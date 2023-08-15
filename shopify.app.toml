@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "gpt-chat"
+client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
+application_url = "https://iowa-org-availability-des.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://iowa-org-availability-des.trycloudflare.com/auth/callback",
+  "https://iowa-org-availability-des.trycloudflare.com/auth/shopify/callback",
+  "https://iowa-org-availability-des.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-07"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-9270ec0b.myshopify.com"
