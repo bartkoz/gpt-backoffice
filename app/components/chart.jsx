@@ -53,6 +53,7 @@ const Chart = () => {
       <AreaChart
         width={500}
         height={400}
+        // @ts-ignore
         data={chartData.charts_data}
         margin={{
           top: 10,
@@ -65,7 +66,7 @@ const Chart = () => {
         <XAxis dataKey="dt" interval={3}/>
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#00214d" />
+        <Area type="monotone" dataKey="conversations" stroke="#8884d8" fill="#00214d" />
       </AreaChart>
     </ResponsiveContainer>
       </>
