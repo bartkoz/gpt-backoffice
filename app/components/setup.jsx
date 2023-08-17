@@ -1,12 +1,26 @@
 import {Form, FormLayout, Select, TextField, Button, Checkbox, Card, VerticalStack, ColorPicker} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
+import axios from "axios";
 
 export default function SetupForm() {
   const [chatSetupBackend, setChatSetupBackend] = useState({});
   const [chatSetupFrontend, setChatSetupFrontend] = useState({});
-  const handleSubmit = useCallback(() => {
-  }, []);
+  const handleSubmit = async () => {
+    await axios.post('http://localhost:8000/update-chat-conf/?store_name=localhost:3000', {"backend":chatSetupBackend, "frontend": chatSetupFrontend});
+  }
 
+  useEffect(() => {
+    const getSetup = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/get-chat-conf/?store_name=zezwolenia.fishster.pl');
+        if (response.data.backend) {setChatSetupBackend(response.data.backend);}
+        if (response.data.frontend) {setChatSetupFrontend(response.data.frontend);}
+      } catch (error) {
+        console.error("Failed to fetch conversations data:", error);
+      }
+    };
+    getSetup();
+  }, [])
   const handleChatSetupBackendChange = event => {
     const { name, value } = event.target;
     setChatSetupBackend(prevState => ({
@@ -23,13 +37,6 @@ export default function SetupForm() {
     }));
   };
 
-  const handleBackgroundColor = event => {
-    const { name, value } = event.target;
-    setChatSetupFrontend(prevState => ({
-      ...prevState,
-      'background_color': value,
-    }));
-  }
 
   const options = [
     {label: 'English', value: 'en'},
@@ -74,7 +81,6 @@ export default function SetupForm() {
     {label: 'Romanian', value: 'ro'},
     {label: 'Bulgarian', value: 'bg'}
   ]
-
   return (
     <>
       <Card>
@@ -82,24 +88,23 @@ export default function SetupForm() {
     <Form onSubmit={handleSubmit}>
       <FormLayout>
         <Checkbox
-          name={'recommendations'}
           label="Recommend products from the store"
           // @ts-ignore
-          checked={chatSetupBackend.recommendations}
-          onChange={handleChatSetupBackendChange}
+          checked={chatSetupBackend.recommendations ?? false}
+          onChange={value => handleChatSetupBackendChange({ target: { value: value, name: 'recommendations' } })}
         />
         <Select
           label="Language"
           options={options}
-          onChange={handleChatSetupBackendChange}
+          onChange={value => handleChatSetupBackendChange({ target: { value: value ?? 'en', name: 'language' } })}
           // @ts-ignore
-          value={chatSetupBackend.language}
+          value={chatSetupBackend.language ?? 'en'}
         />
         <TextField
           multiline={4}
           // @ts-ignore
-          value={chatSetupBackend.dynamic_context}
-          onChange={handleChatSetupBackendChange}
+          value={chatSetupBackend.dynamic_context ?? ''}
+          onChange={value => handleChatSetupBackendChange({ target: { value: value, name: 'dynamic_context' } })}
           label="System prompt"
           helpText={
             <span>
@@ -109,8 +114,8 @@ export default function SetupForm() {
         />
         <TextField
           // @ts-ignore
-          value={chatSetupFrontend.background_color}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.background_color ?? '#f9f9f9'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'background_color' } })}
           label="Chat stripe color"
           helpText={
             <span>
@@ -120,8 +125,8 @@ export default function SetupForm() {
         />
         <TextField
           // @ts-ignore
-          value={chatSetupFrontend.font_color}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.font_color ?? '#00214d'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'font_color' } })}
           label="Chat font color"
           helpText={
             <span>
@@ -131,29 +136,28 @@ export default function SetupForm() {
         />
         <TextField
           // @ts-ignore
-          value={chatSetupFrontend.bar_message}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.bar_message ?? 'Hello I\'m virtual assistant how may I help you?'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'bar_message' } })}
           label="Chat bar message"
         />
         <TextField
           // @ts-ignore
           multiline={2}
-          placeholder={'👋 Glad to help you whenever I can!'}
-          value={chatSetupFrontend.welcome_message}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.welcome_message ?? '👋  Glad to help you whenever I can!'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'welcome_message' } })}
           label="Chat welcome message"
         />
         <TextField
           // @ts-ignore
           multiline={2}
-          value={chatSetupFrontend.recommendation_message}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.recommendation_message ?? 'Based on search I recommend'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'recommendation_message' } })}
           label="Chat recommendation message"
         />
         <TextField
           // @ts-ignore
-          value={chatSetupFrontend.recommendation_button_text}
-          onChange={handleChatSetupFrontendChange}
+          value={chatSetupFrontend.recommendation_button_text ?? 'Check'}
+          onChange={value => handleChatSetupFrontendChange({ target: { value: value, name: 'recommendation_button_text' } })}
           label="Chat recommendation button message"
         />
         <Button submit primarySuccess={true}>Save</Button>
