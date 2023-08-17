@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://declared-rugby-bk-adequate.trycloudflare.com"
+application_url = "https://dump-manufacturer-hot-jose.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://declared-rugby-bk-adequate.trycloudflare.com/auth/callback",
-  "https://declared-rugby-bk-adequate.trycloudflare.com/auth/shopify/callback",
-  "https://declared-rugby-bk-adequate.trycloudflare.com/api/auth/callback"
+  "https://dump-manufacturer-hot-jose.trycloudflare.com/auth/callback",
+  "https://dump-manufacturer-hot-jose.trycloudflare.com/auth/shopify/callback",
+  "https://dump-manufacturer-hot-jose.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

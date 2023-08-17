@@ -11,9 +11,7 @@ export default function Conversations() {
       <VerticalStack gap="5">
         <Layout>
           <Layout.Section>
-            <Card>
               <SetupForm />
-            </Card>
           </Layout.Section>
         </Layout>
       </VerticalStack>
