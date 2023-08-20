@@ -81,6 +81,9 @@ export default function SetupForm() {
     {label: 'Romanian', value: 'ro'},
     {label: 'Bulgarian', value: 'bg'}
   ]
+  // if (!chatSetupBackend.length && !chatSetupBackend.length) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <>
       <Card>

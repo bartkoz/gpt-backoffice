@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Card} from "@shopify/polaris";
+import {Grid, Card, Page, Layout} from "@shopify/polaris";
+import "react-chat-elements/dist/main.css"
 
 export const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);
@@ -31,12 +32,22 @@ export const ConversationsList = () => {
       )
     })
   }
-  if (!conversations) {
-    return <Card><div>Loading...</div></Card>;
-  }
-  return (
-    <Card>
-      {conversationList()}
-    </Card>
-  )
+  return    (<Page fullWidth>
+    <Grid>
+      <Grid.Cell columnSpan={{xs: 4, sm: 4, md: 4, lg: 4, xl: 4}}>
+        <Card>
+            <Layout>
+              <Layout.Section>
+          {conversationList()}
+              </Layout.Section>
+            </Layout>
+        </Card>
+      </Grid.Cell>
+      <Grid.Cell columnSpan={{xs: 8, sm: 8, md: 8, lg: 8, xl: 8}}>
+        <Card padding="32">
+          <p>View a summary of your online store’s orders.</p>
+        </Card>
+      </Grid.Cell>
+    </Grid>
+  </Page>)
 }
