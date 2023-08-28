@@ -32,6 +32,7 @@ export default function App() {
           Home
         </Link>
         <Link to="/app/conversations">Conversation history</Link>
+        <Link to="/app/kb">Knowledge base</Link>
         <Link to="/app/setup">Setup</Link>
       </ui-nav-menu>
       <PolarisAppProvider
