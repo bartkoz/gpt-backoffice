@@ -1,18 +1,21 @@
 import {Form, FormLayout, Select, TextField, Button, Checkbox, Card, VerticalStack, ColorPicker} from '@shopify/polaris';
 import {useState, useCallback, useEffect} from 'react';
 import axios from "axios";
+import {useLoaderData} from "@remix-run/react";
 
 export default function SetupForm() {
+  // const { shop } = useLoaderData();
+  const shop = 'test'
   const [chatSetupBackend, setChatSetupBackend] = useState({});
   const [chatSetupFrontend, setChatSetupFrontend] = useState({});
   const handleSubmit = async () => {
-    await axios.post('http://localhost:8000/update-chat-conf/?store_name=localhost:3000', {"backend":chatSetupBackend, "frontend": chatSetupFrontend});
+    await axios.post(`http://localhost:8000/update-chat-conf/?store_name=${shop}`, {"backend":chatSetupBackend, "frontend": chatSetupFrontend});
   }
 
   useEffect(() => {
     const getSetup = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/get-chat-conf/?store_name=zezwolenia.fishster.pl');
+        const response = await axios.get(`http://localhost:8000/get-chat-conf/?store_name=${shop}`);
         if (response.data.backend) {setChatSetupBackend(response.data.backend);}
         if (response.data.frontend) {setChatSetupFrontend(response.data.frontend);}
       } catch (error) {

@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://fixed-michel-founded-posters.trycloudflare.com"
+application_url = "https://electricity-rec-florist-town.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://fixed-michel-founded-posters.trycloudflare.com/auth/callback",
-  "https://fixed-michel-founded-posters.trycloudflare.com/auth/shopify/callback",
-  "https://fixed-michel-founded-posters.trycloudflare.com/api/auth/callback"
+  "https://electricity-rec-florist-town.trycloudflare.com/auth/callback",
+  "https://electricity-rec-florist-town.trycloudflare.com/auth/shopify/callback",
+  "https://electricity-rec-florist-town.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

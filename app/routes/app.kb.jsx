@@ -5,8 +5,7 @@ import {
   Card,
   Grid,
   Modal
-} from "@shopify/polaris";
-import {DropZone, LegacyStack, Thumbnail, Text} from '@shopify/polaris';
+,DropZone, LegacyStack, Thumbnail, Text} from "@shopify/polaris";
 import {useState, useCallback, useEffect} from 'react';
 import {NoteMinor} from '@shopify/polaris-icons';
 import axios from "axios";
@@ -17,12 +16,13 @@ export default function KBUpload() {
   const [isUploading, setIsUploading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-
+  // const { shop } = useLoaderData();
+  const shop = 'test'
 
   useEffect(() => {
     const getKBFiles = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/kb/test');
+        const response = await axios.get(`http://localhost:8000/kb/${shop}`);
         setUploadedFilesList(response.data)
       } catch (error) {
         console.error("Failed to fetch kb data:", error);
@@ -53,7 +53,7 @@ export default function KBUpload() {
       const formData = new FormData();
       formData.append(`file`, file);
       try {
-        const response = await axios.post('http://localhost:8000/update-embeddings-pdf/test', formData,);
+        const response = await axios.post(`http://localhost:8000/update-embeddings-pdf/${shop}`, formData,);
 
         console.log('Files uploaded successfully:', response.data);
 
@@ -69,7 +69,7 @@ export default function KBUpload() {
   const handleDelete = async (title) => {
     setIsDeleting(true)
     try {
-      const response = await axios.post(`http://localhost:8000/kb/delete/test?kb_file_name=${title}`);
+      const response = await axios.post(`http://localhost:8000/kb/delete/${shop}?kb_file_name=${title}`);
       if (response.status === 200) {
         console.log('Successfully deleted:', response.data);
       } else {

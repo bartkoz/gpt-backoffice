@@ -1,5 +1,4 @@
 import {
-  Card,
   Layout,
   Page,
 } from "@shopify/polaris";

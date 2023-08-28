@@ -1,23 +1,16 @@
-import {useEffect} from "react";
 import { json } from "@remix-run/node";
 import {
   useActionData,
-  useLoaderData,
   useNavigation,
   useSubmit,
 } from "@remix-run/react";
 import {
   Page,
   Layout,
-  Text,
   VerticalStack,
   Card,
   Button,
   HorizontalStack,
-  Box,
-  Divider,
-  List,
-  Link,
 } from "@shopify/polaris";
 
 import { authenticate } from "../shopify.server";
@@ -31,11 +24,19 @@ export const loader = async ({ request }) => {
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
+    `#graphql
+query {
+  shop {
+    primaryDomain {
+      host
+      sslEnabled
+    }
+  }
+}`
   const response = await admin.graphql(
     `#graphql
 query {
   products(first: 10) {
-    # You can adjust the number as needed; remember Shopify may have pagination limits.
     edges {
       node {
         id
@@ -57,15 +58,13 @@ query {
 
 export default function Index() {
   const nav = useNavigation();
-  const { shop } = useLoaderData();
   const actionData = useActionData();
   const submit = useSubmit();
 
   const isLoading =
     ["loading", "submitting"].includes(nav.state) && nav.formMethod === "POST";
 
-  const queryProducts = () => submit({}, { replace: true, method: "POST" });
-
+  const queryProducts = () => submit({}, { replace: true, method: "POST"});
   return (
     <Page>
       <VerticalStack gap="5">

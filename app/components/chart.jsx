@@ -2,9 +2,11 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {HorizontalGrid, Text} from '@shopify/polaris';
+import {useLoaderData} from "@remix-run/react";
 const Chart = () => {
   const [chartData, setChartData] = useState(null);
-
+  // const { shop } = useLoaderData();
+  const shop = 'test'
   const InfoBox = ({data, color = undefined, height = 'auto', width = 'auto'}) => {
 
     return (
@@ -26,7 +28,7 @@ const Chart = () => {
   useEffect(() => {
     const getChartData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/chat-stats/?store_name=zezwolenia.fishster.pl');
+        const response = await axios.get(`http://localhost:8000/chat-stats/?store_name=${shop}`);
         setChartData(response.data);
       } catch (error) {
         console.error("Failed to fetch chart data:", error);

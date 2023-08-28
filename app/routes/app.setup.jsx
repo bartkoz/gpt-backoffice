@@ -1,7 +1,7 @@
 import {
   VerticalStack,
   Layout,
-  Page, Card,
+  Page,
 } from "@shopify/polaris";
 import SetupForm from "~/components/setup";
 
