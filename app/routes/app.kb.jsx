@@ -16,19 +16,20 @@ export default function KBUpload() {
   const [uploadedFilesList, setUploadedFilesList] = useState([])
   const [isUploading, setIsUploading] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  const getKBFiles = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/kb/test');
-      setUploadedFilesList(response.data)
-    } catch (error) {
-      console.error("Failed to fetch kb data:", error);
-    }
-  };
 
   useEffect(() => {
+    const getKBFiles = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/kb/test');
+        setUploadedFilesList(response.data)
+      } catch (error) {
+        console.error("Failed to fetch kb data:", error);
+      }
+    };
     getKBFiles();
-  }, [])
+  }, [isDeleting, isUploading])
 
   const handleDropZoneDrop = useCallback(
     (_dropFiles, acceptedFiles, _rejectedFiles) => {
@@ -63,12 +64,23 @@ export default function KBUpload() {
     setFiles([])
     setShowModal(false)
     setIsUploading(false)
-    getKBFiles()
   };
 
-  const handleDelete = async () => {
-    console.log('delete')
+  const handleDelete = async (title) => {
+    setIsDeleting(true)
+    try {
+      const response = await axios.post(`http://localhost:8000/kb/delete/test?kb_file_name=${title}`);
+      if (response.status === 200) {
+        console.log('Successfully deleted:', response.data);
+      } else {
+        console.error('Error deleting the file:', response.data);
+      }
+    } catch (error) {
+      console.error('Failed to delete the file:', error);
+    }
+    setIsDeleting(false)
   }
+
 
   const uploadedFiles = files.length > 0 && (
     <Layout.Section>
@@ -103,12 +115,11 @@ export default function KBUpload() {
           </Card>
         </Grid.Cell>
         <Grid.Cell columnSpan={{xs: 1, sm: 1, md: 1, lg: 1, xl: 1}} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Button destructive={true} onClick={handleDelete}>Delete</Button>
+          <Button destructive={true} onClick={() => {handleDelete(file)}} disabled={isDeleting}>Delete</Button>
         </Grid.Cell>
       </Grid>
     </Card>
   )));
-  // const [active, setActive] = useState(true);
   const handleChange = useCallback(() => setShowModal(!showModal), [showModal]);
   const uploadModal = (
       <Modal
