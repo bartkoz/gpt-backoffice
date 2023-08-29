@@ -58,22 +58,25 @@ export default function KBUpload() {
   const handleSubmit = async () => {
     setIsUploading(true);
     setShowModal(true);
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append(`file`, file);
-      try {
-        const response = await axios.post(
-          `http://localhost:8000/update-embeddings-pdf/${shop}`,
-          formData
-        );
+    if (files.length > 0) {
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append(`file`, file);
+        try {
+          const response = await axios.post(
+            `http://localhost:8000/update-embeddings-pdf/${shop}`,
+            formData
+          );
 
-        console.log("Files uploaded successfully:", response.data);
-      } catch (error) {
-        console.error(
-          "Error while uploading files:",
-          error.response?.data || error.message
-        );
+          console.log("Files uploaded successfully:", response.data);
+        } catch (error) {
+          console.error(
+            "Error while uploading files:",
+            error.response?.data || error.message
+          );
+        }
       }
+    } else if (inputText.length > 0) {
     }
     setFiles([]);
     setShowModal(false);
