@@ -5,7 +5,7 @@ import {
   Card,
   Grid,
   Modal
-,DropZone, LegacyStack, Thumbnail, Text} from "@shopify/polaris";
+,DropZone, LegacyStack, Thumbnail, Text, TextField,FormLayout, ButtonGroup} from "@shopify/polaris";
 import {useState, useCallback, useEffect} from 'react';
 import {NoteMinor} from '@shopify/polaris-icons';
 import axios from "axios";
@@ -16,6 +16,7 @@ export default function KBUpload() {
   const [isUploading, setIsUploading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [inputText, setInputText] = useState('')
   // const { shop } = useLoaderData();
   const shop = 'test'
 
@@ -146,13 +147,24 @@ export default function KBUpload() {
         <Layout.Section>
         </Layout.Section>
       <Layout.Section>
+        <ButtonGroup>
           <Button primarySuccess={true} disabled={isUploading} onClick={handleSubmit}>Save</Button>
+          <Button destructive={true} onClick={()=> {setFiles([]); setInputText('')}}>Clear</Button>
+        </ButtonGroup>
       </Layout.Section>
         <Layout.Section>
-      <DropZone onDrop={handleDropZoneDrop} disabled={isUploading}>
+      <DropZone onDrop={handleDropZoneDrop} disabled={isUploading || inputText}>
       {uploadedFiles}
       {fileUpload}
     </DropZone>
+        </Layout.Section>
+          <Layout.Section>
+          <Text as="p" variant="headingxl">OR</Text>
+          </Layout.Section>
+        <Layout.Section>
+          <FormLayout>
+        <TextField multiline={4} placeholder={'Type your text here...'} value={inputText} onChange={(newValue) => setInputText(newValue)} disabled={files.length > 0}/>
+          </FormLayout>
         </Layout.Section>
         <Layout.Section>
         {KBFilesList}
