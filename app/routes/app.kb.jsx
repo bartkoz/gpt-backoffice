@@ -77,8 +77,12 @@ export default function KBUpload() {
         }
       }
     } else if (inputText.length > 0) {
+      await axios.post(`http://localhost:8000/update-embeddings-pdf/${shop}`, {
+        text: inputText,
+      });
     }
     setFiles([]);
+    setInputText("");
     setShowModal(false);
     setIsUploading(false);
   };
