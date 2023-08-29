@@ -1,8 +1,4 @@
-import {
-  VerticalStack,
-  Layout,
-  Page,
-} from "@shopify/polaris";
+import { VerticalStack, Layout, Page } from "@shopify/polaris";
 import SetupForm from "~/components/setup";
 
 export default function Conversations() {
@@ -11,7 +7,7 @@ export default function Conversations() {
       <VerticalStack gap="5">
         <Layout>
           <Layout.Section>
-              <SetupForm />
+            <SetupForm />
           </Layout.Section>
         </Layout>
       </VerticalStack>

@@ -1,8 +1,5 @@
-import {
-  Layout,
-  Page,
-} from "@shopify/polaris";
-import {ConversationsList} from "~/components/conversations";
+import { Layout, Page } from "@shopify/polaris";
+import { ConversationsList } from "~/components/conversations";
 
 export default function Conversations() {
   return (

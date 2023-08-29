@@ -1,9 +1,5 @@
 import { json } from "@remix-run/node";
-import {
-  useActionData,
-  useNavigation,
-  useSubmit,
-} from "@remix-run/react";
+import { useActionData, useNavigation, useSubmit } from "@remix-run/react";
 import {
   Page,
   Layout,
@@ -24,7 +20,7 @@ export const loader = async ({ request }) => {
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
-    `#graphql
+  `#graphql
 query {
   shop {
     primaryDomain {
@@ -32,7 +28,7 @@ query {
       sslEnabled
     }
   }
-}`
+}`;
   const response = await admin.graphql(
     `#graphql
 query {
@@ -45,12 +41,11 @@ query {
       }
     }
   }
-}`,
-
+}`
   );
 
   const responseJson = await response.json();
-  console.log(responseJson)
+  console.log(responseJson);
   return json({
     product: responseJson.data,
   });
@@ -64,7 +59,7 @@ export default function Index() {
   const isLoading =
     ["loading", "submitting"].includes(nav.state) && nav.formMethod === "POST";
 
-  const queryProducts = () => submit({}, { replace: true, method: "POST"});
+  const queryProducts = () => submit({}, { replace: true, method: "POST" });
   return (
     <Page>
       <VerticalStack gap="5">
