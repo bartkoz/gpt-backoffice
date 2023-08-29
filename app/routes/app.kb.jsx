@@ -24,7 +24,7 @@ export default function KBUpload() {
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [inputText, setInputText] = useState("");
-  // const { shop } = useLoaderData();
+  const [inputTextTopic, setInputTextTopic] = useState("");
   const shop = "test";
 
   useEffect(() => {
@@ -83,6 +83,7 @@ export default function KBUpload() {
     }
     setFiles([]);
     setInputText("");
+    setInputTextTopic("");
     setShowModal(false);
     setIsUploading(false);
   };
@@ -189,6 +190,7 @@ export default function KBUpload() {
               onClick={() => {
                 setFiles([]);
                 setInputText("");
+                setInputTextTopic("");
               }}
             >
               Clear
@@ -198,7 +200,7 @@ export default function KBUpload() {
         <Layout.Section>
           <DropZone
             onDrop={handleDropZoneDrop}
-            disabled={isUploading || inputText}
+            disabled={isUploading || inputText || inputTextTopic}
           >
             {uploadedFiles}
             {fileUpload}
@@ -211,13 +213,27 @@ export default function KBUpload() {
         </Layout.Section>
         <Layout.Section>
           <FormLayout>
-            <TextField
-              multiline={4}
-              placeholder={"Type your text here..."}
-              value={inputText}
-              onChange={(newValue) => setInputText(newValue)}
-              disabled={files.length > 0}
-            />
+            <FormLayout.Group condensed>
+              <TextField
+                multiline={4}
+                placeholder={"Type your text here..."}
+                value={inputText}
+                onChange={(newValue) => setInputText(newValue)}
+                disabled={files.length > 0}
+                connectedLeft={
+                  <TextField
+                    labelHidden
+                    label="Collection rule content"
+                    autoComplete="off"
+                    multiline={4}
+                    placeholder={"Topic"}
+                    value={inputTextTopic}
+                    onChange={(newValue) => setInputTextTopic(newValue)}
+                    disabled={files.length > 0}
+                  />
+                }
+              />
+            </FormLayout.Group>
           </FormLayout>
         </Layout.Section>
         <Layout.Section>{KBFilesList}</Layout.Section>
