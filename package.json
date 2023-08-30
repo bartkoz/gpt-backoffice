@@ -18,7 +18,10 @@
     "setup": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/material": "^5.14.7",
     "@prisma/client": "^4.13.0",
     "@remix-run/node": "^1.19.1",
     "@remix-run/react": "^1.19.1",
