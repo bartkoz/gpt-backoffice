@@ -11,6 +11,7 @@ export default function Recommendation() {
     title: "Example Snowboard",
     image:
       "https://quickstart-9270ec0b.myshopify.com/cdn/shop/products/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.jpg",
+    price: "$150",
   };
   const Img = styled("img")({
     margin: "auto",
@@ -18,7 +19,6 @@ export default function Recommendation() {
     maxWidth: "100%",
     maxHeight: "100%",
   });
-  console.log(chatSetupFrontend);
   return (
     <Paper
       elevation={0}

@@ -227,6 +227,19 @@ export default function SetupForm() {
               }
               label="Chat recommendation button message"
             />
+            <TextField
+              // @ts-ignore
+              value={chatSetupFrontend.recommendation_currency ?? "$"}
+              onChange={(value) =>
+                handleChatSetupFrontendChange({
+                  target: {
+                    value: value,
+                    name: "recommendation_currency",
+                  },
+                })
+              }
+              label="Recommended product currency"
+            />
             <Button submit primarySuccess={true}>
               Save
             </Button>

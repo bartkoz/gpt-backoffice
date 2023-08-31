@@ -11,6 +11,7 @@ import {
 
 import { authenticate } from "../shopify.server";
 import Chart from "~/components/chart";
+import TokenBar from "~/components/tokenbar";
 
 export const loader = async ({ request }) => {
   const { session } = await authenticate.admin(request);
@@ -53,7 +54,6 @@ query {
 
 export default function Index() {
   const nav = useNavigation();
-  const actionData = useActionData();
   const submit = useSubmit();
 
   const isLoading =
@@ -68,9 +68,10 @@ export default function Index() {
             <Card>
               <VerticalStack gap="5">
                 <HorizontalStack gap="3" align="end">
-                  <Button loading={isLoading} primary onClick={queryProducts}>
-                    query prods
-                  </Button>
+                  <TokenBar />
+                  {/*<Button loading={isLoading} primary onClick={queryProducts}>*/}
+                  {/*  query prods*/}
+                  {/*</Button>*/}
                 </HorizontalStack>
               </VerticalStack>
             </Card>
