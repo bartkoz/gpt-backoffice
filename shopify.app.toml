@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://outputs-namibia-se-parenting.trycloudflare.com"
+application_url = "https://greg-commitment-conflict-instrumentation.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://outputs-namibia-se-parenting.trycloudflare.com/auth/callback",
-  "https://outputs-namibia-se-parenting.trycloudflare.com/auth/shopify/callback",
-  "https://outputs-namibia-se-parenting.trycloudflare.com/api/auth/callback"
+  "https://greg-commitment-conflict-instrumentation.trycloudflare.com/auth/callback",
+  "https://greg-commitment-conflict-instrumentation.trycloudflare.com/auth/shopify/callback",
+  "https://greg-commitment-conflict-instrumentation.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

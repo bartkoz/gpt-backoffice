@@ -2,14 +2,26 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid, Card, Page, Layout } from "@shopify/polaris";
 import "react-chat-elements/dist/main.css";
-import { useLoaderData } from "@remix-run/react";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/system";
 
 export const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);
   const [conversationData, setConversationData] = useState(undefined);
   const [selectedConversation, setSelectedConversation] = useState(undefined);
-  // const { shop } = useLoaderData();
-  const shop = "test";
+  const shop = "zezwolenia.fishster.pl";
+  const PlainButton = styled(Button)({
+    background: "none",
+    border: "none",
+    padding: 0,
+    textTransform: "none", // To prevent automatic uppercase
+    width: "100%",
+    marginTop: "5px",
+    "&:hover": {
+      background: "none",
+      boxShadow: "none",
+    },
+  });
 
   useEffect(() => {
     const getConversationsData = async () => {
@@ -30,18 +42,29 @@ export const ConversationsList = () => {
   const conversationList = () => {
     return conversations.map((conversation) => {
       return (
-        <Card
-          key={conversation.id}
+        <PlainButton
           onClick={() => {
-            setSelectedConversation(conversation.id);
-            console.log(conversation.id);
+            setSelectedConversation(conversation.messages);
+            console.log(conversation.messages);
           }}
         >
-          {conversation.id}
-        </Card>
+          <Card key={conversation.id}>
+            {`${conversation.messages[0].message.slice(0, 40)}...`}
+          </Card>
+        </PlainButton>
       );
     });
   };
+
+  const conversationDetails = selectedConversation.map((message) => {
+    return (
+      <Card>
+        <b>{message.role}</b>:{" "}
+        <span dangerouslySetInnerHTML={{ __html: message.message }} />
+      </Card>
+    );
+  });
+
   return (
     <Page fullWidth>
       <Grid>
@@ -54,7 +77,7 @@ export const ConversationsList = () => {
         </Grid.Cell>
         <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
           <Card padding="32">
-            <p>View a summary of your online store’s orders.</p>
+            <p>{conversationDetails}</p>
           </Card>
         </Grid.Cell>
       </Grid>
