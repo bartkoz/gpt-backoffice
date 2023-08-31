@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://mali-processes-tenant-hidden.trycloudflare.com"
+application_url = "https://deposits-craft-supplier-applying.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://mali-processes-tenant-hidden.trycloudflare.com/auth/callback",
-  "https://mali-processes-tenant-hidden.trycloudflare.com/auth/shopify/callback",
-  "https://mali-processes-tenant-hidden.trycloudflare.com/api/auth/callback"
+  "https://deposits-craft-supplier-applying.trycloudflare.com/auth/callback",
+  "https://deposits-craft-supplier-applying.trycloudflare.com/auth/shopify/callback",
+  "https://deposits-craft-supplier-applying.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
