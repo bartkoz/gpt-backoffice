@@ -46,7 +46,6 @@ query {
   );
 
   const responseJson = await response.json();
-  console.log(responseJson);
   return json({
     product: responseJson.data,
   });
