@@ -7,13 +7,16 @@ import {
   Checkbox,
   Card,
   VerticalStack,
+  Loading,
+  Frame,
 } from "@shopify/polaris";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import ChatSetupContext from "~/components/context";
 
 export default function SetupForm() {
   const shop = "test";
+  const [isLoading, setIsLoading] = useState(true);
   const {
     chatSetupBackend,
     setChatSetupBackend,
@@ -39,6 +42,7 @@ export default function SetupForm() {
         if (response.data.frontend) {
           setChatSetupFrontend(response.data.frontend);
         }
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch conversations data:", error);
       }
@@ -104,148 +108,148 @@ export default function SetupForm() {
     { label: "Romanian", value: "ro" },
     { label: "Bulgarian", value: "bg" },
   ];
-  // if (!chatSetupBackend.length && !chatSetupBackend.length) {
-  //   return <div>Loading...</div>;
-  // }
   return (
-    <Card>
-      <VerticalStack gap="4">
-        <Form onSubmit={handleSubmit}>
-          <FormLayout>
-            <Checkbox
-              label="Recommend products from the store"
-              // @ts-ignore
-              checked={chatSetupBackend.recommendations ?? false}
-              onChange={(value) =>
-                handleChatSetupBackendChange({
-                  target: { value: value, name: "recommendations" },
-                })
-              }
-            />
-            <Select
-              label="Language"
-              options={options}
-              onChange={(value) =>
-                handleChatSetupBackendChange({
-                  target: { value: value ?? "en", name: "language" },
-                })
-              }
-              // @ts-ignore
-              value={chatSetupBackend.language ?? "en"}
-            />
-            <TextField
-              multiline={4}
-              // @ts-ignore
-              value={chatSetupBackend.dynamic_context ?? ""}
-              onChange={(value) =>
-                handleChatSetupBackendChange({
-                  target: { value: value, name: "dynamic_context" },
-                })
-              }
-              label="System prompt"
-              helpText={
-                <span>
-                  Information that will help chatbot to understand what your
-                  store is about. Based on the information and knowledge base
-                  answers are constructed.
-                </span>
-              }
-            />
-            <TextField
-              // @ts-ignore
-              value={chatSetupFrontend.background_color ?? "#00214d"}
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: { value: value, name: "background_color" },
-                })
-              }
-              label="Chat stripe color"
-              helpText={<span>Hex value (ex. #000000)</span>}
-            />
-            <TextField
-              // @ts-ignore
-              value={chatSetupFrontend.font_color ?? "#FFFFFF"}
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: { value: value, name: "font_color" },
-                })
-              }
-              label="Chat font color"
-              helpText={<span>Hex value (ex. #000000)</span>}
-            />
-            <TextField
-              // @ts-ignore
-              value={
-                chatSetupFrontend.bar_message ??
-                "Hello I'm virtual assistant how may I help you?"
-              }
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: { value: value, name: "bar_message" },
-                })
-              }
-              label="Chat bar message"
-            />
-            <TextField
-              // @ts-ignore
-              multiline={2}
-              value={
-                chatSetupFrontend.welcome_message ??
-                "👋  Glad to help you whenever I can!"
-              }
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: { value: value, name: "welcome_message" },
-                })
-              }
-              label="Chat welcome message"
-            />
-            <TextField
-              // @ts-ignore
-              multiline={2}
-              value={
-                chatSetupFrontend.recommendation_message ??
-                "Based on search I recommend"
-              }
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: { value: value, name: "recommendation_message" },
-                })
-              }
-              label="Chat recommendation message"
-            />
-            <TextField
-              // @ts-ignore
-              value={chatSetupFrontend.recommendation_button_text ?? "Check"}
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: {
-                    value: value,
-                    name: "recommendation_button_text",
-                  },
-                })
-              }
-              label="Chat recommendation button message"
-            />
-            <TextField
-              // @ts-ignore
-              value={chatSetupFrontend.recommendation_currency ?? "$"}
-              onChange={(value) =>
-                handleChatSetupFrontendChange({
-                  target: {
-                    value: value,
-                    name: "recommendation_currency",
-                  },
-                })
-              }
-              label="Recommended product currency"
-            />
-            <Button submit primarySuccess={true}>
-              Save
-            </Button>
-          </FormLayout>
-        </Form>
-      </VerticalStack>
-    </Card>
+    <Frame>
+      {isLoading && <Loading />}
+      <Card>
+        <VerticalStack gap="4">
+          <Form onSubmit={handleSubmit}>
+            <FormLayout>
+              <Checkbox
+                label="Recommend products from the store"
+                disabled={isLoading}
+                checked={chatSetupBackend.recommendations ?? false}
+                onChange={(value) =>
+                  handleChatSetupBackendChange({
+                    target: { value: value, name: "recommendations" },
+                  })
+                }
+              />
+              <Select
+                label="Language"
+                disabled={isLoading}
+                options={options}
+                onChange={(value) =>
+                  handleChatSetupBackendChange({
+                    target: { value: value ?? "en", name: "language" },
+                  })
+                }
+                value={chatSetupBackend.language ?? "en"}
+              />
+              <TextField
+                multiline={4}
+                disabled={isLoading}
+                value={chatSetupBackend.dynamic_context ?? ""}
+                onChange={(value) =>
+                  handleChatSetupBackendChange({
+                    target: { value: value, name: "dynamic_context" },
+                  })
+                }
+                label="System prompt"
+                helpText={
+                  <span>
+                    Information that will help chatbot to understand what your
+                    store is about. Based on the information and knowledge base
+                    answers are constructed.
+                  </span>
+                }
+              />
+              <TextField
+                value={chatSetupFrontend.background_color ?? "#00214d"}
+                disabled={isLoading}
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: { value: value, name: "background_color" },
+                  })
+                }
+                label="Chat stripe color"
+                helpText={<span>Hex value (ex. #000000)</span>}
+              />
+              <TextField
+                value={chatSetupFrontend.font_color ?? "#FFFFFF"}
+                disabled={isLoading}
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: { value: value, name: "font_color" },
+                  })
+                }
+                label="Chat font color"
+                helpText={<span>Hex value (ex. #000000)</span>}
+              />
+              <TextField
+                value={
+                  chatSetupFrontend.bar_message ??
+                  "Hello I'm virtual assistant how may I help you?"
+                }
+                disabled={isLoading}
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: { value: value, name: "bar_message" },
+                  })
+                }
+                label="Chat bar message"
+              />
+              <TextField
+                multiline={2}
+                disabled={isLoading}
+                value={
+                  chatSetupFrontend.welcome_message ??
+                  "👋  Glad to help you whenever I can!"
+                }
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: { value: value, name: "welcome_message" },
+                  })
+                }
+                label="Chat welcome message"
+              />
+              <TextField
+                multiline={2}
+                disabled={isLoading}
+                value={
+                  chatSetupFrontend.recommendation_message ??
+                  "Based on search I recommend"
+                }
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: { value: value, name: "recommendation_message" },
+                  })
+                }
+                label="Chat recommendation message"
+              />
+              <TextField
+                value={chatSetupFrontend.recommendation_button_text ?? "Check"}
+                disabled={isLoading}
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: {
+                      value: value,
+                      name: "recommendation_button_text",
+                    },
+                  })
+                }
+                label="Chat recommendation button message"
+              />
+              <TextField
+                value={chatSetupFrontend.recommendation_currency ?? "$"}
+                disabled={isLoading}
+                onChange={(value) =>
+                  handleChatSetupFrontendChange({
+                    target: {
+                      value: value,
+                      name: "recommendation_currency",
+                    },
+                  })
+                }
+                label="Recommended product currency"
+              />
+              <Button submit primarySuccess={true}>
+                Save
+              </Button>
+            </FormLayout>
+          </Form>
+        </VerticalStack>
+      </Card>
+    </Frame>
   );
 }
