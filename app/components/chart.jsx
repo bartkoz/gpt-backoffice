@@ -10,11 +10,9 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { HorizontalGrid, Text } from "@shopify/polaris";
-import { useLoaderData } from "@remix-run/react";
 const Chart = () => {
   const [chartData, setChartData] = useState(null);
-  // const { shop } = useLoaderData();
-  const shop = "test";
+  const shop = "zezwolenia.fishster.pl";
 
   const InfoBox = ({
     data,
