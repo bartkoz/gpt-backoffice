@@ -10,7 +10,7 @@ export default function Recommendation() {
   const recommendation = {
     title: "Example Snowboard",
     image:
-      "https://quickstart-9270ec0b.myshopify.com/cdn/shop/products/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.jpg",
+      "https://storage.googleapis.com/zezwolenia/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.webp",
     price: "$150",
   };
   const Img = styled("img")({

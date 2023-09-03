@@ -88,7 +88,6 @@ const Chart = () => {
         <AreaChart
           width={500}
           height={400}
-          // @ts-ignore
           data={chartData.charts_data}
           margin={{
             top: 10,

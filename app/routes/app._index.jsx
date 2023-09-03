@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { useActionData, useNavigation, useSubmit } from "@remix-run/react";
+import { useNavigation, useSubmit } from "@remix-run/react";
 import {
   Page,
   Layout,
@@ -68,9 +68,9 @@ export default function Index() {
               <VerticalStack gap="5">
                 <HorizontalStack gap="3" align="end">
                   <TokenBar />
-                  {/*<Button loading={isLoading} primary onClick={queryProducts}>*/}
-                  {/*  query prods*/}
-                  {/*</Button>*/}
+                  <Button loading={isLoading} primary onClick={queryProducts}>
+                    query prods
+                  </Button>
                 </HorizontalStack>
               </VerticalStack>
             </Card>

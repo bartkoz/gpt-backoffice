@@ -17,25 +17,23 @@ export default function Message() {
     },
   };
   return (
-    <>
-      <Box padding={"8px"} sx={{ ...boxStyleSystem }}>
-        <Typography
-          paddingLeft={"5px"}
-          paddingRight={"5px"}
-          component="div"
-          variant="body2"
-          style={{ wordWrap: "break-word" }}
-          sx={{
-            display: "-webkit-box",
-            overflow: "hidden",
-            WebkitLineClamp: 999,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {chatSetupFrontend.bar_message ??
-            "Hello I'm virtual assistant how may I help you?"}
-        </Typography>
-      </Box>
-    </>
+    <Box padding={"8px"} sx={{ ...boxStyleSystem }}>
+      <Typography
+        paddingLeft={"5px"}
+        paddingRight={"5px"}
+        component="div"
+        variant="body2"
+        style={{ wordWrap: "break-word" }}
+        sx={{
+          display: "-webkit-box",
+          overflow: "hidden",
+          WebkitLineClamp: 999,
+          WebkitBoxOrient: "vertical",
+        }}
+      >
+        {chatSetupFrontend.bar_message ??
+          "Hello I'm virtual assistant how may I help you?"}
+      </Typography>
+    </Box>
   );
 }

@@ -5,6 +5,7 @@ import "react-chat-elements/dist/main.css";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import PaginationComponent from "~/components/pagination";
+import moment from "moment";
 
 export const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);
@@ -12,7 +13,6 @@ export const ConversationsList = () => {
   const [paginatedPage, setPaginatedPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-
   const shop = "zezwolenia.fishster.pl";
   const PlainButton = styled(Button)({
     background: "none",
@@ -55,7 +55,9 @@ export const ConversationsList = () => {
           }}
         >
           <Card key={conversation.id}>
-            {`${conversation.messages[0].message.slice(0, 40)}...`}
+            {`${conversation.messages[0].message.slice(0, 40)}... ${moment(
+              conversation.messages[0].timestamp
+            ).format("YYYY/MM/DD")}`}
           </Card>
         </PlainButton>
       );
