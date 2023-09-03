@@ -86,6 +86,7 @@ export const ConversationsList = () => {
                     paginationPage={paginatedPage}
                     setPaginationPage={setPaginatedPage}
                     pages={pageCount}
+                    isLoading={isLoading}
                   />
                 </Layout.Section>
                 <Layout.Section>{conversationList()}</Layout.Section>
@@ -94,6 +95,7 @@ export const ConversationsList = () => {
                     paginationPage={paginatedPage}
                     setPaginationPage={setPaginatedPage}
                     pages={pageCount}
+                    isLoading={isLoading}
                   />
                 </Layout.Section>
               </Layout>

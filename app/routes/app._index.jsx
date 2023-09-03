@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { useNavigation, useSubmit } from "@remix-run/react";
+import { useActionData, useNavigation, useSubmit } from "@remix-run/react";
 import {
   Page,
   Layout,
@@ -12,6 +12,7 @@ import {
 import { authenticate } from "../shopify.server";
 import Chart from "~/components/chart";
 import TokenBar from "~/components/tokenbar";
+import HostSetup from "~/components/hosts";
 
 export const loader = async ({ request }) => {
   const { session } = await authenticate.admin(request);
@@ -21,15 +22,6 @@ export const loader = async ({ request }) => {
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
-  `#graphql
-query {
-  shop {
-    primaryDomain {
-      host
-      sslEnabled
-    }
-  }
-}`;
   const response = await admin.graphql(
     `#graphql
 query {
@@ -46,6 +38,7 @@ query {
   );
 
   const responseJson = await response.json();
+  console.log(responseJson);
   return json({
     product: responseJson.data,
   });
@@ -54,6 +47,7 @@ query {
 export default function Index() {
   const nav = useNavigation();
   const submit = useSubmit();
+  const actionData = useActionData();
 
   const isLoading =
     ["loading", "submitting"].includes(nav.state) && nav.formMethod === "POST";
@@ -63,6 +57,11 @@ export default function Index() {
     <Page>
       <VerticalStack gap="5">
         <Layout>
+          <Layout.Section>
+            <VerticalStack gap="5">
+              <HostSetup />
+            </VerticalStack>
+          </Layout.Section>
           <Layout.Section>
             <Card>
               <VerticalStack gap="5">
