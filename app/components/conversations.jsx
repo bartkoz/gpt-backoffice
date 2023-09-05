@@ -10,7 +10,8 @@ import {
   Text,
   Frame,
   VerticalStack,
-  HorizontalStack,
+  LegacyStack,
+  LegacyCard,
 } from "@shopify/polaris";
 import "react-chat-elements/dist/main.css";
 import PaginationComponent from "~/components/pagination";
@@ -52,14 +53,22 @@ export const ConversationsList = () => {
           monochrome={true}
           removeUnderline={true}
         >
-          <Card key={conversation.id}>
-            <p>{`${conversation.messages[0].message.slice(0, 40)}`}...</p>
-            <HorizontalStack>
-              <Text variant="bodySm" as="p" style={{ display: "inline-block" }}>
-                {moment(conversation.messages[0]).format("DD MMM")}
-              </Text>
-            </HorizontalStack>
-          </Card>
+          <LegacyCard key={conversation.id}>
+            <LegacyCard.Section>
+              <LegacyStack spacing="loose" vertical>
+                <p>{`${conversation.messages[0].message.slice(0, 40)}`}...</p>
+                <LegacyStack distribution="trailing">
+                  <Text
+                    variant="bodySm"
+                    as="p"
+                    style={{ display: "inline-block" }}
+                  >
+                    {moment(conversation.messages[0]).format("DD MMM")}
+                  </Text>
+                </LegacyStack>
+              </LegacyStack>
+            </LegacyCard.Section>
+          </LegacyCard>
         </Link>
       );
     });
@@ -105,7 +114,6 @@ export const ConversationsList = () => {
             </Grid.Cell>
             <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
               <Card>
-                {/*{selectedConversation && <Text>sekcja na gorze</Text>}*/}
                 <p>{conversationDetails}</p>
               </Card>
             </Grid.Cell>

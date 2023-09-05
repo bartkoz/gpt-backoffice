@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://recordings-predict-marks-harbour.trycloudflare.com"
+application_url = "https://deserve-tutorials-tree-army.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://recordings-predict-marks-harbour.trycloudflare.com/auth/callback",
-  "https://recordings-predict-marks-harbour.trycloudflare.com/auth/shopify/callback",
-  "https://recordings-predict-marks-harbour.trycloudflare.com/api/auth/callback"
+  "https://deserve-tutorials-tree-army.trycloudflare.com/auth/callback",
+  "https://deserve-tutorials-tree-army.trycloudflare.com/auth/shopify/callback",
+  "https://deserve-tutorials-tree-army.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
