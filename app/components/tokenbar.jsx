@@ -1,5 +1,4 @@
-import { ProgressBar } from "@shopify/polaris";
-import { Typography } from "@mui/material";
+import { ProgressBar, Text, HorizontalStack } from "@shopify/polaris";
 
 export default function TokenBar() {
   function getColor(tokensUsedPercent) {
@@ -10,10 +9,5 @@ export default function TokenBar() {
     } else return "success";
   }
   const progress = 90;
-  return (
-    <>
-      <Typography style={{ float: "left" }}>Tokens consumed:</Typography>
-      <ProgressBar progress={progress} color={getColor(progress)} />
-    </>
-  );
+  return <ProgressBar progress={progress} color={getColor(progress)} />;
 }

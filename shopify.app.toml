@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://tours-qc-nominated-anatomy.trycloudflare.com"
+application_url = "https://championship-fragrances-assembled-physical.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://tours-qc-nominated-anatomy.trycloudflare.com/auth/callback",
-  "https://tours-qc-nominated-anatomy.trycloudflare.com/auth/shopify/callback",
-  "https://tours-qc-nominated-anatomy.trycloudflare.com/api/auth/callback"
+  "https://championship-fragrances-assembled-physical.trycloudflare.com/auth/callback",
+  "https://championship-fragrances-assembled-physical.trycloudflare.com/auth/shopify/callback",
+  "https://championship-fragrances-assembled-physical.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

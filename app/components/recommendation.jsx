@@ -11,7 +11,7 @@ export default function Recommendation() {
     title: "Example Snowboard",
     image:
       "https://storage.googleapis.com/zezwolenia/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.webp",
-    price: "$150",
+    price: "150",
   };
   const Img = styled("img")({
     margin: "auto",
@@ -62,6 +62,7 @@ export default function Recommendation() {
                 {recommendation.title}
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
+                {chatSetupFrontend.recommendation_currency ?? "$"}
                 {recommendation.price}
               </Typography>
               <Button variant="contained">

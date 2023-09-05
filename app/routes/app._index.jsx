@@ -7,6 +7,7 @@ import {
   Card,
   Button,
   HorizontalStack,
+  Text,
 } from "@shopify/polaris";
 
 import { authenticate } from "../shopify.server";
@@ -58,26 +59,27 @@ export default function Index() {
       <VerticalStack gap="5">
         <Layout>
           <Layout.Section>
-            <VerticalStack gap="5">
-              <HostSetup />
-            </VerticalStack>
+            <VerticalStack gap="5">{/*<HostSetup />*/}</VerticalStack>
           </Layout.Section>
           <Layout.Section>
             <Card>
-              <VerticalStack gap="5">
-                <HorizontalStack gap="3" align="end">
-                  <TokenBar />
-                  <Button loading={isLoading} primary onClick={queryProducts}>
-                    query prods
-                  </Button>
-                </HorizontalStack>
-              </VerticalStack>
+              <HorizontalStack wrap={false}>
+                <Text alignment={"center"}>
+                  Tokens used <b>resets in X days</b>
+                </Text>
+              </HorizontalStack>
+              {/*<HorizontalStack>*/}
+              {/*  <Text alignment={"start"}>Tokens used</Text>*/}
+              {/*  <Text align={"end"}>Tokens used</Text>*/}
+              {/*</HorizontalStack>*/}
+              <TokenBar />
+              {/*<Button loading={isLoading} primary onClick={queryProducts}>*/}
+              {/*  query prods*/}
+              {/*</Button>*/}
             </Card>
           </Layout.Section>
           <Layout.Section>
-            <Card>
-              <Chart />
-            </Card>
+            <Chart />
           </Layout.Section>
         </Layout>
       </VerticalStack>

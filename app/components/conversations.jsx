@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Card, Page, Layout, Loading, Frame } from "@shopify/polaris";
+import {
+  Grid,
+  Card,
+  Page,
+  Layout,
+  Loading,
+  Frame,
+  Button,
+} from "@shopify/polaris";
 import "react-chat-elements/dist/main.css";
-import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
@@ -54,11 +61,9 @@ export const ConversationsList = () => {
             setSelectedConversation(conversation.messages);
           }}
         >
-          <Card key={conversation.id}>
-            {`${conversation.messages[0].message.slice(0, 40)}... ${moment(
-              conversation.messages[0].timestamp
-            ).format("YYYY/MM/DD")}`}
-          </Card>
+          {`${conversation.messages[0].message.slice(0, 40)}... (${moment(
+            conversation.messages[0].timestamp
+          ).format("DD/MM/YYYY")})`}
         </PlainButton>
       );
     });

@@ -15,7 +15,7 @@ import axios from "axios";
 import ChatSetupContext from "~/components/context";
 
 export default function SetupForm() {
-  const shop = "test";
+  const shop = "zezwolenia.fishster.pl";
   const [isLoading, setIsLoading] = useState(true);
   const {
     chatSetupBackend,
