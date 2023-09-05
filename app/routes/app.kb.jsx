@@ -16,6 +16,7 @@ import {
 import { useState, useCallback, useEffect } from "react";
 import { NoteMinor } from "@shopify/polaris-icons";
 import axios from "axios";
+import { QAForm } from "~/components/kb_tabs";
 
 export default function KBUpload() {
   const [files, setFiles] = useState([]);
@@ -26,6 +27,25 @@ export default function KBUpload() {
   const [inputText, setInputText] = useState("");
   const [inputTextTopic, setInputTextTopic] = useState("");
   const shop = "test";
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex) => setSelected(selectedTabIndex),
+    []
+  );
+
+  const tabs = [
+    {
+      id: "pdf",
+      content: "PDF upload",
+      panelID: "pdf",
+    },
+    {
+      id: "qa",
+      content: "Q&A",
+      panelID: "qa",
+    },
+  ];
 
   useEffect(() => {
     const getKBFiles = async () => {
@@ -76,7 +96,8 @@ export default function KBUpload() {
           );
         }
       }
-    } else if (inputText.length > 0) {
+    }
+    if (inputText.length > 0) {
       await axios.post(`http://localhost:8000/update-embeddings-text/${shop}`, {
         text: inputText,
       });
@@ -211,31 +232,12 @@ export default function KBUpload() {
             OR
           </Text>
         </Layout.Section>
-        <Layout.Section>
-          <FormLayout>
-            <FormLayout.Group condensed>
-              <TextField
-                multiline={4}
-                placeholder={"Type your text here..."}
-                value={inputText}
-                onChange={(newValue) => setInputText(newValue)}
-                disabled={files.length > 0}
-                connectedLeft={
-                  <TextField
-                    labelHidden
-                    label="Collection rule content"
-                    autoComplete="off"
-                    multiline={4}
-                    placeholder={"Topic"}
-                    value={inputTextTopic}
-                    onChange={(newValue) => setInputTextTopic(newValue)}
-                    disabled={files.length > 0}
-                  />
-                }
-              />
-            </FormLayout.Group>
-          </FormLayout>
-        </Layout.Section>
+        <QAForm
+          inputText={inputText}
+          inputTextTopic={inputTextTopic}
+          setInputText={setInputText}
+          setInputTextTopic={setInputTextTopic}
+        />
         <Layout.Section>{KBFilesList}</Layout.Section>
       </Layout>
     </Page>

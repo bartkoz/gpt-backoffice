@@ -76,13 +76,13 @@ export const ConversationsList = () => {
 
   return (
     <Frame>
-      <Page fullWidth>
+      <Page fullWidth={true}>
         <Layout>
           {isLoading && <Loading />}
           <Grid>
             <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
               <Card>
-                <Layout.Section>
+                <Layout.Section fullWidth={true}>
                   <PaginationComponent
                     paginationPage={paginatedPage}
                     setPaginationPage={setPaginatedPage}
@@ -90,7 +90,7 @@ export const ConversationsList = () => {
                     isLoading={isLoading}
                   />
                 </Layout.Section>
-                <Layout.Section>
+                <Layout.Section fullWidth={true}>
                   <VerticalStack gap={2}>{conversationList()}</VerticalStack>
                 </Layout.Section>
                 <Layout.Section>
