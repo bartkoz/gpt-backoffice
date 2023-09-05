@@ -6,11 +6,13 @@ import {
   Page,
   Layout,
   Loading,
+  Link,
+  Text,
   Frame,
-  Button,
+  VerticalStack,
+  HorizontalStack,
 } from "@shopify/polaris";
 import "react-chat-elements/dist/main.css";
-import { styled } from "@mui/system";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
 
@@ -21,18 +23,6 @@ export const ConversationsList = () => {
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const shop = "zezwolenia.fishster.pl";
-  const PlainButton = styled(Button)({
-    background: "none",
-    border: "none",
-    padding: 0,
-    textTransform: "none", // To prevent automatic uppercase
-    width: "100%",
-    marginTop: "5px",
-    "&:hover": {
-      background: "none",
-      boxShadow: "none",
-    },
-  });
 
   useEffect(() => {
     const getConversationsData = async (paginatedPage) => {
@@ -52,22 +42,28 @@ export const ConversationsList = () => {
     getConversationsData(paginatedPage);
   }, [paginatedPage]);
 
-  const conversationList = () => {
+  function conversationList() {
     return conversations.map((conversation) => {
       return (
-        <PlainButton
-          key={conversation.id}
+        <Link
           onClick={() => {
             setSelectedConversation(conversation.messages);
           }}
+          monochrome={true}
+          removeUnderline={true}
         >
-          {`${conversation.messages[0].message.slice(0, 40)}... (${moment(
-            conversation.messages[0].timestamp
-          ).format("DD/MM/YYYY")})`}
-        </PlainButton>
+          <Card key={conversation.id}>
+            <p>{`${conversation.messages[0].message.slice(0, 40)}`}...</p>
+            <HorizontalStack>
+              <Text variant="bodySm" as="p" style={{ display: "inline-block" }}>
+                {moment(conversation.messages[0]).format("DD MMM")}
+              </Text>
+            </HorizontalStack>
+          </Card>
+        </Link>
       );
     });
-  };
+  }
 
   const conversationDetails = selectedConversation.map((message) => {
     return (
@@ -81,11 +77,11 @@ export const ConversationsList = () => {
   return (
     <Frame>
       <Page fullWidth>
-        {isLoading && <Loading />}
-        <Grid>
-          <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
-            <Card>
-              <Layout>
+        <Layout>
+          {isLoading && <Loading />}
+          <Grid>
+            <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
+              <Card>
                 <Layout.Section>
                   <PaginationComponent
                     paginationPage={paginatedPage}
@@ -94,7 +90,9 @@ export const ConversationsList = () => {
                     isLoading={isLoading}
                   />
                 </Layout.Section>
-                <Layout.Section>{conversationList()}</Layout.Section>
+                <Layout.Section>
+                  <VerticalStack gap={2}>{conversationList()}</VerticalStack>
+                </Layout.Section>
                 <Layout.Section>
                   <PaginationComponent
                     paginationPage={paginatedPage}
@@ -103,15 +101,16 @@ export const ConversationsList = () => {
                     isLoading={isLoading}
                   />
                 </Layout.Section>
-              </Layout>
-            </Card>
-          </Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
-            <Card padding="32">
-              <p>{conversationDetails}</p>
-            </Card>
-          </Grid.Cell>
-        </Grid>
+              </Card>
+            </Grid.Cell>
+            <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
+              <Card>
+                {/*{selectedConversation && <Text>sekcja na gorze</Text>}*/}
+                <p>{conversationDetails}</p>
+              </Card>
+            </Grid.Cell>
+          </Grid>
+        </Layout>
       </Page>
     </Frame>
   );
