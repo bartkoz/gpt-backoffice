@@ -111,20 +111,22 @@ export default function SetupForm() {
   return (
     <Frame>
       {isLoading && <Loading />}
-      <Card>
-        <VerticalStack gap="4">
-          <Form onSubmit={handleSubmit}>
-            <FormLayout>
-              <Checkbox
-                label="Recommend products from the store"
-                disabled={isLoading}
-                checked={chatSetupBackend.recommendations ?? false}
-                onChange={(value) =>
-                  handleChatSetupBackendChange({
-                    target: { value: value, name: "recommendations" },
-                  })
-                }
-              />
+      <VerticalStack gap="4">
+        <Form onSubmit={handleSubmit}>
+          <FormLayout>
+            {/*<Card>*/}
+            {/*  <Checkbox*/}
+            {/*    label="Recommend products from the store"*/}
+            {/*    disabled={isLoading}*/}
+            {/*    checked={chatSetupBackend.recommendations ?? false}*/}
+            {/*    onChange={(value) =>*/}
+            {/*      handleChatSetupBackendChange({*/}
+            {/*        target: { value: value, name: "recommendations" },*/}
+            {/*      })*/}
+            {/*    }*/}
+            {/*  />*/}
+            {/*</Card>*/}
+            <Card>
               <Select
                 label="Language"
                 disabled={isLoading}
@@ -154,6 +156,8 @@ export default function SetupForm() {
                   </span>
                 }
               />
+            </Card>
+            <Card>
               <TextField
                 value={chatSetupFrontend.background_color ?? "#00214d"}
                 disabled={isLoading}
@@ -176,6 +180,8 @@ export default function SetupForm() {
                 label="Chat font color"
                 helpText={<span>Hex value (ex. #000000)</span>}
               />
+            </Card>
+            <Card>
               <TextField
                 value={
                   chatSetupFrontend.bar_message ??
@@ -243,13 +249,10 @@ export default function SetupForm() {
                 }
                 label="Recommended product currency"
               />
-              <Button submit primarySuccess={true}>
-                Save
-              </Button>
-            </FormLayout>
-          </Form>
-        </VerticalStack>
-      </Card>
+            </Card>
+          </FormLayout>
+        </Form>
+      </VerticalStack>
     </Frame>
   );
 }

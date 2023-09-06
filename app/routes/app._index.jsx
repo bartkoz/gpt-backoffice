@@ -26,13 +26,14 @@ export async function action({ request }) {
   const response = await admin.graphql(
     `#graphql
 query {
-  products(first: 10) {
-    edges {
-      node {
-        id
-        title
-        description
-      }
+  shop {
+    primaryDomain {
+      url
+      host
+    }
+    domains {
+      url
+      host
     }
   }
 }`
@@ -73,9 +74,9 @@ export default function Index() {
               {/*  <Text align={"end"}>Tokens used</Text>*/}
               {/*</HorizontalStack>*/}
               <TokenBar />
-              {/*<Button loading={isLoading} primary onClick={queryProducts}>*/}
-              {/*  query prods*/}
-              {/*</Button>*/}
+              <Button loading={isLoading} primary onClick={queryProducts}>
+                query prods
+              </Button>
             </Card>
           </Layout.Section>
           <Layout.Section>
