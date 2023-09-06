@@ -13,7 +13,6 @@ import {
 import { authenticate } from "../shopify.server";
 import Chart from "~/components/chart";
 import TokenBar from "~/components/tokenbar";
-import HostSetup from "~/components/hosts";
 
 export const loader = async ({ request }) => {
   const { session } = await authenticate.admin(request);

@@ -4,7 +4,6 @@ import {
   Select,
   TextField,
   Button,
-  Checkbox,
   Card,
   VerticalStack,
   Loading,
@@ -112,7 +111,7 @@ export default function SetupForm() {
     <Frame>
       {isLoading && <Loading />}
       <VerticalStack gap="4">
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <FormLayout>
             {/*<Card>*/}
             {/*  <Checkbox*/}
@@ -252,6 +251,9 @@ export default function SetupForm() {
             </Card>
           </FormLayout>
         </Form>
+        <Button onClick={handleSubmit} primarySuccess={true}>
+          Save
+        </Button>
       </VerticalStack>
     </Frame>
   );
