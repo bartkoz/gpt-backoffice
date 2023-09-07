@@ -1,3 +1,5 @@
+import { ChatPreview } from "~/components/preview";
+
 export default function ProductRecommendations() {
-  return <p>TODO</p>;
+  return <ChatPreview />;
 }

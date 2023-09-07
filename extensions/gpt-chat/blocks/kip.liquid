@@ -1,5 +1,7 @@
 <div id="root"></div>
-<p>DOMAIN: {{ shop.domain }}</p>
+<script>
+window.localStorage.setItem("shopHost", "{{ shop.domain }}")
+</script>
 <link href="https://storage.googleapis.com/zezwolenia/widget.css" rel="stylesheet"/>
 <script async src="https://storage.googleapis.com/zezwolenia/widget.js"></script>
 
