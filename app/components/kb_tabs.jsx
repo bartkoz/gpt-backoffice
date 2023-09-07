@@ -101,28 +101,12 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
             }}
             disabled={isDeleting}
           >
-            Delete
+            {isDeleting ? "Deleting" : "Delete"}
           </Button>
         </Grid.Cell>
       </Grid>
     </Card>
   ));
-}
-
-export function uploadModal({ showModal, handleChange }) {
-  return (
-    <Modal
-      title="Uplading in progress."
-      open={showModal}
-      onClose={handleChange}
-    >
-      <Modal.Section>
-        <Text>
-          <p>We are uploading your data, please wait...</p>
-        </Text>
-      </Modal.Section>
-    </Modal>
-  );
 }
 
 export function KbTabs({

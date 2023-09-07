@@ -6,6 +6,8 @@ import {
   LegacyStack,
   Thumbnail,
   ButtonGroup,
+  Modal,
+  Text,
   LegacyCard,
 } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
@@ -120,7 +122,17 @@ export default function KBUpload() {
   const handleChange = useCallback(() => setShowModal(!showModal), [showModal]);
   return (
     <Page>
-      <uploadModal showModal={showModal} handleChange={handleChange} />
+      <Modal
+        title="Uplading in progress."
+        open={showModal}
+        onClose={handleChange}
+      >
+        <Modal.Section>
+          <Text>
+            <p>We are uploading your data, please wait...</p>
+          </Text>
+        </Modal.Section>
+      </Modal>
       <Layout>
         <ui-title-bar title="Knowledge base" />
         <Layout.Section>
