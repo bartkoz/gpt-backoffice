@@ -8,8 +8,9 @@ import {
 } from "@shopify/polaris";
 import Chart from "~/components/chart";
 import TokenBar from "~/components/tokenbar";
-import Gql from "~/components/gql";
 import { authenticate } from "~/shopify.server";
+import { useEffect, useState } from "react";
+import { useActionData, useSubmit } from "@remix-run/react";
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
@@ -30,10 +31,19 @@ export async function action({ request }) {
   );
 
   const responseJson = await response.json();
-  return responseJson.data;
+  return responseJson.data.shop;
 }
 
 export default function Index() {
+  const actionData = useActionData();
+  const submit = useSubmit();
+  const queryGQL = () => {
+    submit({}, { replace: true, method: "POST" });
+  };
+  useEffect(() => {
+    queryGQL();
+  }, []);
+
   return (
     <Page>
       <VerticalStack gap="5">
@@ -45,13 +55,12 @@ export default function Index() {
                   Tokens used <b>resets in X days</b>
                 </Text>
               </HorizontalStack>
-              <TokenBar />
+              {actionData && <TokenBar shop={actionData.domains} />}
             </Card>
           </Layout.Section>
           <Layout.Section>
-            <Chart />
+            {actionData && <Chart shop={actionData.domains} />}
           </Layout.Section>
-          <Gql />
         </Layout>
       </VerticalStack>
     </Page>

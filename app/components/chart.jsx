@@ -12,15 +12,16 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Layout, Card, Grid, Text, VerticalStack } from "@shopify/polaris";
-const Chart = () => {
+import { convertHosts } from "~/helpers";
+const Chart = ({ shop }) => {
   const [chartData, setChartData] = useState(null);
-  const shop = "zezwolenia.fishster.pl";
+  const domains = convertHosts(shop);
 
   useEffect(() => {
     const getChartData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/chat-stats/?store_name=${shop}`
+          `http://localhost:8000/chat-stats/?store_name=${domains}`
         );
         setChartData(response.data);
       } catch (error) {

@@ -34,7 +34,7 @@ export default function App() {
         <Link to="/app/conversations">Conversation history</Link>
         <Link to="/app/kb">Knowledge base</Link>
         <Link to="/app/setup">Setup</Link>
-        <Link to="/app/recommendations">Product recommendations</Link>
+        <Link to="/app/preview">Chat test</Link>
       </ui-nav-menu>
       <PolarisAppProvider
         i18n={polarisTranslations}

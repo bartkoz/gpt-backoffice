@@ -17,13 +17,12 @@ import "react-chat-elements/dist/main.css";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
 
-export const ConversationsList = () => {
+export const ConversationsList = ({ shop }) => {
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState([]);
   const [paginatedPage, setPaginatedPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const shop = "zezwolenia.fishster.pl";
 
   useEffect(() => {
     const getConversationsData = async (paginatedPage) => {
