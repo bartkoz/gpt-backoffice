@@ -9,55 +9,58 @@ import {
   LegacyStack,
   Thumbnail,
   Text,
-  TextField,
-  FormLayout,
   ButtonGroup,
 } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
 import { NoteMinor } from "@shopify/polaris-icons";
 import axios from "axios";
-import { QAForm } from "~/components/kb_tabs";
+import {
+  QAForm,
+  KbFileUpload,
+  KBFilesList,
+  uploadModal,
+} from "~/components/kb_tabs";
+import { authenticate } from "~/shopify.server";
+import { useActionData, useSubmit } from "@remix-run/react";
+import { convertHosts } from "~/helpers";
+
+export async function action({ request }) {
+  const { admin } = await authenticate.admin(request);
+  const response = await admin.graphql(
+    `#graphql
+    query {
+  shop {
+    primaryDomain {
+      url
+      host
+    }
+    domains {
+      url
+      host
+    }
+  }
+}`
+  );
+
+  const responseJson = await response.json();
+  return responseJson.data.shop;
+}
 
 export default function KBUpload() {
   const [files, setFiles] = useState([]);
-  const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [inputText, setInputText] = useState("");
   const [inputTextTopic, setInputTextTopic] = useState("");
-  const shop = "test";
-  const [selected, setSelected] = useState(0);
-
-  const handleTabChange = useCallback(
-    (selectedTabIndex) => setSelected(selectedTabIndex),
-    []
-  );
-
-  const tabs = [
-    {
-      id: "pdf",
-      content: "PDF upload",
-      panelID: "pdf",
-    },
-    {
-      id: "qa",
-      content: "Q&A",
-      panelID: "qa",
-    },
-  ];
-
+  const actionData = useActionData();
+  const submit = useSubmit();
+  const queryGQL = () => {
+    submit({}, { replace: true, method: "POST" });
+  };
   useEffect(() => {
-    const getKBFiles = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/kb/${shop}`);
-        setUploadedFilesList(response.data);
-      } catch (error) {
-        console.error("Failed to fetch kb data:", error);
-      }
-    };
-    getKBFiles();
-  }, [isDeleting, isUploading]);
+    queryGQL();
+  }, []);
 
   const handleDropZoneDrop = useCallback(
     (_dropFiles, acceptedFiles, _rejectedFiles) => {
@@ -78,52 +81,30 @@ export default function KBUpload() {
   const handleSubmit = async () => {
     setIsUploading(true);
     setShowModal(true);
+    const domains = convertHosts(actionData.domains);
     if (files.length > 0) {
       for (const file of files) {
         const formData = new FormData();
         formData.append(`file`, file);
-        try {
-          const response = await axios.post(
-            `http://localhost:8000/update-embeddings-pdf/${shop}`,
-            formData
-          );
-
-          console.log("Files uploaded successfully:", response.data);
-        } catch (error) {
-          console.error(
-            "Error while uploading files:",
-            error.response?.data || error.message
-          );
-        }
+        await axios.post(
+          `http://localhost:8000/update-embeddings-pdf/${domains}`,
+          formData
+        );
       }
     }
     if (inputText.length > 0) {
-      await axios.post(`http://localhost:8000/update-embeddings-text/${shop}`, {
-        text: inputText,
-      });
+      await axios.post(
+        `http://localhost:8000/update-embeddings-text/${domains}`,
+        {
+          text: inputText,
+        }
+      );
     }
     setFiles([]);
     setInputText("");
     setInputTextTopic("");
     setShowModal(false);
     setIsUploading(false);
-  };
-
-  const handleDelete = async (title) => {
-    setIsDeleting(true);
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/kb/delete/${shop}?kb_file_name=${title}`
-      );
-      if (response.status === 200) {
-        console.log("Successfully deleted:", response.data);
-      } else {
-        console.error("Error deleting the file:", response.data);
-      }
-    } catch (error) {
-      console.error("Failed to delete the file:", error);
-    }
-    setIsDeleting(false);
   };
 
   const uploadedFiles = files.length > 0 && (
@@ -145,67 +126,23 @@ export default function KBUpload() {
     </Layout.Section>
   );
 
-  const KBFilesList = uploadedFilesList.map((file, index) => (
-    <Card key={index}>
-      <Grid>
-        <Grid.Cell columnSpan={{ xs: 11, sm: 11, md: 11, lg: 11, xl: 11 }}>
-          <Card>
-            <Text as="h2" variant="bodyMd">
-              {file}
-            </Text>
-          </Card>
-        </Grid.Cell>
-        <Grid.Cell
-          columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            destructive={true}
-            onClick={() => {
-              handleDelete(file);
-            }}
-            disabled={isDeleting}
-          >
-            Delete
-          </Button>
-        </Grid.Cell>
-      </Grid>
-    </Card>
-  ));
   const handleChange = useCallback(() => setShowModal(!showModal), [showModal]);
-  const uploadModal = (
-    <Modal
-      title="Uplading in progress."
-      open={showModal}
-      onClose={handleChange}
-    >
-      <Modal.Section>
-        <Text>
-          <p>We are uploading your files, please wait...</p>
-        </Text>
-      </Modal.Section>
-    </Modal>
-  );
   return (
     <Page>
-      {uploadModal}
+      <uploadModal showModal={showModal} handleChange={handleChange} />
       <Layout>
         <ui-title-bar title="Knowledge base" />
-        <Layout.Section></Layout.Section>
-        <Layout.Section></Layout.Section>
         <Layout.Section>
           <ButtonGroup>
-            <Button
-              primarySuccess={true}
-              disabled={isUploading}
-              onClick={handleSubmit}
-            >
-              Save
-            </Button>
+            {actionData && (
+              <Button
+                primarySuccess={true}
+                disabled={isUploading}
+                onClick={handleSubmit}
+              >
+                Save
+              </Button>
+            )}
             <Button
               destructive={true}
               onClick={() => {
@@ -217,28 +154,33 @@ export default function KBUpload() {
               Clear
             </Button>
           </ButtonGroup>
+          {actionData && (
+            <KbFileUpload
+              handleDropZoneDrop={handleDropZoneDrop}
+              isUploading={isUploading}
+              uploadedFiles={uploadedFiles}
+              fileUpload={fileUpload}
+            />
+          )}
         </Layout.Section>
+        {actionData && (
+          <QAForm
+            inputText={inputText}
+            inputTextTopic={inputTextTopic}
+            setInputText={setInputText}
+            setInputTextTopic={setInputTextTopic}
+          />
+        )}
         <Layout.Section>
-          <DropZone
-            onDrop={handleDropZoneDrop}
-            disabled={isUploading || inputText || inputTextTopic}
-          >
-            {uploadedFiles}
-            {fileUpload}
-          </DropZone>
+          {actionData && (
+            <KBFilesList
+              isUploading={isUploading}
+              isDeleting={isDeleting}
+              setIsDeleting={setIsDeleting}
+              shop={actionData.domains}
+            />
+          )}
         </Layout.Section>
-        <Layout.Section>
-          <Text as="p" variant="headingxl">
-            OR
-          </Text>
-        </Layout.Section>
-        <QAForm
-          inputText={inputText}
-          inputTextTopic={inputTextTopic}
-          setInputText={setInputText}
-          setInputTextTopic={setInputTextTopic}
-        />
-        <Layout.Section>{KBFilesList}</Layout.Section>
       </Layout>
     </Page>
   );
