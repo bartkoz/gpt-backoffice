@@ -29,24 +29,18 @@ export async function action({ request }) {
 export default function Conversations() {
   const actionData = useActionData();
   const submit = useSubmit();
-  const [shop, setShop] = useState(undefined);
   const queryGQL = () => {
     submit({}, { replace: true, method: "POST" });
   };
   useEffect(() => {
     queryGQL();
-    if (actionData.domains) {
-      console.log(actionData.domains);
-      const domains = actionData.domains.map((obj) => obj.host).join(", ");
-      setShop(domains);
-    }
   }, []);
 
   return (
     <Page>
       <ui-title-bar title="Conversation history" />
       <Layout>
-        <ConversationsList shop={shop} />
+        {actionData && <ConversationsList shop={actionData.domains} />}
       </Layout>
     </Page>
   );

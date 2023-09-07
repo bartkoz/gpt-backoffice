@@ -16,6 +16,7 @@ import {
 import "react-chat-elements/dist/main.css";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
+import { convertHosts } from "~/helpers";
 
 export const ConversationsList = ({ shop }) => {
   const [conversations, setConversations] = useState([]);
@@ -23,13 +24,14 @@ export const ConversationsList = ({ shop }) => {
   const [paginatedPage, setPaginatedPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const domains = convertHosts(shop);
 
   useEffect(() => {
     const getConversationsData = async (paginatedPage) => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8000/chat-history/?store_name=${shop}&page=${paginatedPage}&size=10`
+          `http://localhost:8000/chat-history/?store_name=${domains}&page=${paginatedPage}&size=10`
         );
         setConversations(response.data.items);
         setPageCount(response.data.pages);
