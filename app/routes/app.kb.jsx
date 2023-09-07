@@ -2,24 +2,16 @@ import {
   Button,
   Layout,
   Page,
-  Card,
-  Grid,
-  Modal,
   DropZone,
   LegacyStack,
   Thumbnail,
-  Text,
   ButtonGroup,
+  LegacyCard,
 } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
 import { NoteMinor } from "@shopify/polaris-icons";
 import axios from "axios";
-import {
-  QAForm,
-  KbFileUpload,
-  KBFilesList,
-  uploadModal,
-} from "~/components/kb_tabs";
+import { KBFilesList, uploadModal, KbTabs } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
 import { useActionData, useSubmit } from "@remix-run/react";
 import { convertHosts } from "~/helpers";
@@ -154,8 +146,14 @@ export default function KBUpload() {
               Clear
             </Button>
           </ButtonGroup>
+        </Layout.Section>
+        <Layout.Section>
           {actionData && (
-            <KbFileUpload
+            <KbTabs
+              inputText={inputText}
+              inputTextTopic={inputTextTopic}
+              setInputText={setInputText}
+              setInputTextTopic={setInputTextTopic}
               handleDropZoneDrop={handleDropZoneDrop}
               isUploading={isUploading}
               uploadedFiles={uploadedFiles}
@@ -163,23 +161,17 @@ export default function KBUpload() {
             />
           )}
         </Layout.Section>
-        {actionData && (
-          <QAForm
-            inputText={inputText}
-            inputTextTopic={inputTextTopic}
-            setInputText={setInputText}
-            setInputTextTopic={setInputTextTopic}
-          />
-        )}
         <Layout.Section>
-          {actionData && (
-            <KBFilesList
-              isUploading={isUploading}
-              isDeleting={isDeleting}
-              setIsDeleting={setIsDeleting}
-              shop={actionData.domains}
-            />
-          )}
+          <LegacyCard title="Knowledge Base data:" sectioned>
+            {actionData && (
+              <KBFilesList
+                isUploading={isUploading}
+                isDeleting={isDeleting}
+                setIsDeleting={setIsDeleting}
+                shop={actionData.domains}
+              />
+            )}
+          </LegacyCard>
         </Layout.Section>
       </Layout>
     </Page>

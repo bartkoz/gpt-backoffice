@@ -10,7 +10,7 @@ import {
   Button,
   Modal,
 } from "@shopify/polaris";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 export function QAForm({
@@ -25,7 +25,7 @@ export function QAForm({
         <FormLayout.Group condensed>
           <TextField
             multiline={4}
-            placeholder={"Type your text here..."}
+            placeholder={"Answer"}
             value={inputText}
             onChange={(newValue) => setInputText(newValue)}
             connectedLeft={
@@ -33,7 +33,7 @@ export function QAForm({
                 labelHidden
                 autoComplete="off"
                 multiline={4}
-                placeholder={"Topic"}
+                placeholder={"Question"}
                 value={inputTextTopic}
                 onChange={(newValue) => setInputTextTopic(newValue)}
               />
@@ -83,11 +83,9 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
     <Card key={index}>
       <Grid>
         <Grid.Cell columnSpan={{ xs: 11, sm: 11, md: 11, lg: 11, xl: 11 }}>
-          <Card>
-            <Text as="h2" variant="bodyMd">
-              {file}
-            </Text>
-          </Card>
+          <Text as="h2" variant="bodyMd">
+            {file}
+          </Text>
         </Grid.Cell>
         <Grid.Cell
           columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}
@@ -121,9 +119,60 @@ export function uploadModal({ showModal, handleChange }) {
     >
       <Modal.Section>
         <Text>
-          <p>We are uploading your files, please wait...</p>
+          <p>We are uploading your data, please wait...</p>
         </Text>
       </Modal.Section>
     </Modal>
+  );
+}
+
+export function KbTabs({
+  handleDropZoneDrop,
+  isUploading,
+  uploadedFiles,
+  fileUpload,
+  inputText,
+  inputTextTopic,
+  setInputText,
+  setInputTextTopic,
+}) {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex) => setSelected(selectedTabIndex),
+    []
+  );
+
+  const tabs = [
+    {
+      id: "file",
+      title: "file-upload",
+      content: "File upload",
+    },
+    {
+      id: "inline",
+      title: "QA",
+      content: "QA",
+    },
+  ];
+
+  return (
+    <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      {selected === 0 ? (
+        <KbFileUpload
+          handleDropZoneDrop={handleDropZoneDrop}
+          isUploading={isUploading}
+          uploadedFiles={uploadedFiles}
+          fileUpload={fileUpload}
+        />
+      ) : (
+        <QAForm
+          inputText={inputText}
+          inputTextTopic={inputTextTopic}
+          setInputText={setInputText}
+          setInputTextTopic={setInputTextTopic}
+        />
+      )}
+    </Tabs>
   );
 }
