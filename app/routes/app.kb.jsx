@@ -14,7 +14,6 @@ import axios from "axios";
 import { KBFilesList, uploadModal, KbTabs } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
 import { useActionData, useSubmit } from "@remix-run/react";
-import { convertHosts } from "~/helpers";
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
@@ -73,7 +72,7 @@ export default function KBUpload() {
   const handleSubmit = async () => {
     setIsUploading(true);
     setShowModal(true);
-    const domains = convertHosts(actionData.domains);
+    const domains = actionData.primaryDomain.host;
     if (files.length > 0) {
       for (const file of files) {
         const formData = new FormData();
@@ -168,7 +167,7 @@ export default function KBUpload() {
                 isUploading={isUploading}
                 isDeleting={isDeleting}
                 setIsDeleting={setIsDeleting}
-                shop={actionData.domains}
+                shop={actionData.primaryDomain.host}
               />
             )}
           </LegacyCard>

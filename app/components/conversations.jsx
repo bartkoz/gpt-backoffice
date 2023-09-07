@@ -16,7 +16,6 @@ import {
 import "react-chat-elements/dist/main.css";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
-import { convertHosts } from "~/helpers";
 
 export const ConversationsList = ({ shop }) => {
   const [conversations, setConversations] = useState([]);
@@ -24,14 +23,13 @@ export const ConversationsList = ({ shop }) => {
   const [paginatedPage, setPaginatedPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const domains = convertHosts(shop);
 
   useEffect(() => {
     const getConversationsData = async (paginatedPage) => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8000/chat-history/?store_name=${domains}&page=${paginatedPage}&size=10`
+          `http://localhost:8000/chat-history/?store_name=${shop}&page=${paginatedPage}&size=10`
         );
         setConversations(response.data.items);
         setPageCount(response.data.pages);
@@ -83,44 +81,57 @@ export const ConversationsList = ({ shop }) => {
       </Card>
     );
   });
-
-  return (
-    <Frame>
-      <Page fullWidth={true}>
-        <Layout>
-          {isLoading && <Loading />}
-          <Grid>
-            <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
-              <Card>
-                <Layout.Section fullWidth={true}>
-                  <PaginationComponent
-                    paginationPage={paginatedPage}
-                    setPaginationPage={setPaginatedPage}
-                    pages={pageCount}
-                    isLoading={isLoading}
-                  />
-                </Layout.Section>
-                <Layout.Section fullWidth={true}>
-                  <VerticalStack gap={2}>{conversationList()}</VerticalStack>
-                </Layout.Section>
-                <Layout.Section>
-                  <PaginationComponent
-                    paginationPage={paginatedPage}
-                    setPaginationPage={setPaginatedPage}
-                    pages={pageCount}
-                    isLoading={isLoading}
-                  />
-                </Layout.Section>
-              </Card>
-            </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
-              <Card>
-                <p>{conversationDetails}</p>
-              </Card>
-            </Grid.Cell>
-          </Grid>
-        </Layout>
-      </Page>
-    </Frame>
-  );
+  if (conversations.length > 0) {
+    return (
+      <Frame>
+        <Page fullWidth={true}>
+          <Layout>
+            {isLoading && <Loading />}
+            <Grid>
+              <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
+                <Card>
+                  <Layout.Section fullWidth={true}>
+                    <PaginationComponent
+                      paginationPage={paginatedPage}
+                      setPaginationPage={setPaginatedPage}
+                      pages={pageCount}
+                      isLoading={isLoading}
+                    />
+                  </Layout.Section>
+                  <Layout.Section fullWidth={true}>
+                    <VerticalStack gap={2}>{conversationList()}</VerticalStack>
+                  </Layout.Section>
+                  <Layout.Section>
+                    <PaginationComponent
+                      paginationPage={paginatedPage}
+                      setPaginationPage={setPaginatedPage}
+                      pages={pageCount}
+                      isLoading={isLoading}
+                    />
+                  </Layout.Section>
+                </Card>
+              </Grid.Cell>
+              <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
+                <Card>
+                  <p>{conversationDetails}</p>
+                </Card>
+              </Grid.Cell>
+            </Grid>
+          </Layout>
+        </Page>
+      </Frame>
+    );
+  } else {
+    return (
+      <Frame>
+        <Page fullWidth={true}>
+          <Layout>
+            <Layout.Section>
+              <Text>No conversations found yet.</Text>
+            </Layout.Section>
+          </Layout>
+        </Page>
+      </Frame>
+    );
+  }
 };

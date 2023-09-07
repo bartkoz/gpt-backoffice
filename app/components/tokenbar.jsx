@@ -1,5 +1,4 @@
 import { ProgressBar } from "@shopify/polaris";
-import { convertHosts } from "~/helpers";
 
 export default function TokenBar({ shop }) {
   function getColor(tokensUsedPercent) {
@@ -10,6 +9,5 @@ export default function TokenBar({ shop }) {
     } else return "success";
   }
   const progress = 90;
-  const hosts = convertHosts(shop);
   return <ProgressBar progress={progress} color={getColor(progress)} />;
 }

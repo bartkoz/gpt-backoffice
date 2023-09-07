@@ -1,7 +1,7 @@
-import { Layout, Page } from "@shopify/polaris";
+import { Layout, Page, Button } from "@shopify/polaris";
 import { ConversationsList } from "~/components/conversations";
 import { useActionData, useSubmit } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { authenticate } from "~/shopify.server";
 
 export async function action({ request }) {
@@ -40,7 +40,9 @@ export default function Conversations() {
     <Page>
       <ui-title-bar title="Conversation history" />
       <Layout>
-        {actionData && <ConversationsList shop={actionData.domains} />}
+        {actionData && (
+          <ConversationsList shop={actionData.primaryDomain.host} />
+        )}
       </Layout>
     </Page>
   );

@@ -55,11 +55,11 @@ export default function Index() {
                   Tokens used <b>resets in X days</b>
                 </Text>
               </HorizontalStack>
-              {actionData && <TokenBar shop={actionData.domains} />}
+              {actionData && <TokenBar shop={actionData.primaryDomain.host} />}
             </Card>
           </Layout.Section>
           <Layout.Section>
-            {actionData && <Chart shop={actionData.domains} />}
+            {actionData && <Chart shop={actionData.primaryDomain.host} />}
           </Layout.Section>
         </Layout>
       </VerticalStack>

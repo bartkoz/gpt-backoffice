@@ -12,10 +12,8 @@ import {
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import ChatSetupContext from "~/components/context";
-import { convertHosts } from "~/helpers";
 
 export default function SetupForm({ shop }) {
-  const domains = convertHosts(shop);
   const [isLoading, setIsLoading] = useState(true);
   const {
     chatSetupBackend,
@@ -25,7 +23,7 @@ export default function SetupForm({ shop }) {
   } = useContext(ChatSetupContext);
   const handleSubmit = async () => {
     await axios.post(
-      `http://localhost:8000/update-chat-conf/?store_name=${domains}`,
+      `http://localhost:8000/update-chat-conf/?store_name=${shop}`,
       { backend: chatSetupBackend, frontend: chatSetupFrontend }
     );
   };
@@ -34,7 +32,7 @@ export default function SetupForm({ shop }) {
     const getSetup = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/get-chat-conf/?store_name=${domains}`
+          `http://localhost:8000/get-chat-conf/?store_name=${shop}`
         );
         if (response.data.backend) {
           setChatSetupBackend(response.data.backend);

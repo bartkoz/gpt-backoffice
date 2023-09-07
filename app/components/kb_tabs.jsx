@@ -62,18 +62,17 @@ export function KbFileUpload({
 }
 
 export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
-  const domains = "test";
   const handleDelete = async (title) => {
     setIsDeleting(true);
     await axios.post(
-      `http://localhost:8000/kb/delete/${domains}?kb_file_name=${title}`
+      `http://localhost:8000/kb/delete/${shop}?kb_file_name=${title}`
     );
     setIsDeleting(false);
   };
 
   useEffect(() => {
     const getKBFiles = async () => {
-      const response = await axios.get(`http://localhost:8000/kb/${domains}`);
+      const response = await axios.get(`http://localhost:8000/kb/${shop}`);
       setUploadedFilesList(response.data);
     };
     getKBFiles();
