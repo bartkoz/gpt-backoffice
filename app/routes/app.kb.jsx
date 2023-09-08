@@ -89,7 +89,8 @@ export default function KBUpload() {
       await axios.post(
         `http://localhost:8000/update-embeddings-text/${domains}`,
         {
-          text: inputText,
+          question: inputTextTopic,
+          answer: inputText,
         }
       );
     }
