@@ -7,10 +7,10 @@ import {
   Text,
 } from "@shopify/polaris";
 import Chart from "~/components/chart";
-import TokenBar from "~/components/tokenbar";
 import { authenticate } from "~/shopify.server";
 import { useEffect, useState } from "react";
 import { useActionData, useSubmit } from "@remix-run/react";
+import { DaysToEndOfMonth, TokenBar } from "~/components/tokenbar";
 
 export async function action({ request }) {
   const { admin } = await authenticate.admin(request);
@@ -43,7 +43,6 @@ export default function Index() {
   useEffect(() => {
     queryGQL();
   }, []);
-
   return (
     <Page>
       <VerticalStack gap="5">
@@ -51,9 +50,7 @@ export default function Index() {
           <Layout.Section>
             <Card>
               <HorizontalStack wrap={false}>
-                <Text alignment={"center"}>
-                  Tokens used <b>resets in X days</b>
-                </Text>
+                <DaysToEndOfMonth />
               </HorizontalStack>
               {actionData && <TokenBar shop={actionData.primaryDomain.host} />}
             </Card>
