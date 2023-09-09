@@ -81,12 +81,13 @@ export const ConversationsList = ({ shop }) => {
       </Card>
     );
   });
-  if (conversations.length > 0) {
-    return (
-      <Frame>
-        <Page fullWidth={true}>
-          <Layout>
-            {isLoading && <Loading />}
+  return (
+    <Frame>
+      <Page fullWidth={true}>
+        <Layout>
+          {isLoading && <Loading />}
+
+          {conversations.length > 0 ? (
             <Grid>
               <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 4, lg: 4, xl: 4 }}>
                 <Card>
@@ -98,9 +99,11 @@ export const ConversationsList = ({ shop }) => {
                       isLoading={isLoading}
                     />
                   </Layout.Section>
+
                   <Layout.Section fullWidth={true}>
                     <VerticalStack gap={2}>{conversationList()}</VerticalStack>
                   </Layout.Section>
+
                   <Layout.Section>
                     <PaginationComponent
                       paginationPage={paginatedPage}
@@ -111,27 +114,22 @@ export const ConversationsList = ({ shop }) => {
                   </Layout.Section>
                 </Card>
               </Grid.Cell>
+
               <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 8, lg: 8, xl: 8 }}>
                 <Card>
                   <p>{conversationDetails}</p>
                 </Card>
               </Grid.Cell>
             </Grid>
-          </Layout>
-        </Page>
-      </Frame>
-    );
-  } else {
-    return (
-      <Frame>
-        <Page fullWidth={true}>
-          <Layout>
-            <Layout.Section>
-              <Text>No conversations found yet.</Text>
-            </Layout.Section>
-          </Layout>
-        </Page>
-      </Frame>
-    );
-  }
+          ) : (
+            !isLoading && (
+              <Layout.Section>
+                <Text>No conversations found yet.</Text>
+              </Layout.Section>
+            )
+          )}
+        </Layout>
+      </Page>
+    </Frame>
+  );
 };

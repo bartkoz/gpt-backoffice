@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://charter-contributing-cardiovascular-exclusion.trycloudflare.com"
+application_url = "https://tonight-interact-portfolio-closest.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://charter-contributing-cardiovascular-exclusion.trycloudflare.com/auth/callback",
-  "https://charter-contributing-cardiovascular-exclusion.trycloudflare.com/auth/shopify/callback",
-  "https://charter-contributing-cardiovascular-exclusion.trycloudflare.com/api/auth/callback"
+  "https://tonight-interact-portfolio-closest.trycloudflare.com/auth/callback",
+  "https://tonight-interact-portfolio-closest.trycloudflare.com/auth/shopify/callback",
+  "https://tonight-interact-portfolio-closest.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

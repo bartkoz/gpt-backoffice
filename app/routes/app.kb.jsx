@@ -9,6 +9,7 @@ import {
   Modal,
   Text,
   LegacyCard,
+  Loading,
 } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
 import { NoteMinor } from "@shopify/polaris-icons";
