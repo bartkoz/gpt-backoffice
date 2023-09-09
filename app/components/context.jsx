@@ -17,6 +17,9 @@ export const ChatSetupProvider = ({ children }) => {
     recommendation_message: "Based on search I recommend",
     recommendation_button_text: "Check",
     recommendation_currency: "$",
+    feedback_thank_you: "Thank you for you feedback",
+    feedback_positive: "Upvote",
+    feedback_negative: "Downvote",
   });
 
   return (

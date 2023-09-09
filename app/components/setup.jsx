@@ -21,11 +21,17 @@ export default function SetupForm({ shop }) {
     chatSetupFrontend,
     setChatSetupFrontend,
   } = useContext(ChatSetupContext);
+  const [isSaving, setIsSaving] = useState(false);
   const handleSubmit = async () => {
-    await axios.post(
-      `http://localhost:8000/update-chat-conf/?store_name=${shop}`,
-      { backend: chatSetupBackend, frontend: chatSetupFrontend }
-    );
+    setIsSaving(true);
+    await axios
+      .post(`http://localhost:8000/update-chat-conf/?store_name=${shop}`, {
+        backend: chatSetupBackend,
+        frontend: chatSetupFrontend,
+      })
+      .then(() => {
+        setIsSaving(false);
+      });
   };
 
   useEffect(() => {
@@ -211,46 +217,86 @@ export default function SetupForm({ shop }) {
                 multiline={2}
                 disabled={isLoading}
                 value={
-                  chatSetupFrontend.recommendation_message ??
-                  "Based on search I recommend"
+                  chatSetupFrontend.feedback_thank_you ??
+                  "Thank you for your feedback."
                 }
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
-                    target: { value: value, name: "recommendation_message" },
+                    target: { value: value, name: "feedback_thank_you" },
                   })
                 }
-                label="Chat recommendation message"
+                label="Feedback thank you"
               />
               <TextField
-                value={chatSetupFrontend.recommendation_button_text ?? "Check"}
+                multiline={2}
                 disabled={isLoading}
+                value={chatSetupFrontend.feedback_positive ?? "Upvote"}
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
-                    target: {
-                      value: value,
-                      name: "recommendation_button_text",
-                    },
+                    target: { value: value, name: "feedback_positive" },
                   })
                 }
-                label="Chat recommendation button message"
+                label="Feedback (positive)"
               />
               <TextField
-                value={chatSetupFrontend.recommendation_currency ?? "$"}
+                multiline={2}
                 disabled={isLoading}
+                value={chatSetupFrontend.feedback_negative ?? "Downvote"}
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
-                    target: {
-                      value: value,
-                      name: "recommendation_currency",
-                    },
+                    target: { value: value, name: "feedback_negative" },
                   })
                 }
-                label="Recommended product currency"
+                label="Feedback (negative)"
               />
+              {/*  <TextField*/}
+              {/*    multiline={2}*/}
+              {/*    disabled={isLoading}*/}
+              {/*    value={*/}
+              {/*      chatSetupFrontend.recommendation_message ??*/}
+              {/*      "Based on search I recommend"*/}
+              {/*    }*/}
+              {/*    onChange={(value) =>*/}
+              {/*      handleChatSetupFrontendChange({*/}
+              {/*        target: { value: value, name: "recommendation_message" },*/}
+              {/*      })*/}
+              {/*    }*/}
+              {/*    label="Chat recommendation message"*/}
+              {/*  />*/}
+              {/*  <TextField*/}
+              {/*    value={chatSetupFrontend.recommendation_button_text ?? "Check"}*/}
+              {/*    disabled={isLoading}*/}
+              {/*    onChange={(value) =>*/}
+              {/*      handleChatSetupFrontendChange({*/}
+              {/*        target: {*/}
+              {/*          value: value,*/}
+              {/*          name: "recommendation_button_text",*/}
+              {/*        },*/}
+              {/*      })*/}
+              {/*    }*/}
+              {/*    label="Chat recommendation button message"*/}
+              {/*  />*/}
+              {/*  <TextField*/}
+              {/*    value={chatSetupFrontend.recommendation_currency ?? "$"}*/}
+              {/*    disabled={isLoading}*/}
+              {/*    onChange={(value) =>*/}
+              {/*      handleChatSetupFrontendChange({*/}
+              {/*        target: {*/}
+              {/*          value: value,*/}
+              {/*          name: "recommendation_currency",*/}
+              {/*        },*/}
+              {/*      })*/}
+              {/*    }*/}
+              {/*    label="Recommended product currency"*/}
+              {/*  />*/}
             </Card>
           </FormLayout>
         </Form>
-        <Button onClick={handleSubmit} primarySuccess={true}>
+        <Button
+          onClick={handleSubmit}
+          primarySuccess={true}
+          disabled={isSaving || isLoading}
+        >
           Save
         </Button>
       </VerticalStack>

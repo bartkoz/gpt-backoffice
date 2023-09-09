@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import { Fragment, useContext } from "react";
 import ChatSetupContext from "~/components/context";
 import Message from "~/components/message";
-import Recommendation from "~/components/recommendation";
 
 export default function ChatPreview() {
   const { chatSetupFrontend } = useContext(ChatSetupContext);
@@ -46,7 +45,7 @@ export default function ChatPreview() {
           }}
         >
           <Message />
-          <Recommendation />
+          {/*<Recommendation />*/}
         </Box>
       </Container>
     </Fragment>

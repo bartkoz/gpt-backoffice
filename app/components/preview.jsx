@@ -1,5 +1,5 @@
 export function ChatPreview(shop) {
-  window.localStorage.setItem("shopHost", shop);
+  window.localStorage.setItem("shopHost", shop.shop);
   return (
     <iframe
       src="https://frontend-dot-chatbot-zezwolenia.ey.r.appspot.com/"
