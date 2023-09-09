@@ -88,7 +88,7 @@ export const ConversationsList = ({ shop }) => {
           <Layout>
             {isLoading && <Loading />}
             <Grid>
-              <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
+              <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 4, lg: 4, xl: 4 }}>
                 <Card>
                   <Layout.Section fullWidth={true}>
                     <PaginationComponent
@@ -111,7 +111,7 @@ export const ConversationsList = ({ shop }) => {
                   </Layout.Section>
                 </Card>
               </Grid.Cell>
-              <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
+              <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 8, lg: 8, xl: 8 }}>
                 <Card>
                   <p>{conversationDetails}</p>
                 </Card>

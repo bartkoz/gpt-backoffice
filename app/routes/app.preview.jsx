@@ -35,9 +35,5 @@ export default function ProductRecommendations() {
   useEffect(() => {
     queryGQL();
   }, []);
-  return (
-    <Page>
-      {actionData && <ChatPreview shop={actionData.primaryDomain.host} />}
-    </Page>
-  );
+  return <Page>{actionData && <ChatPreview data={actionData} />}</Page>;
 }
