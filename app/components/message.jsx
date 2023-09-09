@@ -31,7 +31,7 @@ export default function Message() {
           WebkitBoxOrient: "vertical",
         }}
       >
-        {chatSetupFrontend.bar_message ??
+        {chatSetupFrontend.welcome_message ??
           "Hello I'm virtual assistant how may I help you?"}
       </Typography>
     </Box>

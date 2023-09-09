@@ -29,7 +29,7 @@ export default function ChatPreview() {
               }}
             >
               <Typography>
-                {chatSetupFrontend.welcome_message ??
+                {chatSetupFrontend.bar_message ??
                   "👋  Glad to help you whenever I can!"}
               </Typography>
             </Toolbar>

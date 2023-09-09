@@ -189,7 +189,7 @@ export default function SetupForm({ shop }) {
               <TextField
                 value={
                   chatSetupFrontend.bar_message ??
-                  "Hello I'm virtual assistant how may I help you?"
+                  "👋  Glad to help you whenever I can!"
                 }
                 disabled={isLoading}
                 onChange={(value) =>
@@ -204,7 +204,7 @@ export default function SetupForm({ shop }) {
                 disabled={isLoading}
                 value={
                   chatSetupFrontend.welcome_message ??
-                  "👋  Glad to help you whenever I can!"
+                  "Hello I'm virtual assistant how may I help you?"
                 }
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
