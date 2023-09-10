@@ -19,7 +19,7 @@ const Chart = ({ shop }) => {
     const getChartData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/chat-stats/?store_name=${shop}`
+          `https://backend-rvm4xlf6ba-ey.a.run.app/chat-stats/?store_name=${shop}`
         );
         setChartData(response.data);
       } catch (error) {

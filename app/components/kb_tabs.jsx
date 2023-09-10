@@ -65,14 +65,14 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
   const handleDelete = async (title) => {
     setIsDeleting(true);
     await axios.post(
-      `http://localhost:8000/kb/delete/${shop}?kb_file_name=${title}`
+      `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?kb_file_name=${title}`
     );
     setIsDeleting(false);
   };
 
   useEffect(() => {
     const getKBFiles = async () => {
-      const response = await axios.get(`http://localhost:8000/kb/${shop}`);
+      const response = await axios.get(`https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`);
       setUploadedFilesList(response.data);
     };
     getKBFiles();

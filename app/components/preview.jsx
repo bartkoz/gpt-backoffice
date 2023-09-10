@@ -7,7 +7,7 @@ export function ChatPreview({ data }) {
   useEffect(() => {
     const setDomains = async () => {
       try {
-        await axios.post(`http://localhost:8000/set-test-domains/`, {
+        await axios.post(`https://backend-rvm4xlf6ba-ey.a.run.app/set-test-domains/`, {
           domains: data.domains,
           primaryDomain: data.primaryDomain,
         });

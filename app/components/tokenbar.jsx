@@ -7,7 +7,7 @@ export function TokenBar({ shop }) {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(
-        `http://localhost:8000/client-tokens/${shop}`
+        `https://backend-rvm4xlf6ba-ey.a.run.app/client-tokens/${shop}`
       );
       setTokensUsed((response.data / 100000) * 100);
     };

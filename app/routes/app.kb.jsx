@@ -81,14 +81,14 @@ export default function KBUpload() {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `http://localhost:8000/update-embeddings-pdf/${domains}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/${domains}`,
           formData
         );
       }
     }
     if (inputText.length > 0) {
       await axios.post(
-        `http://localhost:8000/update-embeddings-text/${domains}`,
+        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/${domains}`,
         {
           question: inputTextTopic,
           answer: inputText,

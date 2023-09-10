@@ -29,7 +29,7 @@ export const ConversationsList = ({ shop }) => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8000/chat-history/?store_name=${shop}&page=${paginatedPage}&size=10`
+          `https://backend-rvm4xlf6ba-ey.a.run.app/chat-history/?store_name=${shop}&page=${paginatedPage}&size=10`
         );
         setConversations(response.data.items);
         setPageCount(response.data.pages);

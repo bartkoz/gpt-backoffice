@@ -25,7 +25,7 @@ export default function SetupForm({ shop }) {
   const handleSubmit = async () => {
     setIsSaving(true);
     await axios
-      .post(`http://localhost:8000/update-chat-conf/?store_name=${shop}`, {
+      .post(`https://backend-rvm4xlf6ba-ey.a.run.app/update-chat-conf/?store_name=${shop}`, {
         backend: chatSetupBackend,
         frontend: chatSetupFrontend,
       })
@@ -38,7 +38,7 @@ export default function SetupForm({ shop }) {
     const getSetup = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/get-chat-conf/?store_name=${shop}`
+          `https://lbackend-rvm4xlf6ba-ey.a.run.app/get-chat-conf/?store_name=${shop}`
         );
         if (response.data.backend) {
           setChatSetupBackend(response.data.backend);
