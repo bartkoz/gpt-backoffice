@@ -104,8 +104,8 @@ const Chart = ({ shop }) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="dt" interval={0} />
-              <YAxis yAxisId="left" />
-              <YAxis yAxisId="right" orientation="right" />
+              <YAxis yAxisId="left" allowDecimals={false}/>
+              <YAxis yAxisId="right" orientation="right" allowDecimals={false}/>
               <Tooltip />
               <Line
                 yAxisId="left"
