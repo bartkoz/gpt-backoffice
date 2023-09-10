@@ -213,41 +213,63 @@ export default function SetupForm({ shop }) {
                 }
                 label="Chat welcome message"
               />
+              {/*<TextField*/}
+              {/*  multiline={2}*/}
+              {/*  disabled={isLoading}*/}
+              {/*  value={*/}
+              {/*    chatSetupFrontend.feedback_thank_you ??*/}
+              {/*    "Thank you for your feedback."*/}
+              {/*  }*/}
+              {/*  onChange={(value) =>*/}
+              {/*    handleChatSetupFrontendChange({*/}
+              {/*      target: { value: value, name: "feedback_thank_you" },*/}
+              {/*    })*/}
+              {/*  }*/}
+              {/*  label="Feedback thank you"*/}
+              {/*/>*/}
+              {/*<TextField*/}
+              {/*  multiline={2}*/}
+              {/*  disabled={isLoading}*/}
+              {/*  value={chatSetupFrontend.feedback_positive ?? "Upvote"}*/}
+              {/*  onChange={(value) =>*/}
+              {/*    handleChatSetupFrontendChange({*/}
+              {/*      target: { value: value, name: "feedback_positive" },*/}
+              {/*    })*/}
+              {/*  }*/}
+              {/*  label="Feedback (positive)"*/}
+              {/*/>*/}
+              {/*<TextField*/}
+              {/*  multiline={2}*/}
+              {/*  disabled={isLoading}*/}
+              {/*  value={chatSetupFrontend.feedback_negative ?? "Downvote"}*/}
+              {/*  onChange={(value) =>*/}
+              {/*    handleChatSetupFrontendChange({*/}
+              {/*      target: { value: value, name: "feedback_negative" },*/}
+              {/*    })*/}
+              {/*  }*/}
+              {/*  label="Feedback (negative)"*/}
+              {/*/>*/}
               <TextField
-                multiline={2}
+                multiline={1}
                 disabled={isLoading}
-                value={
-                  chatSetupFrontend.feedback_thank_you ??
-                  "Thank you for your feedback."
-                }
+                value={chatSetupFrontend.ask_a_question ?? "Ask a question..."}
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
-                    target: { value: value, name: "feedback_thank_you" },
+                    target: { value: value, name: "ask_a_question" },
                   })
                 }
-                label="Feedback thank you"
+                label="Input label (empty state)"
               />
               <TextField
-                multiline={2}
+                multiline={1}
                 disabled={isLoading}
-                value={chatSetupFrontend.feedback_positive ?? "Upvote"}
+                value={chatSetupFrontend.write_an_answer ?? "Write an answer"}
                 onChange={(value) =>
                   handleChatSetupFrontendChange({
-                    target: { value: value, name: "feedback_positive" },
+                    target: { value: value, name: "write_an_answer" },
                   })
                 }
-                label="Feedback (positive)"
-              />
-              <TextField
-                multiline={2}
-                disabled={isLoading}
-                value={chatSetupFrontend.feedback_negative ?? "Downvote"}
-                onChange={(value) =>
-                  handleChatSetupFrontendChange({
-                    target: { value: value, name: "feedback_negative" },
-                  })
-                }
-                label="Feedback (negative)"
+                label="Input label (conversation in progress)"
               />
               {/*  <TextField*/}
               {/*    multiline={2}*/}

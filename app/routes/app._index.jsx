@@ -4,7 +4,6 @@ import {
   VerticalStack,
   Card,
   HorizontalStack,
-  Text,
 } from "@shopify/polaris";
 import Chart from "~/components/chart";
 import { authenticate } from "~/shopify.server";

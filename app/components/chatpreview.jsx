@@ -1,8 +1,17 @@
-import { Container, Divider, Toolbar, Typography } from "@mui/material";
+import {
+  Container,
+  Divider,
+  FormControl,
+  IconButton,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment, useContext } from "react";
 import ChatSetupContext from "~/components/context";
 import Message from "~/components/message";
+import SendIcon from "@mui/icons-material/Send";
 
 export default function ChatPreview() {
   const { chatSetupFrontend } = useContext(ChatSetupContext);
@@ -46,6 +55,18 @@ export default function ChatPreview() {
         >
           <Message />
           {/*<Recommendation />*/}
+        </Box>
+        <Box sx={{ m: 1 }} mt={2} display="flex" alignItems="center">
+          <FormControl fullWidth>
+            <TextField
+              value=""
+              label={chatSetupFrontend.ask_a_question ?? "Ask a question..."}
+              variant="outlined"
+            />
+          </FormControl>
+          <IconButton aria-label="send" sx={{ color: "rgb(0, 33, 77)" }}>
+            <SendIcon />
+          </IconButton>
         </Box>
       </Container>
     </Fragment>

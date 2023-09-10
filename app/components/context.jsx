@@ -20,6 +20,8 @@ export const ChatSetupProvider = ({ children }) => {
     feedback_thank_you: "Thank you for you feedback",
     feedback_positive: "Upvote",
     feedback_negative: "Downvote",
+    ask_a_question: "Ask a question...",
+    write_an_answer: "Write an answer",
   });
 
   return (

@@ -38,7 +38,7 @@ const Chart = ({ shop }) => {
     <>
       <Layout.Section>
         <Grid>
-          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Card>
               <VerticalStack gap="3">
                 <Text variant="headingMd" as="h6">
@@ -50,7 +50,7 @@ const Chart = ({ shop }) => {
               </VerticalStack>
             </Card>
           </Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Card>
               <VerticalStack gap="3">
                 <Text variant="headingMd" as="h6">
@@ -62,30 +62,30 @@ const Chart = ({ shop }) => {
               </VerticalStack>
             </Card>
           </Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
-            <Card>
-              <VerticalStack gap="3">
-                <Text variant="headingMd" as="h6" color={"critical"}>
-                  Downvotes:
-                </Text>
-                <Text variant="headingXl" as="h4" color={"critical"}>
-                  {chartData.downvotes}
-                </Text>
-              </VerticalStack>
-            </Card>
-          </Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
-            <Card>
-              <VerticalStack gap="3">
-                <Text variant="headingMd" as="h6" color={"success"}>
-                  Upvotes:
-                </Text>
-                <Text variant="headingXl" as="h4" color={"success"}>
-                  {chartData.upvotes}
-                </Text>
-              </VerticalStack>
-            </Card>
-          </Grid.Cell>
+          {/*<Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>*/}
+          {/*  <Card>*/}
+          {/*    <VerticalStack gap="3">*/}
+          {/*      <Text variant="headingMd" as="h6" color={"critical"}>*/}
+          {/*        Downvotes:*/}
+          {/*      </Text>*/}
+          {/*      <Text variant="headingXl" as="h4" color={"critical"}>*/}
+          {/*        {chartData.downvotes}*/}
+          {/*      </Text>*/}
+          {/*    </VerticalStack>*/}
+          {/*  </Card>*/}
+          {/*</Grid.Cell>*/}
+          {/*<Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>*/}
+          {/*  <Card>*/}
+          {/*    <VerticalStack gap="3">*/}
+          {/*      <Text variant="headingMd" as="h6" color={"success"}>*/}
+          {/*        Upvotes:*/}
+          {/*      </Text>*/}
+          {/*      <Text variant="headingXl" as="h4" color={"success"}>*/}
+          {/*        {chartData.upvotes}*/}
+          {/*      </Text>*/}
+          {/*    </VerticalStack>*/}
+          {/*  </Card>*/}
+          {/*</Grid.Cell>*/}
         </Grid>
       </Layout.Section>
       <Layout.Section>
