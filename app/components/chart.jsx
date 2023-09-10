@@ -113,6 +113,7 @@ const Chart = ({ shop }) => {
                 stroke="rgb(19,156,217)"
                 fill="#00214d"
               />
+              <Line strokeWidth={3} type="monotone" dataKey="messages" stroke="#82ca9d" fill={"#82ca9d"} />
             </LineChart>
           </ResponsiveContainer>
         </Card>
