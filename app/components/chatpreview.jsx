@@ -50,7 +50,7 @@ export default function ChatPreview() {
             backgroundColor: "rgb(249,249,249)",
             borderColor: "transparent",
             borderBottomRightRadius: "20px",
-            height: "500px",
+            height: "350px",
           }}
         >
           <Message />

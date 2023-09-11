@@ -5,11 +5,11 @@ export function ChatPreview({ data }) {
   const [isReady, setIsReady] = useState(false);
 
   function findFirstShopifyHost(response) {
-    if (response.primaryDomain.host.includes('myshopify.com')) {
+    if (response.primaryDomain.host.includes("myshopify.com")) {
       return response.primaryDomain.host;
     }
     for (let domain of response.domains) {
-      if (domain.host.includes('myshopify.com')) {
+      if (domain.host.includes("myshopify.com")) {
         return domain.host;
       }
     }
@@ -19,10 +19,13 @@ export function ChatPreview({ data }) {
   useEffect(() => {
     const setDomains = async () => {
       try {
-        await axios.post(`https://backend-rvm4xlf6ba-ey.a.run.app/set-test-domains/`, {
-          domains: data.domains,
-          primaryDomain: data.primaryDomain,
-        });
+        await axios.post(
+          `https://backend-rvm4xlf6ba-ey.a.run.app/set-test-domains/`,
+          {
+            domains: data.domains,
+            primaryDomain: data.primaryDomain,
+          }
+        );
         setIsReady(true);
       } catch (error) {
         console.error("Error setting domains:", error);
@@ -32,17 +35,7 @@ export function ChatPreview({ data }) {
     setDomains();
   }, []);
 
-  const host = findFirstShopifyHost(data)
-  const url = `https://frontend-dot-chatbot-zezwolenia.ey.r.appspot.com/?host=${host}`
-  return (
-    <>
-      {isReady && (
-        <iframe
-          src={url}
-          width="600"
-          height="800"
-        ></iframe>
-      )}
-    </>
-  );
+  const host = findFirstShopifyHost(data);
+  const url = `https://frontend-dot-chatbot-zezwolenia.ey.r.appspot.com/?host=${host}`;
+  return <>{isReady && <iframe src={url} width="300" height="400"></iframe>}</>;
 }
