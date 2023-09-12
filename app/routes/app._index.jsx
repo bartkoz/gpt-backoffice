@@ -7,7 +7,7 @@ import {
 } from "@shopify/polaris";
 import Chart from "~/components/chart";
 import { authenticate } from "~/shopify.server";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useActionData, useSubmit } from "@remix-run/react";
 import { DaysToEndOfMonth, TokenBar } from "~/components/tokenbar";
 
@@ -46,6 +46,7 @@ export default function Index() {
     <Page>
       <VerticalStack gap="5">
         <Layout>
+          {actionData && <Chart shop={actionData.primaryDomain.host} />}
           <Layout.Section>
             <Card>
               <HorizontalStack wrap={false}>
@@ -53,9 +54,6 @@ export default function Index() {
               </HorizontalStack>
               {actionData && <TokenBar shop={actionData.primaryDomain.host} />}
             </Card>
-          </Layout.Section>
-          <Layout.Section>
-            {actionData && <Chart shop={actionData.primaryDomain.host} />}
           </Layout.Section>
         </Layout>
       </VerticalStack>
