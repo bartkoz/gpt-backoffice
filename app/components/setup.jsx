@@ -25,10 +25,13 @@ export default function SetupForm({ shop }) {
   const handleSubmit = async () => {
     setIsSaving(true);
     await axios
-      .post(`https://backend-rvm4xlf6ba-ey.a.run.app/update-chat-conf/?store_name=${shop}`, {
-        backend: chatSetupBackend,
-        frontend: chatSetupFrontend,
-      })
+      .post(
+        `https://backend-rvm4xlf6ba-ey.a.run.app/update-chat-conf/?store_name=${shop}`,
+        {
+          backend: chatSetupBackend,
+          frontend: chatSetupFrontend,
+        }
+      )
       .then(() => {
         setIsSaving(false);
       });

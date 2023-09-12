@@ -1,29 +1,27 @@
 import {
   FormLayout,
   TextField,
-  Tabs,
   Layout,
-  Card,
   DropZone,
-  Grid,
-  Text,
-  Button,
   IndexTable,
   LegacyCard,
   useIndexResourceState,
-  Badge, Icon, Link,
+  Icon,
+  Link,
+  PageActions,
+  Modal,
+  Button,
 } from "@shopify/polaris";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  AttachmentMajor, FileFilledMinor
-} from '@shopify/polaris-icons';
+import { FileFilledMinor } from "@shopify/polaris-icons";
 
 export function QAForm({
   inputText,
   inputTextTopic,
   setInputText,
   setInputTextTopic,
+  handleSubmit,
 }) {
   return (
     <Layout.Section>
@@ -46,6 +44,11 @@ export function QAForm({
             }
           />
         </FormLayout.Group>
+        <FormLayout.Group>
+          <Button primarySuccess onClick={handleSubmit}>
+            Save
+          </Button>
+        </FormLayout.Group>
       </FormLayout>
     </Layout.Section>
   );
@@ -56,33 +59,39 @@ export function KbFileUpload({
   isUploading,
   uploadedFiles,
   fileUpload,
+  handleSubmit,
 }) {
   return (
-    <Layout.Section>
-      <DropZone onDrop={handleDropZoneDrop} disabled={isUploading}>
-        {uploadedFiles}
-        {fileUpload}
-      </DropZone>
-    </Layout.Section>
+    <>
+      <Layout.Section>
+        <DropZone onDrop={handleDropZoneDrop} disabled={isUploading}>
+          {uploadedFiles}
+          {fileUpload}
+        </DropZone>
+      </Layout.Section>
+      <Layout.Section>
+        <Button primarySuccess onClick={handleSubmit}>
+          Save
+        </Button>
+      </Layout.Section>
+    </>
   );
 }
 
 export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
   const handleDelete = async () => {
     setIsDeleting(true);
-    selectedResources.forEach(async function(element, index, arr) {
+    selectedResources.forEach(async function (element, index, arr) {
       await axios.post(
         `http://localhost:8000/kb/delete/${shop}?uid=${element}`
       );
-    })
+    });
     setIsDeleting(false);
   };
 
   useEffect(() => {
     const getKBFiles = async () => {
-      const response = await axios.get(
-        `http://localhost:8000/kb/${shop}`
-      );
+      const response = await axios.get(`http://localhost:8000/kb/${shop}`);
       setUploadedFilesList(response.data);
     };
     getKBFiles();
@@ -97,10 +106,7 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
     useIndexResourceState(uploadedFilesList);
 
   const rowMarkup = uploadedFilesList.map(
-    (
-      { id, topic, type, preview },
-      index
-    ) => (
+    ({ id, topic, type, preview }, index) => (
       <IndexTable.Row
         id={id}
         key={id}
@@ -109,10 +115,17 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
       >
         <IndexTable.Cell>{topic}</IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
-        <IndexTable.Cell>{preview && <Link onClick={()=>{window.open(preview, '_blank')}}><Icon
-          source={FileFilledMinor}
-          color="base"
-        /></Link>}</IndexTable.Cell>
+        <IndexTable.Cell>
+          {preview && (
+            <Link
+              onClick={() => {
+                window.open(preview, "_blank");
+              }}
+            >
+              <Icon source={FileFilledMinor} color="base" />
+            </Link>
+          )}
+        </IndexTable.Cell>
       </IndexTable.Row>
     )
   );
@@ -120,7 +133,9 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
   const promotedBulkActions = [
     {
       content: "Delete",
-      onAction: () => {handleDelete()},
+      onAction: () => {
+        handleDelete();
+      },
     },
   ];
 
@@ -148,7 +163,7 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
   );
 }
 
-export function KbTabs({
+export function KBActions({
   handleDropZoneDrop,
   isUploading,
   uploadedFiles,
@@ -157,44 +172,81 @@ export function KbTabs({
   inputTextTopic,
   setInputText,
   setInputTextTopic,
+  setFiles,
+  actionData,
+  files,
+  setIsUploading,
 }) {
-  const [selected, setSelected] = useState(0);
-
-  const handleTabChange = useCallback(
-    (selectedTabIndex) => setSelected(selectedTabIndex),
-    []
+  const [activeContent, setActiveContent] = useState(null);
+  const handleSubmit = async () => {
+    setIsUploading(true);
+    const domains = actionData.primaryDomain.host;
+    if (files.length > 0) {
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append(`file`, file);
+        await axios.post(
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}`,
+          formData
+        );
+      }
+    }
+    if (inputText.length > 0) {
+      await axios.post(
+        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store-name=${domains}`,
+        {
+          question: inputTextTopic,
+          answer: inputText,
+        }
+      );
+    }
+    setFiles([]);
+    setInputText("");
+    setInputTextTopic("");
+    setIsUploading(false);
+  };
+  const createQAContent = (
+    <KbFileUpload
+      handleDropZoneDrop={handleDropZoneDrop}
+      isUploading={isUploading}
+      uploadedFiles={uploadedFiles}
+      fileUpload={fileUpload}
+      handleSubmit={handleSubmit}
+    />
+  );
+  const CreateFileUploadContent = (
+    <QAForm
+      inputText={inputText}
+      inputTextTopic={inputTextTopic}
+      setInputText={setInputText}
+      setInputTextTopic={setInputTextTopic}
+      handleSubmit={handleSubmit}
+    />
   );
 
-  const tabs = [
-    {
-      id: "file",
-      title: "file-upload",
-      content: "File upload",
-    },
-    {
-      id: "inline",
-      title: "QA",
-      content: "QA",
-    },
-  ];
-
   return (
-    <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
-      {selected === 0 ? (
-        <KbFileUpload
-          handleDropZoneDrop={handleDropZoneDrop}
-          isUploading={isUploading}
-          uploadedFiles={uploadedFiles}
-          fileUpload={fileUpload}
-        />
-      ) : (
-        <QAForm
-          inputText={inputText}
-          inputTextTopic={inputTextTopic}
-          setInputText={setInputText}
-          setInputTextTopic={setInputTextTopic}
-        />
+    <>
+      {activeContent && (
+        <Modal
+          title="KB Definition"
+          open={!!activeContent}
+          onClose={() => setActiveContent(null)}
+        >
+          <Modal.Section>{activeContent}</Modal.Section>
+        </Modal>
       )}
-    </Tabs>
+      <PageActions
+        secondaryActions={[
+          {
+            content: "Create QA",
+            onAction: () => setActiveContent(createQAContent),
+          },
+          {
+            content: "Upload File",
+            onAction: () => setActiveContent(CreateFileUploadContent),
+          },
+        ]}
+      />
+    </>
   );
 }
