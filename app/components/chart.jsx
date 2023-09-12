@@ -104,18 +104,16 @@ const Chart = ({ shop }) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="dt" interval={0} />
-              <YAxis yAxisId="left" allowDecimals={false}/>
-              <YAxis yAxisId="right" orientation="right" allowDecimals={false}/>
+              <YAxis allowDecimals={false}/>
               <Tooltip />
               <Line
-                yAxisId="left"
                 strokeWidth={3}
                 type="monotone"
                 dataKey="conversations"
                 stroke="rgb(19,156,217)"
                 fill="#00214d"
               />
-              <Line strokeWidth={3} type="monotone" dataKey="messages" stroke="#82ca9d" fill={"#82ca9d"} yAxisId="right"/>
+              <Line strokeWidth={3} type="monotone" dataKey="messages" stroke="#82ca9d" fill={"#82ca9d"}/>
             </LineChart>
           </ResponsiveContainer>
         </Card>

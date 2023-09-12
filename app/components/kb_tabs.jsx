@@ -8,10 +8,16 @@ import {
   Grid,
   Text,
   Button,
-  Modal,
+  IndexTable,
+  LegacyCard,
+  useIndexResourceState,
+  Badge, Icon, Link,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import {
+  AttachmentMajor, FileFilledMinor
+} from '@shopify/polaris-icons';
 
 export function QAForm({
   inputText,
@@ -72,41 +78,72 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
 
   useEffect(() => {
     const getKBFiles = async () => {
-      const response = await axios.get(`https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`);
+      const response = await axios.get(
+        `http://localhost:8000/kb/${shop}`
+      );
       setUploadedFilesList(response.data);
     };
     getKBFiles();
   }, [isDeleting, isUploading]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
-  return uploadedFilesList.map((file, index) => (
-    <Card key={index}>
-      <Grid>
-        <Grid.Cell columnSpan={{ xs: 11, sm: 11, md: 11, lg: 11, xl: 11 }}>
-          <Text as="h2" variant="bodyMd">
-            {file}
-          </Text>
-        </Grid.Cell>
-        <Grid.Cell
-          columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+  const resourceName = {
+    singular: "Data",
+    plural: "Data",
+  };
+
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(uploadedFilesList);
+
+  const rowMarkup = uploadedFilesList.map(
+    (
+      { id, topic, type, preview },
+      index
+    ) => (
+      <IndexTable.Row
+        id={id}
+        key={id}
+        selected={selectedResources.includes(id)}
+        position={index}
+      >
+        <IndexTable.Cell>{topic}</IndexTable.Cell>
+        <IndexTable.Cell>{type}</IndexTable.Cell>
+        <IndexTable.Cell>{preview && <Link onClick={()=>window.open(preview, '_blank')}><Icon
+          source={FileFilledMinor}
+          color="base"
+        /></Link>}</IndexTable.Cell>
+      </IndexTable.Row>
+    )
+  );
+
+  const promotedBulkActions = [
+    {
+      content: "Delete",
+      onAction: () => {console.log("Todo: delete"); console.log(selectedResources)},
+    },
+  ];
+
+  return (
+    uploadedFilesList && (
+      <LegacyCard>
+        <IndexTable
+          resourceName={resourceName}
+          itemCount={uploadedFilesList.length}
+          selectedItemsCount={
+            allResourcesSelected ? "All" : selectedResources.length
+          }
+          onSelectionChange={handleSelectionChange}
+          headings={[
+            { title: "Topic" },
+            { title: "Type" },
+            { title: "Preview" },
+          ]}
+          promotedBulkActions={promotedBulkActions}
         >
-          <Button
-            destructive={true}
-            onClick={() => {
-              handleDelete(file);
-            }}
-            disabled={isDeleting}
-          >
-            {isDeleting ? "Deleting" : "Delete"}
-          </Button>
-        </Grid.Cell>
-      </Grid>
-    </Card>
-  ));
+          {rowMarkup}
+        </IndexTable>
+      </LegacyCard>
+    )
+  );
 }
 
 export function KbTabs({

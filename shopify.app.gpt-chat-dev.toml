@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://jewelry-compounds-glory-internationally.trycloudflare.com"
+application_url = "https://bridges-billy-cached-ideal.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://jewelry-compounds-glory-internationally.trycloudflare.com/auth/callback",
-  "https://jewelry-compounds-glory-internationally.trycloudflare.com/auth/shopify/callback",
-  "https://jewelry-compounds-glory-internationally.trycloudflare.com/api/auth/callback"
+  "https://bridges-billy-cached-ideal.trycloudflare.com/auth/callback",
+  "https://bridges-billy-cached-ideal.trycloudflare.com/auth/shopify/callback",
+  "https://bridges-billy-cached-ideal.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

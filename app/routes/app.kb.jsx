@@ -14,7 +14,10 @@ import {
 import { useState, useCallback, useEffect } from "react";
 import { NoteMinor } from "@shopify/polaris-icons";
 import axios from "axios";
-import { KBFilesList, uploadModal, KbTabs } from "~/components/kb_tabs";
+import {
+  KBFilesList,
+  KbTabs,
+} from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
 import { useActionData, useSubmit } from "@remix-run/react";
 
@@ -81,14 +84,14 @@ export default function KBUpload() {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/${domains}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}`,
           formData
         );
       }
     }
     if (inputText.length > 0) {
       await axios.post(
-        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/${domains}`,
+        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store-name=${domains}`,
         {
           question: inputTextTopic,
           answer: inputText,
@@ -175,7 +178,6 @@ export default function KBUpload() {
           )}
         </Layout.Section>
         <Layout.Section>
-          <LegacyCard title="Knowledge Base data:" sectioned>
             {actionData && (
               <KBFilesList
                 isUploading={isUploading}
@@ -184,7 +186,6 @@ export default function KBUpload() {
                 shop={actionData.primaryDomain.host}
               />
             )}
-          </LegacyCard>
         </Layout.Section>
       </Layout>
     </Page>
