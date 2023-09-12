@@ -68,11 +68,13 @@ export function KbFileUpload({
 }
 
 export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
-  const handleDelete = async (title) => {
+  const handleDelete = async () => {
     setIsDeleting(true);
-    await axios.post(
-      `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?kb_file_name=${title}`
-    );
+    selectedResources.forEach(async function(element, index, arr) {
+      await axios.post(
+        `http://localhost:8000/kb/delete/${shop}?uid=${element}`
+      );
+    })
     setIsDeleting(false);
   };
 
@@ -107,7 +109,7 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
       >
         <IndexTable.Cell>{topic}</IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
-        <IndexTable.Cell>{preview && <Link onClick={()=>window.open(preview, '_blank')}><Icon
+        <IndexTable.Cell>{preview && <Link onClick={()=>{window.open(preview, '_blank')}}><Icon
           source={FileFilledMinor}
           color="base"
         /></Link>}</IndexTable.Cell>
@@ -118,7 +120,7 @@ export function KBFilesList({ isDeleting, isUploading, setIsDeleting, shop }) {
   const promotedBulkActions = [
     {
       content: "Delete",
-      onAction: () => {console.log("Todo: delete"); console.log(selectedResources)},
+      onAction: () => {handleDelete()},
     },
   ];
 

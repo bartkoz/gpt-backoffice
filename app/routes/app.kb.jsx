@@ -165,6 +165,16 @@ export default function KBUpload() {
         </Layout.Section>
         <Layout.Section>
           {actionData && (
+            <KBFilesList
+              isUploading={isUploading}
+              isDeleting={isDeleting}
+              setIsDeleting={setIsDeleting}
+              shop={actionData.primaryDomain.host}
+            />
+          )}
+        </Layout.Section>
+        <Layout.Section>
+          {actionData && (
             <KbTabs
               inputText={inputText}
               inputTextTopic={inputTextTopic}
@@ -176,16 +186,6 @@ export default function KBUpload() {
               fileUpload={fileUpload}
             />
           )}
-        </Layout.Section>
-        <Layout.Section>
-            {actionData && (
-              <KBFilesList
-                isUploading={isUploading}
-                isDeleting={isDeleting}
-                setIsDeleting={setIsDeleting}
-                shop={actionData.primaryDomain.host}
-              />
-            )}
         </Layout.Section>
       </Layout>
     </Page>
