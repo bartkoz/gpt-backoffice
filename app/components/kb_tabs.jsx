@@ -149,7 +149,7 @@ export function KBFilesList({ shop }) {
     setIsDeleting(true);
     selectedResources.forEach(async function (element, index, arr) {
       await axios.post(
-        `http://localhost:8000/kb/delete/${shop}?uid=${element}`
+        `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?uid=${element}`
       );
     });
     setIsDeleting(false);
@@ -157,7 +157,9 @@ export function KBFilesList({ shop }) {
 
   useEffect(() => {
     const getKBFiles = async () => {
-      const response = await axios.get(`http://localhost:8000/kb/${shop}`);
+      const response = await axios.get(
+        `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
+      );
       setUploadedFilesList(response.data);
     };
     getKBFiles();
