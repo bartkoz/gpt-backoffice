@@ -155,7 +155,12 @@ export function KbFileUpload({ actionData, setActiveContent }) {
   );
 }
 
-export function KBFilesList({ shop, activeContent }) {
+export function KBFilesList({
+  shop,
+  activeContent,
+  setIsDeleting,
+  isDeleting,
+}) {
   const handleDelete = async () => {
     setIsDeleting(true);
     selectedResources.forEach(async function (element, index, arr) {
@@ -174,7 +179,7 @@ export function KBFilesList({ shop, activeContent }) {
       setUploadedFilesList(response.data);
     };
     getKBFiles();
-  }, [activeContent]);
+  }, [activeContent, isDeleting]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const resourceName = {
     singular: "Data",

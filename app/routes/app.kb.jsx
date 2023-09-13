@@ -38,6 +38,7 @@ export default function KBUpload() {
   const actionData = useActionData();
   const submit = useSubmit();
   const [activeContent, setActiveContent] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const queryGQL = () => {
     submit({}, { replace: true, method: "POST" });
   };
@@ -61,6 +62,8 @@ export default function KBUpload() {
             <KBFilesList
               shop={actionData.primaryDomain.host}
               activeContent={activeContent}
+              setIsDeleting={setIsDeleting}
+              isDeleting={isDeleting}
             />
           )}
         </Layout.Section>
