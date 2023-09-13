@@ -46,20 +46,20 @@ export function QAForm({ actionData, setActiveContent }) {
       <FormLayout>
         <FormLayout.Group>
           <TextField
-            multiline={3}
-            placeholder={"Answer"}
-            value={inputText}
-            onChange={(newValue) => setInputText(newValue)}
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <TextField
             labelHidden
             autoComplete="off"
             multiline={3}
             placeholder={"Question"}
             value={inputTextTopic}
             onChange={(newValue) => setInputTextTopic(newValue)}
+          />
+        </FormLayout.Group>
+        <FormLayout.Group>
+          <TextField
+            multiline={3}
+            placeholder={"Answer"}
+            value={inputText}
+            onChange={(newValue) => setInputText(newValue)}
           />
         </FormLayout.Group>
         <FormLayout.Group>
