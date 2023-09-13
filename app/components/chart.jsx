@@ -102,7 +102,7 @@ const Chart = ({ shop }) => {
                 bottom: 0,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3" vertical={false} />
               <XAxis dataKey="dt" interval={0} />
               <YAxis allowDecimals={false} />
               <Tooltip />
