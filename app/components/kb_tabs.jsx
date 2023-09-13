@@ -18,7 +18,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { FileFilledMinor, NoteMinor } from "@shopify/polaris-icons";
 
-export function QAForm({ actionData }) {
+export function QAForm({ actionData, setActiveContent }) {
   const [inputText, setInputText] = useState("");
   const [inputTextTopic, setInputTextTopic] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -38,6 +38,7 @@ export function QAForm({ actionData }) {
     setInputText("");
     setInputTextTopic("");
     setIsUploading(false);
+    setActiveContent(null);
   };
 
   return (
@@ -71,7 +72,7 @@ export function QAForm({ actionData }) {
   );
 }
 
-export function KbFileUpload({ actionData }) {
+export function KbFileUpload({ actionData, setActiveContent }) {
   const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [title, setTitle] = useState("");
@@ -126,6 +127,7 @@ export function KbFileUpload({ actionData }) {
     }
     setFiles([]);
     setIsUploading(false);
+    setActiveContent(null);
   };
 
   return (
@@ -153,7 +155,7 @@ export function KbFileUpload({ actionData }) {
   );
 }
 
-export function KBFilesList({ shop }) {
+export function KBFilesList({ shop, activeContent }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     selectedResources.forEach(async function (element, index, arr) {
@@ -172,7 +174,7 @@ export function KBFilesList({ shop }) {
       setUploadedFilesList(response.data);
     };
     getKBFiles();
-  }, []);
+  }, [activeContent]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const resourceName = {
     singular: "Data",
@@ -240,10 +242,13 @@ export function KBFilesList({ shop }) {
   );
 }
 
-export function KBActions({ actionData }) {
-  const [activeContent, setActiveContent] = useState(null);
-  const CreateFileUploadContent = <KbFileUpload actionData={actionData} />;
-  const createQAContent = <QAForm actionData={actionData} />;
+export function KBActions({ actionData, activeContent, setActiveContent }) {
+  const CreateFileUploadContent = (
+    <KbFileUpload actionData={actionData} setActiveContent={setActiveContent} />
+  );
+  const createQAContent = (
+    <QAForm actionData={actionData} setActiveContent={setActiveContent} />
+  );
 
   return (
     <>

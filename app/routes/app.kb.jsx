@@ -37,6 +37,7 @@ export async function action({ request }) {
 export default function KBUpload() {
   const actionData = useActionData();
   const submit = useSubmit();
+  const [activeContent, setActiveContent] = useState(null);
   const queryGQL = () => {
     submit({}, { replace: true, method: "POST" });
   };
@@ -49,10 +50,19 @@ export default function KBUpload() {
       <Layout>
         <ui-title-bar title="Knowledge base" />
         <Layout.Section>
-          <KBActions actionData={actionData} />
+          <KBActions
+            actionData={actionData}
+            activeContent={activeContent}
+            setActiveContent={setActiveContent}
+          />
         </Layout.Section>
         <Layout.Section>
-          {actionData && <KBFilesList shop={actionData.primaryDomain.host} />}
+          {actionData && (
+            <KBFilesList
+              shop={actionData.primaryDomain.host}
+              activeContent={activeContent}
+            />
+          )}
         </Layout.Section>
       </Layout>
     </Page>
