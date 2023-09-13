@@ -28,7 +28,7 @@ export function QAForm({ actionData }) {
     const domains = actionData.primaryDomain.host;
     if (inputText.length > 0) {
       await axios.post(
-        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store-name=${domains}`,
+        `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${domains}`,
         {
           question: inputTextTopic,
           answer: inputText,
@@ -74,6 +74,7 @@ export function QAForm({ actionData }) {
 export function KbFileUpload({ actionData }) {
   const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [title, setTitle] = useState("");
 
   const handleDropZoneDrop = useCallback(
     (_dropFiles, acceptedFiles, _rejectedFiles) => {
@@ -118,7 +119,7 @@ export function KbFileUpload({ actionData }) {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}&topic=${title}`,
           formData
         );
       }
@@ -129,6 +130,14 @@ export function KbFileUpload({ actionData }) {
 
   return (
     <>
+      <Layout.Section>
+        <TextField
+          label="Topic"
+          value={title}
+          onChange={(newValue) => setTitle(newValue)}
+          autoComplete="off"
+        />
+      </Layout.Section>
       <Layout.Section>
         <DropZone onDrop={handleDropZoneDrop} disabled={isUploading}>
           {uploadedFiles}
