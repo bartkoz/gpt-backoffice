@@ -12,7 +12,7 @@ import {
   Modal,
   Button,
   LegacyStack,
-  Thumbnail,
+  Thumbnail, EmptySearchResult,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -223,6 +223,13 @@ export function KBFilesList({
     },
   ];
 
+  const emptyStateMarkup = (
+    <EmptySearchResult
+      title={'No KB entries yet'}
+      description={'Try adding some QAs and uploading pdfs.'}
+      withIllustration
+    />)
+
   return (
     uploadedFilesList && (
       <LegacyCard>
@@ -232,6 +239,7 @@ export function KBFilesList({
           selectedItemsCount={
             allResourcesSelected ? "All" : selectedResources.length
           }
+          emptyState={emptyStateMarkup}
           onSelectionChange={handleSelectionChange}
           headings={[
             { title: "Topic" },
