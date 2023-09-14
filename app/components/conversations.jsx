@@ -23,6 +23,7 @@ export const ConversationsList = ({ shop }) => {
   const [paginatedPage, setPaginatedPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [conversationsClicked, setConversationsClicked] = useState([]);
 
   useEffect(() => {
     const getConversationsData = async (paginatedPage) => {
@@ -42,7 +43,7 @@ export const ConversationsList = ({ shop }) => {
     getConversationsData(paginatedPage);
   }, [paginatedPage]);
 
-  async function matchConversationAsRead(conversation_id) {
+  async function markConversationAsRead(conversation_id) {
     await axios.post(
       `https://backend-rvm4xlf6ba-ey.a.run.app/mark-conversation-read/?store_name=${shop}&conv_id=${conversation_id}`
     );
@@ -54,8 +55,15 @@ export const ConversationsList = ({ shop }) => {
         <Link
           onClick={() => {
             setSelectedConversation(conversation.messages);
-            if (!conversation.read) {
-              matchConversationAsRead(conversation.id);
+            setConversationsClicked((prevItems) => [
+              ...prevItems,
+              conversation.id,
+            ]);
+            if (
+              !conversation.read &&
+              !conversationsClicked.includes(conversation.id)
+            ) {
+              markConversationAsRead(conversation.id);
             }
           }}
           monochrome={true}
@@ -64,7 +72,14 @@ export const ConversationsList = ({ shop }) => {
           <LegacyCard key={conversation.id}>
             <LegacyCard.Section>
               <LegacyStack spacing="loose" vertical>
-                <Text fontWeight={conversation.read ? "regular" : "bold"}>
+                <Text
+                  fontWeight={
+                    conversation.read ||
+                    conversationsClicked.includes(conversation.id)
+                      ? "regular"
+                      : "bold"
+                  }
+                >
                   {`${conversation.messages[0].message.slice(0, 40)}`}...
                 </Text>
                 <LegacyStack distribution="trailing">
