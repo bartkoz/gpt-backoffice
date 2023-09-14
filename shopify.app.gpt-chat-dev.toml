@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://senior-sand-dosage-hall.trycloudflare.com"
+application_url = "https://hunt-bush-appliance-loan.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://senior-sand-dosage-hall.trycloudflare.com/auth/callback",
-  "https://senior-sand-dosage-hall.trycloudflare.com/auth/shopify/callback",
-  "https://senior-sand-dosage-hall.trycloudflare.com/api/auth/callback"
+  "https://hunt-bush-appliance-loan.trycloudflare.com/auth/callback",
+  "https://hunt-bush-appliance-loan.trycloudflare.com/auth/shopify/callback",
+  "https://hunt-bush-appliance-loan.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

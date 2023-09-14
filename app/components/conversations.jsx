@@ -88,7 +88,9 @@ export const ConversationsList = ({ shop }) => {
                     as="p"
                     style={{ display: "inline-block" }}
                   >
-                    {moment(conversation.messages[0]).format("DD MMM")}
+                    {moment(conversation.messages[0].timestamp).format(
+                      "DD MMM"
+                    )}
                   </Text>
                 </LegacyStack>
               </LegacyStack>
@@ -113,7 +115,7 @@ export const ConversationsList = ({ shop }) => {
       },
     };
     return (
-      <Box padding={"8px"} sx={{ ...boxStyleSystem }}>
+      <Box padding={"16px"} sx={{ ...boxStyleSystem }}>
         <Typography
           component="div"
           variant="body2"
@@ -126,15 +128,11 @@ export const ConversationsList = ({ shop }) => {
           }}
           dangerouslySetInnerHTML={{ __html: message.message }}
         ></Typography>
-        <Text
-          variant="bodySm"
-          as="p"
-          style={{
-            display: "inline-block",
-          }}
-        >
-          {moment(message.timestamp).format("DD MMM")}
-        </Text>
+        <LegacyStack distribution="trailing">
+          <Text variant="bodySm" as="p" style={{ display: "inline-block" }}>
+            {moment(message.timestamp).format("DD MMM")}
+          </Text>
+        </LegacyStack>
       </Box>
     );
   }
