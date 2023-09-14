@@ -42,7 +42,7 @@ const Chart = ({ shop }) => {
             <Card>
               <VerticalStack gap="3">
                 <Text variant="headingMd" as="h6">
-                  Conversations:
+                  Conversations
                 </Text>
                 <Text variant="headingXl" as="h4">
                   {chartData.conversations}
@@ -54,7 +54,7 @@ const Chart = ({ shop }) => {
             <Card>
               <VerticalStack gap="3">
                 <Text variant="headingMd" as="h6">
-                  Messages:
+                  Messages
                 </Text>
                 <Text variant="headingXl" as="h4">
                   {chartData.messages}

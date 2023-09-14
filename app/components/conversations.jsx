@@ -151,22 +151,38 @@ export const ConversationsList = ({ shop }) => {
     <Frame>
       <Page fullWidth={true}>
         {isLoading && <Loading />}
-        <Grid>
-          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
-            <Card>
-              <VerticalStack gap={2}>{conversationList()}</VerticalStack>
-              <PaginationComponent
-                paginationPage={paginatedPage}
-                setPaginationPage={setPaginatedPage}
-                pages={pageCount}
-                isLoading={isLoading}
-              />
-            </Card>
-          </Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 9, sm: 3, md: 3, lg: 9, xl: 9 }}>
-            <Card>{conversationDetails}</Card>
-          </Grid.Cell>
-        </Grid>
+        {!isLoading && (
+          <Grid>
+            <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+              <Card>
+                <VerticalStack gap={2}>
+                  {conversations.length > 0 ? (
+                    <>
+                      {conversationList()}
+                      <PaginationComponent
+                        paginationPage={paginatedPage}
+                        setPaginationPage={setPaginatedPage}
+                        pages={pageCount}
+                        isLoading={isLoading}
+                      />
+                    </>
+                  ) : (
+                    <Text as={"p"}>No conversations yet.</Text>
+                  )}
+                </VerticalStack>
+              </Card>
+            </Grid.Cell>
+            <Grid.Cell columnSpan={{ xs: 9, sm: 3, md: 3, lg: 9, xl: 9 }}>
+              <Card>
+                {selectedConversation.length > 0 ? (
+                  conversationDetails
+                ) : (
+                  <Text as={"p"}>No conversation selected.</Text>
+                )}
+              </Card>
+            </Grid.Cell>
+          </Grid>
+        )}
       </Page>
     </Frame>
   );
