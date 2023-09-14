@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  Grid,
   Card,
   Page,
-  Layout,
+  Grid,
   Loading,
   Link,
   Text,
@@ -13,9 +12,10 @@ import {
   LegacyStack,
   LegacyCard,
 } from "@shopify/polaris";
-import "react-chat-elements/dist/main.css";
 import PaginationComponent from "~/components/pagination";
 import moment from "moment";
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 export const ConversationsList = ({ shop }) => {
   const [conversations, setConversations] = useState([]);
@@ -42,12 +42,21 @@ export const ConversationsList = ({ shop }) => {
     getConversationsData(paginatedPage);
   }, [paginatedPage]);
 
+  async function matchConversationAsRead(conversation_id) {
+    await axios.post(
+      `https://backend-rvm4xlf6ba-ey.a.run.app/mark-conversation-read/?store_name=${shop}&conv_id=${conversation_id}`
+    );
+  }
+
   function conversationList() {
     return conversations.map((conversation) => {
       return (
         <Link
           onClick={() => {
             setSelectedConversation(conversation.messages);
+            if (!conversation.read) {
+              matchConversationAsRead(conversation.id);
+            }
           }}
           monochrome={true}
           removeUnderline={true}
@@ -55,7 +64,9 @@ export const ConversationsList = ({ shop }) => {
           <LegacyCard key={conversation.id}>
             <LegacyCard.Section>
               <LegacyStack spacing="loose" vertical>
-                <p>{`${conversation.messages[0].message.slice(0, 40)}`}...</p>
+                <Text fontWeight={conversation.read ? "regular" : "bold"}>
+                  {`${conversation.messages[0].message.slice(0, 40)}`}...
+                </Text>
                 <LegacyStack distribution="trailing">
                   <Text
                     variant="bodySm"
@@ -73,62 +84,74 @@ export const ConversationsList = ({ shop }) => {
     });
   }
 
+  function Message({ message }) {
+    const boxStyleSystem = {
+      backgroundColor: message.role === "chat" ? "#f0f0f0" : "#E5F1FF",
+      color: "#202124",
+      borderRadius: "16px",
+      marginLeft: "15px",
+      marginTop: "8px",
+      display: "inline-block",
+      "& a": {
+        color: "inherit",
+        textDecoration: "underline",
+      },
+    };
+    return (
+      <Box padding={"8px"} sx={{ ...boxStyleSystem }}>
+        <Typography
+          component="div"
+          variant="body2"
+          style={{ wordWrap: "break-word" }}
+          sx={{
+            display: "-webkit-box",
+            overflow: "hidden",
+            WebkitLineClamp: 999,
+            WebkitBoxOrient: "vertical",
+          }}
+          dangerouslySetInnerHTML={{ __html: message.message }}
+        ></Typography>
+        <Text
+          variant="bodySm"
+          as="p"
+          style={{
+            display: "inline-block",
+          }}
+        >
+          {moment(message.timestamp).format("DD MMM")}
+        </Text>
+      </Box>
+    );
+  }
+
   const conversationDetails = selectedConversation.map((message) => {
     return (
-      <Card>
-        <b>{message.role}</b>:{" "}
-        <span dangerouslySetInnerHTML={{ __html: message.message }} />
-      </Card>
+      <>
+        <Message message={message} />
+        <br />
+      </>
     );
   });
   return (
     <Frame>
       <Page fullWidth={true}>
-        <Layout>
-          {isLoading && <Loading />}
-
-          {conversations.length > 0 ? (
-            <Grid>
-              <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 4, lg: 4, xl: 4 }}>
-                <Card>
-                  <Layout.Section fullWidth={true}>
-                    <PaginationComponent
-                      paginationPage={paginatedPage}
-                      setPaginationPage={setPaginatedPage}
-                      pages={pageCount}
-                      isLoading={isLoading}
-                    />
-                  </Layout.Section>
-
-                  <Layout.Section fullWidth={true}>
-                    <VerticalStack gap={2}>{conversationList()}</VerticalStack>
-                  </Layout.Section>
-
-                  <Layout.Section>
-                    <PaginationComponent
-                      paginationPage={paginatedPage}
-                      setPaginationPage={setPaginatedPage}
-                      pages={pageCount}
-                      isLoading={isLoading}
-                    />
-                  </Layout.Section>
-                </Card>
-              </Grid.Cell>
-
-              <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 8, lg: 8, xl: 8 }}>
-                <Card>
-                  <p>{conversationDetails}</p>
-                </Card>
-              </Grid.Cell>
-            </Grid>
-          ) : (
-            !isLoading && (
-              <Layout.Section>
-                <Text>No conversations found yet.</Text>
-              </Layout.Section>
-            )
-          )}
-        </Layout>
+        {isLoading && <Loading />}
+        <Grid>
+          <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+            <Card>
+              <VerticalStack gap={2}>{conversationList()}</VerticalStack>
+              <PaginationComponent
+                paginationPage={paginatedPage}
+                setPaginationPage={setPaginatedPage}
+                pages={pageCount}
+                isLoading={isLoading}
+              />
+            </Card>
+          </Grid.Cell>
+          <Grid.Cell columnSpan={{ xs: 9, sm: 3, md: 3, lg: 9, xl: 9 }}>
+            <Card>{conversationDetails}</Card>
+          </Grid.Cell>
+        </Grid>
       </Page>
     </Frame>
   );
