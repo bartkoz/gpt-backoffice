@@ -1,13 +1,5 @@
-import {
-  Button,
-  Layout,
-  Page,
-  DropZone,
-  LegacyStack,
-  Thumbnail,
-} from "@shopify/polaris";
-import { useState, useCallback, useEffect } from "react";
-import { NoteMinor } from "@shopify/polaris-icons";
+import { Layout, Page } from "@shopify/polaris";
+import { useState, useEffect } from "react";
 import { KBActions, KBFilesList } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
 import { useActionData, useSubmit } from "@remix-run/react";
@@ -38,7 +30,6 @@ export default function KBUpload() {
   const actionData = useActionData();
   const submit = useSubmit();
   const [activeContent, setActiveContent] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
   const queryGQL = () => {
     submit({}, { replace: true, method: "POST" });
   };
@@ -62,8 +53,6 @@ export default function KBUpload() {
             <KBFilesList
               shop={actionData.primaryDomain.host}
               activeContent={activeContent}
-              setIsDeleting={setIsDeleting}
-              isDeleting={isDeleting}
             />
           )}
         </Layout.Section>

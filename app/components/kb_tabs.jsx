@@ -12,7 +12,8 @@ import {
   Modal,
   Button,
   LegacyStack,
-  Thumbnail, EmptySearchResult,
+  Thumbnail,
+  EmptySearchResult,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -155,31 +156,24 @@ export function KbFileUpload({ actionData, setActiveContent }) {
   );
 }
 
-export function KBFilesList({
-  shop,
-  activeContent,
-  setIsDeleting,
-  isDeleting,
-}) {
+export function KBFilesList({ shop, activeContent }) {
+  const getKBFiles = async () => {
+    const response = await axios.get(
+      `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
+    );
+    setUploadedFilesList(response.data);
+  };
   const handleDelete = async () => {
-    setIsDeleting(true);
     selectedResources.forEach(async function (element, index, arr) {
       await axios.post(
         `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?uid=${element}`
       );
     });
-    setIsDeleting(false);
   };
 
   useEffect(() => {
-    const getKBFiles = async () => {
-      const response = await axios.get(
-        `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
-      );
-      setUploadedFilesList(response.data);
-    };
     getKBFiles();
-  }, [activeContent, isDeleting]);
+  }, [activeContent]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const resourceName = {
     singular: "Data",
@@ -225,10 +219,11 @@ export function KBFilesList({
 
   const emptyStateMarkup = (
     <EmptySearchResult
-      title={'No KB entries yet'}
-      description={'Try adding some QAs and uploading pdfs.'}
+      title={"No KB entries yet"}
+      description={"Try adding some QAs and uploading pdfs."}
       withIllustration
-    />)
+    />
+  );
 
   return (
     uploadedFilesList && (
