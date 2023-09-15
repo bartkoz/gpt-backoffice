@@ -80,7 +80,7 @@ export const ConversationsList = ({ shop }) => {
                       : "bold"
                   }
                 >
-                  {`${conversation.messages[0].message.slice(0, 40)}`}...
+                  {conversation.messages[0].message}
                 </Text>
                 <LegacyStack distribution="trailing">
                   <Text
@@ -88,9 +88,10 @@ export const ConversationsList = ({ shop }) => {
                     as="p"
                     style={{ display: "inline-block" }}
                   >
-                    {moment(conversation.messages[0].timestamp).format(
-                      "DD MMM"
-                    )}
+                    {moment
+                      .utc(conversation.messages[0].timestamp)
+                      .local()
+                      .format("DD MMM")}
                   </Text>
                 </LegacyStack>
               </LegacyStack>
@@ -130,7 +131,7 @@ export const ConversationsList = ({ shop }) => {
         ></Typography>
         <LegacyStack distribution="trailing">
           <Text variant="bodySm" as="p" style={{ display: "inline-block" }}>
-            {moment(message.timestamp).format("DD MMM")}
+            {moment.utc(message.timestamp).local().format("LT")}
           </Text>
         </LegacyStack>
       </Box>
@@ -151,7 +152,7 @@ export const ConversationsList = ({ shop }) => {
         {isLoading && <Loading />}
         {!isLoading && (
           <Grid>
-            <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+            <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
               <Card>
                 <VerticalStack gap={2}>
                   {conversations.length > 0 ? (
@@ -170,7 +171,7 @@ export const ConversationsList = ({ shop }) => {
                 </VerticalStack>
               </Card>
             </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 9, sm: 3, md: 3, lg: 9, xl: 9 }}>
+            <Grid.Cell columnSpan={{ xs: 7, sm: 3, md: 3, lg: 7, xl: 7 }}>
               <Card>
                 {selectedConversation.length > 0 ? (
                   conversationDetails
