@@ -171,7 +171,7 @@ export const ConversationsList = ({ shop }) => {
                 </VerticalStack>
               </Card>
             </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 7, sm: 3, md: 3, lg: 7, xl: 7 }}>
+            <Grid.Cell columnSpan={{ xs: 7, sm: 5, md: 5, lg: 7, xl: 7 }}>
               <Card>
                 {selectedConversation.length > 0 ? (
                   conversationDetails
