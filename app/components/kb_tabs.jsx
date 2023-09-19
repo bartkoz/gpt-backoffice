@@ -184,7 +184,7 @@ export function KBFilesList({ shop, activeContent }) {
     useIndexResourceState(uploadedFilesList);
 
   const rowMarkup = uploadedFilesList.map(
-    ({ id, topic, type, preview }, index) => (
+    ({ id, topic, answer, type, preview }, index) => (
       <IndexTable.Row
         id={id}
         key={id}
@@ -192,6 +192,7 @@ export function KBFilesList({ shop, activeContent }) {
         position={index}
       >
         <IndexTable.Cell>{topic}</IndexTable.Cell>
+        <IndexTable.Cell>{answer}</IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
         <IndexTable.Cell>
           {preview && (
@@ -220,7 +221,7 @@ export function KBFilesList({ shop, activeContent }) {
   const emptyStateMarkup = (
     <EmptySearchResult
       title={"No KB entries yet"}
-      description={"Try adding some QAs and uploading pdfs."}
+      description={"Try adding some FAQs and uploading pdfs."}
       withIllustration
     />
   );
@@ -238,6 +239,7 @@ export function KBFilesList({ shop, activeContent }) {
           onSelectionChange={handleSelectionChange}
           headings={[
             { title: "Topic" },
+            { title: "Content" },
             { title: "Type" },
             { title: "Preview" },
           ]}
@@ -272,7 +274,7 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
       <PageActions
         secondaryActions={[
           {
-            content: "Create QA",
+            content: "Create FAQs",
             onAction: () => setActiveContent(createQAContent),
           },
           {
