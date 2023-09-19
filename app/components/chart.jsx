@@ -64,7 +64,7 @@ const Chart = ({ shop }) => {
       </Layout.Section>
       <Layout.Section>
         <Card>
-          <ResponsiveContainer width={"100%"} aspect={2}>
+          <ResponsiveContainer width={"100%"} height={275}>
             <LineChart
               width={500}
               height={250}
@@ -76,7 +76,7 @@ const Chart = ({ shop }) => {
                 bottom: 0,
               }}
             >
-              <CartesianGrid strokeDasharray="3" vertical={false} />
+              <CartesianGrid vertical={false} />
               <XAxis dataKey="dt" interval={0} />
               <YAxis allowDecimals={false} />
               <Tooltip />
