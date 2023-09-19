@@ -14,6 +14,7 @@ import {
   LegacyStack,
   Thumbnail,
   EmptySearchResult,
+  Form,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -261,7 +262,7 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
   );
 
   return (
-    <>
+    <Form>
       {activeContent && (
         <Modal
           title="KB Definition"
@@ -283,6 +284,6 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
           },
         ]}
       />
-    </>
+    </Form>
   );
 }
