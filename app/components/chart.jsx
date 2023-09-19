@@ -67,7 +67,7 @@ const Chart = ({ shop }) => {
           <ResponsiveContainer width={"100%"} aspect={2}>
             <LineChart
               width={500}
-              height={400}
+              height={250}
               data={chartData.charts_data}
               margin={{
                 top: 10,
