@@ -1,4 +1,4 @@
-import { Layout, Page } from "@shopify/polaris";
+import { Form, Layout, Page } from "@shopify/polaris";
 import { useState, useEffect } from "react";
 import { KBActions, KBFilesList } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
@@ -39,24 +39,26 @@ export default function KBUpload() {
 
   return (
     <Page>
-      <Layout>
-        <ui-title-bar title="Knowledge base" />
-        <Layout.Section>
-          <KBActions
-            actionData={actionData}
-            activeContent={activeContent}
-            setActiveContent={setActiveContent}
-          />
-        </Layout.Section>
-        <Layout.Section>
-          {actionData && (
-            <KBFilesList
-              shop={actionData.primaryDomain.host}
+      <Form>
+        <Layout>
+          <ui-title-bar title="Knowledge base" />
+          <Layout.Section>
+            <KBActions
+              actionData={actionData}
               activeContent={activeContent}
+              setActiveContent={setActiveContent}
             />
-          )}
-        </Layout.Section>
-      </Layout>
+          </Layout.Section>
+          <Layout.Section>
+            {actionData && (
+              <KBFilesList
+                shop={actionData.primaryDomain.host}
+                activeContent={activeContent}
+              />
+            )}
+          </Layout.Section>
+        </Layout>
+      </Form>
     </Page>
   );
 }
