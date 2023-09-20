@@ -39,26 +39,24 @@ export default function KBUpload() {
 
   return (
     <Page>
-      <Form>
-        <Layout>
-          <ui-title-bar title="Knowledge base" />
-          <Layout.Section>
-            <KBActions
-              actionData={actionData}
+      <Layout>
+        <ui-title-bar title="Knowledge base" />
+        <Layout.Section>
+          <KBActions
+            actionData={actionData}
+            activeContent={activeContent}
+            setActiveContent={setActiveContent}
+          />
+        </Layout.Section>
+        <Layout.Section>
+          {actionData && (
+            <KBFilesList
+              shop={actionData.primaryDomain.host}
               activeContent={activeContent}
-              setActiveContent={setActiveContent}
             />
-          </Layout.Section>
-          <Layout.Section>
-            {actionData && (
-              <KBFilesList
-                shop={actionData.primaryDomain.host}
-                activeContent={activeContent}
-              />
-            )}
-          </Layout.Section>
-        </Layout>
-      </Form>
+          )}
+        </Layout.Section>
+      </Layout>
     </Page>
   );
 }
