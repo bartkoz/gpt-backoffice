@@ -1,7 +1,7 @@
 import React from "react";
 import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData, useRouteError } from "@remix-run/react";
-import { AppProvider as PolarisAppProvider } from "@shopify/polaris";
+import { AppProvider as PolarisAppProvider, Form } from "@shopify/polaris";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css";
 import { boundary } from "@shopify/shopify-app-remix";
 
@@ -40,7 +40,9 @@ export default function App() {
         i18n={polarisTranslations}
         linkComponent={RemixPolarisLink}
       >
-        <Outlet />
+        <Form>
+          <Outlet />
+        </Form>
       </PolarisAppProvider>
     </>
   );
