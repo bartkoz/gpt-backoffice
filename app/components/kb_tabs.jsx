@@ -14,6 +14,7 @@ import {
   LegacyStack,
   Thumbnail,
   EmptySearchResult,
+  Frame,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -263,13 +264,15 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
   return (
     <>
       {activeContent && (
-        <Modal
-          title="KB Definition"
-          open={!!activeContent}
-          onClose={() => setActiveContent(null)}
-        >
-          <Modal.Section>{activeContent}</Modal.Section>
-        </Modal>
+        <Frame>
+          <Modal
+            title="KB Definition"
+            open={!!activeContent}
+            onClose={() => setActiveContent(null)}
+          >
+            <Modal.Section>{activeContent}</Modal.Section>
+          </Modal>
+        </Frame>
       )}
       <PageActions
         secondaryActions={[

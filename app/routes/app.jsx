@@ -40,9 +40,7 @@ export default function App() {
         i18n={polarisTranslations}
         linkComponent={RemixPolarisLink}
       >
-        <Form>
-          <Outlet />
-        </Form>
+        <Outlet />
       </PolarisAppProvider>
     </>
   );
