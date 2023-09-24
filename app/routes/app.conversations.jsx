@@ -1,48 +1,38 @@
-import { Layout, Page, Button } from "@shopify/polaris";
+import { Layout, Page } from "@shopify/polaris";
 import { ConversationsList } from "~/components/conversations";
-import { useActionData, useSubmit } from "@remix-run/react";
-import { useEffect } from "react";
+import { useLoaderData } from "@remix-run/react";
 import { authenticate } from "~/shopify.server";
 
-export async function action({ request }) {
+export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
+
   const response = await admin.graphql(
     `#graphql
     query {
-  shop {
-    primaryDomain {
-      url
-      host
-    }
-    domains {
-      url
-      host
-    }
-  }
-}`
+      shop {
+        primaryDomain {
+          url
+          host
+        }
+        domains {
+          url
+          host
+        }
+      }
+    }`
   );
-
-  const responseJson = await response.json();
-  return responseJson.data.shop;
+  const data = await response.json();
+  return data.data.shop;
 }
 
 export default function Conversations() {
-  const actionData = useActionData();
-  const submit = useSubmit();
-  const queryGQL = () => {
-    submit({}, { replace: true, method: "POST" });
-  };
-  useEffect(() => {
-    queryGQL();
-  }, []);
+  const shopData = useLoaderData();
 
   return (
     <Page>
       <ui-title-bar title="Conversation history" />
       <Layout>
-        {actionData && (
-          <ConversationsList shop={actionData.primaryDomain.host} />
-        )}
+        {shopData && <ConversationsList shop={shopData.primaryDomain.host} />}
       </Layout>
     </Page>
   );

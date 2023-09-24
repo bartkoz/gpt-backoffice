@@ -1,41 +1,34 @@
-import { Form, Layout, Page } from "@shopify/polaris";
-import { useState, useEffect } from "react";
+import { Layout, Page } from "@shopify/polaris";
+import { useState } from "react";
 import { KBActions, KBFilesList } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
-import { useActionData, useSubmit } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
-export async function action({ request }) {
+export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
+
   const response = await admin.graphql(
     `#graphql
     query {
-  shop {
-    primaryDomain {
-      url
-      host
-    }
-    domains {
-      url
-      host
-    }
-  }
-}`
+      shop {
+        primaryDomain {
+          url
+          host
+        }
+        domains {
+          url
+          host
+        }
+      }
+    }`
   );
-
-  const responseJson = await response.json();
-  return responseJson.data.shop;
+  const data = await response.json();
+  return data.data.shop;
 }
 
 export default function KBUpload() {
-  const actionData = useActionData();
-  const submit = useSubmit();
+  const shopData = useLoaderData();
   const [activeContent, setActiveContent] = useState(null);
-  const queryGQL = () => {
-    submit({}, { replace: true, method: "POST" });
-  };
-  useEffect(() => {
-    queryGQL();
-  }, []);
 
   return (
     <Page>
@@ -43,15 +36,15 @@ export default function KBUpload() {
         <ui-title-bar title="Knowledge base" />
         <Layout.Section>
           <KBActions
-            actionData={actionData}
+            actionData={shopData}
             activeContent={activeContent}
             setActiveContent={setActiveContent}
           />
         </Layout.Section>
         <Layout.Section>
-          {actionData && (
+          {shopData && (
             <KBFilesList
-              shop={actionData.primaryDomain.host}
+              shop={shopData.primaryDomain.host}
               activeContent={activeContent}
             />
           )}

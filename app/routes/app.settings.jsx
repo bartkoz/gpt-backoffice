@@ -2,41 +2,33 @@ import { VerticalStack, Layout, Page, Grid } from "@shopify/polaris";
 import SetupForm from "~/components/setup";
 import ChatPreview from "~/components/chatpreview";
 import { ChatSetupProvider } from "~/components/context";
-import { useActionData, useSubmit } from "@remix-run/react";
-import { useEffect } from "react";
+import { useLoaderData } from "@remix-run/react";
 import { authenticate } from "~/shopify.server";
 
-export async function action({ request }) {
+export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
+
   const response = await admin.graphql(
     `#graphql
     query {
-  shop {
-    primaryDomain {
-      url
-      host
-    }
-    domains {
-      url
-      host
-    }
-  }
-}`
+      shop {
+        primaryDomain {
+          url
+          host
+        }
+        domains {
+          url
+          host
+        }
+      }
+    }`
   );
-
-  const responseJson = await response.json();
-  return responseJson.data.shop;
+  const data = await response.json();
+  return data.data.shop;
 }
 
 export default function Conversations() {
-  const actionData = useActionData();
-  const submit = useSubmit();
-  const queryGQL = () => {
-    submit({}, { replace: true, method: "POST" });
-  };
-  useEffect(() => {
-    queryGQL();
-  }, []);
+  const shopData = useLoaderData();
   return (
     <ChatSetupProvider>
       <Page>
@@ -45,9 +37,7 @@ export default function Conversations() {
             <Layout.Section>
               <Grid>
                 <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
-                  {actionData && (
-                    <SetupForm shop={actionData.primaryDomain.host} />
-                  )}
+                  {shopData && <SetupForm shop={shopData.primaryDomain.host} />}
                 </Grid.Cell>
                 <Grid.Cell columnSpan={{ xs: 7, sm: 7, md: 7, lg: 7, xl: 7 }}>
                   <ChatPreview />

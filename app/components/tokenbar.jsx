@@ -10,7 +10,7 @@ export function TokenBar({ shop }) {
       const response = await axios.get(
         `https://backend-rvm4xlf6ba-ey.a.run.app/client-tokens/${shop}`
       );
-      setTokensUsed(Math.round((response.data / 100000) * 100));
+      setTokensUsed(Math.round((response.data["val"] / 100000) * 100));
     };
     getData();
   }, []);

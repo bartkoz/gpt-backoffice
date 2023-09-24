@@ -7,52 +7,48 @@ import {
 } from "@shopify/polaris";
 import Chart from "~/components/chart";
 import { authenticate } from "~/shopify.server";
-import { useEffect } from "react";
-import { useActionData, useSubmit } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { DaysToEndOfMonth, TokenBar } from "~/components/tokenbar";
 
-export async function action({ request }) {
+export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
+
   const response = await admin.graphql(
     `#graphql
     query {
-  shop {
-    primaryDomain {
-      url
-      host
-    }
-    domains {
-      url
-      host
-    }
-  }
-}`
+      shop {
+        primaryDomain {
+          url
+          host
+        }
+        domains {
+          url
+          host
+        }
+      }
+    }`
   );
-
-  const responseJson = await response.json();
-  return responseJson.data.shop;
+  const data = await response.json();
+  return data.data.shop;
 }
 
 export default function Index() {
-  const actionData = useActionData();
-  const submit = useSubmit();
-  const queryGQL = () => {
-    submit({}, { replace: true, method: "POST" });
-  };
-  useEffect(() => {
-    queryGQL();
-  }, []);
+  const shopData = useLoaderData();
+
+  const host =
+    shopData && shopData.primaryDomain ? shopData.primaryDomain.host : null;
+
   return (
     <Page>
       <VerticalStack gap="5">
         <Layout>
-          {actionData && <Chart shop={actionData.primaryDomain.host} />}
+          {host && <Chart shop={host} />}
           <Layout.Section>
             <Card>
               <HorizontalStack wrap={false}>
                 <DaysToEndOfMonth />
               </HorizontalStack>
-              {actionData && <TokenBar shop={actionData.primaryDomain.host} />}
+              {host && <TokenBar shop={host} />}
             </Card>
           </Layout.Section>
         </Layout>
