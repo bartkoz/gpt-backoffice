@@ -29,7 +29,7 @@ const Chart = ({ shop }) => {
   }, []);
 
   if (!chartData) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   return (
