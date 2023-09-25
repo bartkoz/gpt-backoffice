@@ -85,8 +85,8 @@ export async function loader({ request }) {
     shop: dataShop.data.shop.primaryDomain.host,
   };
   if (Object.keys(dataBilling).length > 0) {
-    data["billing"] =
-      dataBilling.data.appSubscriptionCreate.billing.confirmationUrl;
+    console.log(dataBilling);
+    data["billing"] = dataBilling.data.appSubscriptionCreate.confirmationUrl;
   } else {
     data["billing"] = null;
   }
@@ -104,13 +104,13 @@ export default function Index() {
           <Layout.Section>
             {billingUrl && <BillingBanner billingLink={billingUrl} />}
           </Layout.Section>
-          {host && <Chart shop={host} />}
+          {!billingUrl && host && <Chart shop={host} />}
           <Layout.Section>
             <Card>
               <HorizontalStack wrap={false}>
                 <DaysToEndOfMonth />
               </HorizontalStack>
-              {host && <TokenBar shop={host} />}
+              {!billingUrl && host && <TokenBar shop={host} />}
             </Card>
           </Layout.Section>
         </Layout>
