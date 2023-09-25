@@ -10,9 +10,11 @@ import { authenticate } from "~/shopify.server";
 import { useLoaderData } from "@remix-run/react";
 import { DaysToEndOfMonth, TokenBar } from "~/components/tokenbar";
 import BillingBanner from "~/components/billing";
+import axios from "axios";
 
 export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
+  let dataBilling = {};
 
   const responseShop = await admin.graphql(
     `#graphql
@@ -29,55 +31,72 @@ export async function loader({ request }) {
       }
     }`
   );
-
-  const responseBilling = await admin.graphql(
-    `#graphql
-    mutation {
-      appSubscriptionCreate(
-        name: "Your Subscription Name",
-        returnUrl: "https://google.com/",
-        trialDays: 7,
-        test: true,
-        lineItems: [{
-        plan: {
-          appRecurringPricingDetails: {
-            price: { amount: 9.99, currencyCode: USD }
+  const dataShop = await responseShop.json();
+  const subscription_exists = await axios.get(
+    `https://backend-rvm4xlf6ba-ey.a.run.app/subscription-exists/?shop=${dataShop.data.shop.primaryDomain.host}`
+  );
+  if (!subscription_exists.data.exists) {
+    const responseBilling = await admin.graphql(
+      `#graphql
+      mutation {
+        appSubscriptionCreate(
+          name: "Your Subscription Name",
+          returnUrl: "https://google.com/",
+          trialDays: 7,
+          test: true,
+          lineItems: [{
+          plan: {
+            appRecurringPricingDetails: {
+              price: { amount: 9.99, currencyCode: USD }
+            }
+          }
+        }]
+      ) {
+          appSubscription {
+            id
+          }
+          confirmationUrl
+          userErrors {
+            field
+            message
           }
         }
-      }]
-    ) {
-        appSubscription {
-          id
-        }
-        confirmationUrl
-        userErrors {
-          field
-          message
-        }
-      }
-    }`
-  );
+      }`
+    );
+    dataBilling = await responseBilling.json();
+  }
 
-  const dataShop = await responseShop.json();
-  const dataBilling = await responseBilling.json();
+  // const responsePolicies = await admin.graphql(
+  //   `#graphql
+  //   query {
+  // shop {
+  //   name
+  //   description
+  //   shopPolicies {
+  //     body
+  //   }
+  // }
+  //   }`
+  // );
 
-  return {
-    shop: dataShop.data.shop,
-    billing: dataBilling.data.appSubscriptionCreate,
+  // const dataPolicies = await responsePolicies.json();
+  // console.log(dataPolicies.data.shop.shopPolicies[2]);
+  let data = {
+    shop: dataShop.data.shop.primaryDomain.host,
   };
+  if (Object.keys(dataBilling).length > 0) {
+    data["billing"] =
+      dataBilling.data.appSubscriptionCreate.billing.confirmationUrl;
+  } else {
+    data["billing"] = null;
+  }
+  return data;
 }
 
 export default function Index() {
   const shopData = useLoaderData();
-  const host =
-    shopData && shopData.shop.primaryDomain
-      ? shopData.shop.primaryDomain.host
-      : null;
-  const billingUrl =
-    shopData && shopData.billing.confirmationUrl
-      ? shopData.billing.confirmationUrl
-      : null;
-
+  const host = shopData && shopData.shop ? shopData.shop : null;
+  const billingUrl = shopData && shopData.billing ? shopData.billing : null;
   return (
     <Page>
       <VerticalStack gap="5">
