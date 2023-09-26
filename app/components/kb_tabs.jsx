@@ -27,7 +27,7 @@ export function QAForm({ actionData, setActiveContent }) {
 
   const handleSubmit = async () => {
     setIsUploading(true);
-    const domains = actionData.primaryDomain.host;
+    const domains = actionData.host;
     if (inputText.length > 0) {
       await axios.post(
         `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${domains}`,
@@ -116,7 +116,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
 
   const handleSubmit = async () => {
     setIsUploading(true);
-    const domains = actionData.primaryDomain.host;
+    const domains = actionData.host;
     if (files.length > 0) {
       for (const file of files) {
         const formData = new FormData();
@@ -261,6 +261,20 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
     <QAForm actionData={actionData} setActiveContent={setActiveContent} />
   );
 
+  const handleImportPolicies = async () => {
+    actionData.shopPolicies.forEach(async (e) => {
+      if (e["body"].trim() !== "") {
+        await axios.post(
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}`,
+          {
+            question: e["type"],
+            answer: e["body"],
+          }
+        );
+      }
+    });
+  };
+
   return (
     <>
       {activeContent && (
@@ -283,6 +297,10 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
           {
             content: "Upload File",
             onAction: () => setActiveContent(CreateFileUploadContent),
+          },
+          {
+            content: "Import Policies",
+            onAction: handleImportPolicies,
           },
         ]}
       />

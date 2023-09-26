@@ -66,22 +66,6 @@ export async function loader({ request }) {
     );
     dataBilling = await responseBilling.json();
   }
-
-  // const responsePolicies = await admin.graphql(
-  //   `#graphql
-  //   query {
-  // shop {
-  //   name
-  //   description
-  //   shopPolicies {
-  //     body
-  //   }
-  // }
-  //   }`
-  // );
-
-  // const dataPolicies = await responsePolicies.json();
-  // console.log(dataPolicies.data.shop.shopPolicies[2]);
   let data = {
     shop: dataShop.data.shop.primaryDomain.host,
   };

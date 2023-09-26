@@ -22,13 +22,32 @@ export async function loader({ request }) {
       }
     }`
   );
+  const policiesResp = await admin.graphql(
+    `#graphql
+       query {
+     shop {
+       name
+       description
+       shopPolicies {
+         body
+         type
+       }
+     }
+       }`
+  );
+  const dataPolicies = await policiesResp.json();
+  const shopPolicies = dataPolicies.data.shop.shopPolicies;
   const data = await response.json();
-  return data.data.shop;
+  return {
+    host: data.data.shop.primaryDomain.host,
+    shopPolicies: shopPolicies,
+  };
 }
 
 export default function KBUpload() {
   const shopData = useLoaderData();
   const [activeContent, setActiveContent] = useState(null);
+  const [shopPolicies, setShopPolicies] = useState(shopData.shopPolicies);
 
   return (
     <Page>
@@ -43,10 +62,7 @@ export default function KBUpload() {
         </Layout.Section>
         <Layout.Section>
           {shopData && (
-            <KBFilesList
-              shop={shopData.primaryDomain.host}
-              activeContent={activeContent}
-            />
+            <KBFilesList shop={shopData.host} activeContent={activeContent} />
           )}
         </Layout.Section>
       </Layout>
