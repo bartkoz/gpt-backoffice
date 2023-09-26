@@ -265,7 +265,7 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
     actionData.shopPolicies.forEach(async (e) => {
       if (e["body"].trim() !== "") {
         await axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}&delete_existing_kb=true`,
           {
             question: e["type"],
             answer: e["body"],
