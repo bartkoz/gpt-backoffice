@@ -1,20 +1,6 @@
 import { ProgressBar, Text } from "@shopify/polaris";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-export function TokenBar({ shop }) {
-  const [tokensUsed, setTokensUsed] = useState(undefined);
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await axios.get(
-        `https://backend-rvm4xlf6ba-ey.a.run.app/client-tokens/${shop}`
-      );
-      setTokensUsed(Math.round((response.data["val"] / 100000) * 100));
-    };
-    getData();
-  }, []);
-
+export function TokenBar({ tokensUsed }) {
   function getColor(tokensUsedPercent) {
     if (tokensUsedPercent > 80) {
       return "critical";
