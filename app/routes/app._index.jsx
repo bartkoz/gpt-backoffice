@@ -116,7 +116,7 @@ export default function Index() {
     const TrialDaysLeft = () => {
       let givenDate = new Date(appStartDate);
       let currentDate = new Date();
-      let diffInMilliseconds = givenDate - currentDate;
+      let diffInMilliseconds = currentDate - givenDate;
       let diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
       if (diffInDays < 0) {
         setTrialDaysLeft(7);
@@ -126,6 +126,7 @@ export default function Index() {
       if (diffInDays < 7) {
         setIsTrial(true);
       }
+      console.log(diffInDays);
     };
     TrialDaysLeft();
   }, [appStartDate]);
