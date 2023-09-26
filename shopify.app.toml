@@ -2,7 +2,7 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://ward-contrary-cos-wear.trycloudflare.com"
+application_url = "https://f-impossible-randy-modeling.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://ward-contrary-cos-wear.trycloudflare.com/auth/callback",
-  "https://ward-contrary-cos-wear.trycloudflare.com/auth/shopify/callback",
-  "https://ward-contrary-cos-wear.trycloudflare.com/api/auth/callback"
+  "https://f-impossible-randy-modeling.trycloudflare.com/auth/callback",
+  "https://f-impossible-randy-modeling.trycloudflare.com/auth/shopify/callback",
+  "https://f-impossible-randy-modeling.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

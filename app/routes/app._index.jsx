@@ -110,6 +110,9 @@ export default function Index() {
       setTokensUsed(Math.round((response.data["val"] / 100000) * 100));
       setAppStartDate(response.data["started_at"]);
     };
+    getData();
+  }, []);
+  useEffect(() => {
     const TrialDaysLeft = () => {
       let givenDate = new Date(appStartDate);
       let currentDate = new Date();
@@ -124,9 +127,9 @@ export default function Index() {
         setIsTrial(true);
       }
     };
-    getData();
     TrialDaysLeft();
-  }, []);
+  }, [appStartDate]);
+
   return (
     <Page>
       <VerticalStack gap="5">
