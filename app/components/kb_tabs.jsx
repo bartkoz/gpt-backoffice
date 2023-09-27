@@ -158,6 +158,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
 }
 
 export function KBFilesList({ shop, activeContent, wip }) {
+  const [isDeleting, setIsDeleting] = useState(false);
   const getKBFiles = async () => {
     const response = await axios.get(
       `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
@@ -165,16 +166,21 @@ export function KBFilesList({ shop, activeContent, wip }) {
     setUploadedFilesList(response.data);
   };
   const handleDelete = async () => {
-    selectedResources.forEach(async function (element, index, arr) {
+    const promises = selectedResources.map(async (element) => {
       await axios.post(
         `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?uid=${element}`
       );
+      return Promise.resolve();
+    });
+
+    await Promise.all(promises).then(() => {
+      setIsDeleting((prevShouldReload) => !prevShouldReload);
     });
   };
 
   useEffect(() => {
     getKBFiles();
-  }, [activeContent, wip]);
+  }, [activeContent, wip, isDeleting]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const resourceName = {
     singular: "Data",
