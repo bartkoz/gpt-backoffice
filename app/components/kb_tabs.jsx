@@ -254,6 +254,7 @@ export function KBFilesList({ shop, activeContent }) {
 }
 
 export function KBActions({ actionData, activeContent, setActiveContent }) {
+  const [wip, setWip] = useState(false);
   const CreateFileUploadContent = (
     <KbFileUpload actionData={actionData} setActiveContent={setActiveContent} />
   );
@@ -261,10 +262,11 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
     <QAForm actionData={actionData} setActiveContent={setActiveContent} />
   );
 
-  const handleImportPolicies = async () => {
-    actionData.shopPolicies.forEach(async (e) => {
+  const handleImportPolicies = async ({ setWip }) => {
+    setWip(true);
+    const promises = actionData.shopPolicies.map((e) => {
       if (e["body"].trim() !== "") {
-        await axios.post(
+        return axios.post(
           `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}&delete_existing_kb=true`,
           {
             question: e["type"],
@@ -272,6 +274,10 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
           }
         );
       }
+      return Promise.resolve();
+    });
+    await Promise.all(promises).then(() => {
+      setWip(false);
     });
   };
 
@@ -300,7 +306,11 @@ export function KBActions({ actionData, activeContent, setActiveContent }) {
           },
           {
             content: "Import Policies",
-            onAction: handleImportPolicies,
+            onAction: () => {
+              handleImportPolicies({ setWip });
+            },
+            disabled: wip,
+            loading: wip,
           },
         ]}
       />

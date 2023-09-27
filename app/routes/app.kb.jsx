@@ -47,7 +47,6 @@ export async function loader({ request }) {
 export default function KBUpload() {
   const shopData = useLoaderData();
   const [activeContent, setActiveContent] = useState(null);
-  const [shopPolicies, setShopPolicies] = useState(shopData.shopPolicies);
 
   return (
     <Page>
