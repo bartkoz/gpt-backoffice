@@ -47,6 +47,7 @@ export async function loader({ request }) {
 export default function KBUpload() {
   const shopData = useLoaderData();
   const [activeContent, setActiveContent] = useState(null);
+  const [wip, setWip] = useState(false);
 
   return (
     <Page>
@@ -57,11 +58,17 @@ export default function KBUpload() {
             actionData={shopData}
             activeContent={activeContent}
             setActiveContent={setActiveContent}
+            wip={wip}
+            setWip={setWip}
           />
         </Layout.Section>
         <Layout.Section>
           {shopData && (
-            <KBFilesList shop={shopData.host} activeContent={activeContent} />
+            <KBFilesList
+              shop={shopData.host}
+              activeContent={activeContent}
+              wip={wip}
+            />
           )}
         </Layout.Section>
       </Layout>

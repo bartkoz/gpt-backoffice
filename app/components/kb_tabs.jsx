@@ -157,7 +157,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
   );
 }
 
-export function KBFilesList({ shop, activeContent }) {
+export function KBFilesList({ shop, activeContent, wip }) {
   const getKBFiles = async () => {
     const response = await axios.get(
       `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
@@ -174,7 +174,7 @@ export function KBFilesList({ shop, activeContent }) {
 
   useEffect(() => {
     getKBFiles();
-  }, [activeContent]);
+  }, [activeContent, wip]);
   const [uploadedFilesList, setUploadedFilesList] = useState([]);
   const resourceName = {
     singular: "Data",
@@ -253,8 +253,13 @@ export function KBFilesList({ shop, activeContent }) {
   );
 }
 
-export function KBActions({ actionData, activeContent, setActiveContent }) {
-  const [wip, setWip] = useState(false);
+export function KBActions({
+  actionData,
+  activeContent,
+  setActiveContent,
+  wip,
+  setWip,
+}) {
   const CreateFileUploadContent = (
     <KbFileUpload actionData={actionData} setActiveContent={setActiveContent} />
   );
