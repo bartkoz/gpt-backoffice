@@ -166,6 +166,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
     setUploadedFilesList(response.data);
   };
   const handleDelete = async () => {
+    setIsDeleting(true);
     const promises = selectedResources.map(async (element) => {
       await axios.post(
         `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${shop}?uid=${element}`
@@ -222,6 +223,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
       onAction: () => {
         handleDelete();
       },
+      disabled: isDeleting,
     },
   ];
 

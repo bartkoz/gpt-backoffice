@@ -2,18 +2,18 @@
 
 name = "gpt-chat"
 client_id = "79d29f8cc93d1e469dde31e9fa2f10db"
-application_url = "https://f-impossible-randy-modeling.trycloudflare.com"
+application_url = "https://basement-doll-submitted-shortcuts.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://f-impossible-randy-modeling.trycloudflare.com/auth/callback",
-  "https://f-impossible-randy-modeling.trycloudflare.com/auth/shopify/callback",
-  "https://f-impossible-randy-modeling.trycloudflare.com/api/auth/callback"
+  "https://basement-doll-submitted-shortcuts.trycloudflare.com/auth/callback",
+  "https://basement-doll-submitted-shortcuts.trycloudflare.com/auth/shopify/callback",
+  "https://basement-doll-submitted-shortcuts.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
