@@ -36,10 +36,10 @@ export default function Conversations() {
           <Layout>
             <Layout.Section>
               <Grid>
-                <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
+                <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 5, xl: 5 }}>
                   {shopData && <SetupForm shop={shopData.primaryDomain.host} />}
                 </Grid.Cell>
-                <Grid.Cell columnSpan={{ xs: 7, sm: 7, md: 7, lg: 7, xl: 7 }}>
+                <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 7, xl: 7 }}>
                   <ChatPreview />
                 </Grid.Cell>
               </Grid>

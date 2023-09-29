@@ -7,7 +7,7 @@ import {
   Line,
   LineChart,
 } from "recharts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Layout, Card, Grid, Text, VerticalStack } from "@shopify/polaris";
 const Chart = ({ shop }) => {
@@ -27,6 +27,26 @@ const Chart = ({ shop }) => {
 
     getChartData();
   }, []);
+
+  const [windowWidth, setWindowWidth] = useState(1500);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  let xAxisInterval;
+  if (windowWidth < 1280) {
+    xAxisInterval = 2;
+  } else {
+    xAxisInterval = 0;
+  }
 
   if (!chartData) {
     return null;
@@ -69,15 +89,10 @@ const Chart = ({ shop }) => {
               width={500}
               height={250}
               data={chartData.charts_data}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="dt" interval={0} />
+              <XAxis dataKey="dt" interval={xAxisInterval} />
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Line
@@ -92,7 +107,7 @@ const Chart = ({ shop }) => {
                 type="monotone"
                 dataKey="messages"
                 stroke="#82ca9d"
-                fill={"#82ca9d"}
+                fill="#82ca9d"
               />
             </LineChart>
           </ResponsiveContainer>

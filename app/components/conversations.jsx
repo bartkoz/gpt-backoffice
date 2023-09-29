@@ -152,7 +152,7 @@ export const ConversationsList = ({ shop }) => {
         {isLoading && <Loading />}
         {!isLoading && (
           <Grid>
-            <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
+            <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 5, xl: 5 }}>
               <Card>
                 <VerticalStack gap={2}>
                   {conversations.length > 0 ? (
@@ -171,7 +171,7 @@ export const ConversationsList = ({ shop }) => {
                 </VerticalStack>
               </Card>
             </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 7, sm: 5, md: 5, lg: 7, xl: 7 }}>
+            <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 7, xl: 7 }}>
               <Card>
                 {selectedConversation.length > 0 ? (
                   conversationDetails
