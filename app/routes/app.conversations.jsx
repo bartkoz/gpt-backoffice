@@ -30,7 +30,7 @@ export default function Conversations() {
 
   return (
     <Page>
-      <ui-title-bar title="Conversation history" />
+      <ui-title-bar title="Chat history" />
       <Layout>
         {shopData && <ConversationsList shop={shopData.primaryDomain.host} />}
       </Layout>

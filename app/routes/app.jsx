@@ -63,7 +63,7 @@ export default function App() {
         </Link>
         {!isLoading && subscriptionData.exists && (
           <>
-            <Link to="/app/conversations">Conversation history</Link>
+            <Link to="/app/conversations">Chat history</Link>
             <Link to="/app/kb">Knowledge base</Link>
             <Link to="/app/settings">Chat settings</Link>
             <Link to="/app/preview">Chat preview</Link>
