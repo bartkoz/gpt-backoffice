@@ -275,15 +275,27 @@ export function KBActions({
     <QAForm actionData={actionData} setActiveContent={setActiveContent} />
   );
 
+  function stripHtmlTags(input) {
+    const tempDivElement = document.createElement("div");
+    tempDivElement.innerHTML = input;
+    return tempDivElement.textContent || tempDivElement.innerText || "";
+  }
+
   const handleImportPolicies = async ({ setWip }) => {
     setWip(true);
+
+    await axios.post(
+      `https://backend-rvm4xlf6ba-ey.a.run.app/delete-existing-policies/?store_name=${actionData.host}`,
+      {}
+    );
+
     const promises = actionData.shopPolicies.map((e) => {
       if (e["body"].trim() !== "") {
         return axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}&delete_existing_kb=true`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${actionData.host}`,
           {
-            question: e["type"],
-            answer: e["body"],
+            question: e["type"].replace(/_/g, " ").toLowerCase(),
+            answer: stripHtmlTags(e["body"]),
           }
         );
       }

@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://music-van-opera-obvious.trycloudflare.com"
+application_url = "https://commerce-placing-selections-sentences.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://music-van-opera-obvious.trycloudflare.com/auth/callback",
-  "https://music-van-opera-obvious.trycloudflare.com/auth/shopify/callback",
-  "https://music-van-opera-obvious.trycloudflare.com/api/auth/callback"
+  "https://commerce-placing-selections-sentences.trycloudflare.com/auth/callback",
+  "https://commerce-placing-selections-sentences.trycloudflare.com/auth/shopify/callback",
+  "https://commerce-placing-selections-sentences.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
