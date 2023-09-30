@@ -252,7 +252,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
       withIllustration
     />
   );
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const handleChange = useCallback(() => setActive(!active), [active]);
   const selectedFilesMarkup = uploadedFilesList
     .filter((file) => selectedResources.includes(file.id))
