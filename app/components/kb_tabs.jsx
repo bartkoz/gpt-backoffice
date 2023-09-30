@@ -15,10 +15,16 @@ import {
   Thumbnail,
   EmptySearchResult,
   Frame,
+  TextContainer,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { FileFilledMinor, NoteMinor } from "@shopify/polaris-icons";
+import {
+  ContentMinor,
+  FileFilledMinor,
+  NoteMinor,
+} from "@shopify/polaris-icons";
+import { margin } from "@mui/system";
 
 export function QAForm({ actionData, setActiveContent }) {
   const [inputText, setInputText] = useState("");
@@ -199,17 +205,29 @@ export function KBFilesList({ shop, activeContent, wip }) {
         selected={selectedResources.includes(id)}
         position={index}
       >
-        <IndexTable.Cell>{topic}</IndexTable.Cell>
-        <IndexTable.Cell>{answer}</IndexTable.Cell>
+        <IndexTable.Cell>
+          {topic.length > 50 ? `${topic.slice(0, 50)}...` : topic}
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          {answer.length > 50 ? `${answer.slice(0, 50)}...` : answer}
+        </IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
         <IndexTable.Cell>
-          {preview && (
+          {preview ? (
             <Link
               onClick={() => {
                 window.open(preview, "_blank");
               }}
             >
               <Icon source={FileFilledMinor} color="base" />
+            </Link>
+          ) : (
+            <Link
+              onClick={() => {
+                setActive(true);
+              }}
+            >
+              <Icon source={ContentMinor} color="base" />
             </Link>
           )}
         </IndexTable.Cell>
@@ -234,30 +252,51 @@ export function KBFilesList({ shop, activeContent, wip }) {
       withIllustration
     />
   );
+  const [active, setActive] = useState(true);
+  const handleChange = useCallback(() => setActive(!active), [active]);
+  const selectedFilesMarkup = uploadedFilesList
+    .filter((file) => selectedResources.includes(file.id))
+    .map((file) => (
+      <div key={file.id} style={{ marginBottom: "10px" }}>
+        <p>
+          <b>{file.topic}</b>: {file.answer}
+        </p>
+      </div>
+    ));
 
   return (
-    uploadedFilesList && (
-      <LegacyCard>
-        <IndexTable
-          resourceName={resourceName}
-          itemCount={uploadedFilesList.length}
-          selectedItemsCount={
-            allResourcesSelected ? "All" : selectedResources.length
-          }
-          emptyState={emptyStateMarkup}
-          onSelectionChange={handleSelectionChange}
-          headings={[
-            { title: "Topic" },
-            { title: "Content" },
-            { title: "Type" },
-            { title: "Preview" },
-          ]}
-          promotedBulkActions={promotedBulkActions}
-        >
-          {rowMarkup}
-        </IndexTable>
-      </LegacyCard>
-    )
+    <Frame>
+      {uploadedFilesList && uploadedFilesList.length > 0 ? (
+        <LegacyCard>
+          <IndexTable
+            resourceName={resourceName}
+            itemCount={uploadedFilesList.length}
+            selectedItemsCount={
+              allResourcesSelected ? "All" : selectedResources.length
+            }
+            emptyState={emptyStateMarkup}
+            onSelectionChange={handleSelectionChange}
+            headings={[
+              { title: "Topic" },
+              { title: "Content" },
+              { title: "Type" },
+              { title: "Preview" },
+            ]}
+            promotedBulkActions={promotedBulkActions}
+          >
+            {rowMarkup}
+          </IndexTable>
+        </LegacyCard>
+      ) : null}
+      <Modal open={active} onClose={handleChange} title="Preview">
+        {" "}
+        <Modal.Section>
+          <TextContainer>
+            <p>{selectedFilesMarkup}</p>
+          </TextContainer>
+        </Modal.Section>
+      </Modal>
+    </Frame>
   );
 }
 
