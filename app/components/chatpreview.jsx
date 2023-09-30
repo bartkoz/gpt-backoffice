@@ -51,22 +51,28 @@ export default function ChatPreview() {
             borderColor: "transparent",
             borderBottomRightRadius: "20px",
             height: "350px",
+            display: "flex", // Add flexbox
+            flexDirection: "column", // Column direction
           }}
         >
-          <Message />
-          {/*<Recommendation />*/}
-        </Box>
-        <Box sx={{ m: 1 }} mt={2} display="flex" alignItems="center">
-          <FormControl fullWidth>
-            <TextField
-              value=""
-              label={chatSetupFrontend.ask_a_question ?? "Ask a question..."}
-              variant="outlined"
-            />
-          </FormControl>
-          <IconButton aria-label="send" sx={{ color: "rgb(0, 33, 77)" }}>
-            <SendIcon />
-          </IconButton>
+          <Box style={{ flexGrow: 1 }}>
+            {" "}
+            {/* This box takes up all available space */}
+            <Message />
+            {/*<Recommendation />*/}
+          </Box>
+          <Box sx={{ m: 1 }} mt={2} display="flex" alignItems="center">
+            <FormControl fullWidth>
+              <TextField
+                value=""
+                label={chatSetupFrontend.ask_a_question ?? "Ask a question..."}
+                variant="outlined"
+              />
+            </FormControl>
+            <IconButton aria-label="send" sx={{ color: "rgb(0, 33, 77)" }}>
+              <SendIcon />
+            </IconButton>
+          </Box>
         </Box>
       </Container>
     </Fragment>
