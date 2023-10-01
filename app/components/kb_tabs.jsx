@@ -24,7 +24,6 @@ import {
   FileFilledMinor,
   NoteMinor,
 } from "@shopify/polaris-icons";
-import { margin } from "@mui/system";
 
 export function QAForm({ actionData, setActiveContent }) {
   const [inputText, setInputText] = useState("");
@@ -146,6 +145,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
           value={title}
           onChange={(newValue) => setTitle(newValue)}
           autoComplete="off"
+          requiredIndicator={true}
         />
       </Layout.Section>
       <Layout.Section>
@@ -206,10 +206,18 @@ export function KBFilesList({ shop, activeContent, wip }) {
         position={index}
       >
         <IndexTable.Cell>
-          {topic.length > 50 ? `${topic.slice(0, 50)}...` : topic}
+          {topic
+            ? topic.length > 50
+              ? `${topic.slice(0, 50)}...`
+              : topic
+            : ""}
         </IndexTable.Cell>
         <IndexTable.Cell>
-          {answer.length > 50 ? `${answer.slice(0, 50)}...` : answer}
+          {answer
+            ? answer.length > 50
+              ? `${answer.slice(0, 50)}...`
+              : answer
+            : ""}
         </IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
         <IndexTable.Cell>

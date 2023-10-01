@@ -110,7 +110,6 @@ export default function Index() {
       if (diffInDays < 7) {
         setIsTrial(true);
       }
-      console.log(diffInDays);
     };
     TrialDaysLeft();
   }, [appStartDate]);

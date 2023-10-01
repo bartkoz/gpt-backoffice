@@ -1,4 +1,5 @@
 import { ProgressBar, Text } from "@shopify/polaris";
+import { Tooltip } from "@mui/material";
 
 export function TokenBar({ tokensUsed }) {
   function getColor(tokensUsedPercent) {
@@ -25,10 +26,15 @@ export function DaysToEndOfMonth({ tokensUsed }) {
   return (
     tokensUsed !== undefined &&
     tokensUsed !== null && (
-      <Text alignment={"center"}>
-        Tokens used {tokensUsed}
-        /100 (<b>resets in {days} days</b>)
-      </Text>
+      <Tooltip
+        active
+        content="Quota resets at midnight of first day of next month UTC timezone."
+      >
+        <Text alignment={"center"}>
+          Tokens used {tokensUsed}
+          /100 (<b>resets in {days} days</b>)
+        </Text>
+      </Tooltip>
     )
   );
 }
