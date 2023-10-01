@@ -51,6 +51,9 @@ export const ConversationsList = ({ shop }) => {
 
   function conversationList() {
     return conversations.map((conversation) => {
+      const firstMessage =
+        conversation.messages.length > 0 ? conversation.messages[0] : null;
+
       return (
         <Link
           onClick={() => {
@@ -72,28 +75,32 @@ export const ConversationsList = ({ shop }) => {
           <LegacyCard key={conversation.id}>
             <LegacyCard.Section>
               <LegacyStack spacing="loose" vertical>
-                <Text
-                  fontWeight={
-                    conversation.read ||
-                    conversationsClicked.includes(conversation.id)
-                      ? "regular"
-                      : "bold"
-                  }
-                >
-                  {conversation.messages[0].message}
-                </Text>
-                <LegacyStack distribution="trailing">
+                {firstMessage && (
                   <Text
-                    variant="bodySm"
-                    as="p"
-                    style={{ display: "inline-block" }}
+                    fontWeight={
+                      conversation.read ||
+                      conversationsClicked.includes(conversation.id)
+                        ? "regular"
+                        : "bold"
+                    }
                   >
-                    {moment
-                      .utc(conversation.messages[0].timestamp)
-                      .local()
-                      .format("DD MMM")}
+                    {firstMessage.message}
                   </Text>
-                </LegacyStack>
+                )}
+                {firstMessage && (
+                  <LegacyStack distribution="trailing">
+                    <Text
+                      variant="bodySm"
+                      as="p"
+                      style={{ display: "inline-block" }}
+                    >
+                      {moment
+                        .utc(firstMessage.timestamp)
+                        .local()
+                        .format("DD MMM")}
+                    </Text>
+                  </LegacyStack>
+                )}
               </LegacyStack>
             </LegacyCard.Section>
           </LegacyCard>
