@@ -151,7 +151,7 @@ export default function SetupForm({ shop }) {
                 value={chatSetupBackend.dynamic_context ?? ""}
                 onChange={(value) =>
                   handleChatSetupBackendChange({
-                    target: { value: value, name: "dynamic_context" },
+                    target: { value: value ?? "", name: "dynamic_context" },
                   })
                 }
                 label="System prompt"
