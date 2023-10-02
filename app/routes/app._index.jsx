@@ -91,7 +91,7 @@ export default function Index() {
       const response = await axios.get(
         `https://backend-rvm4xlf6ba-ey.a.run.app/client-tokens/${host}`
       );
-      setTokensUsed(Math.round((response.data["val"] / 100000) * 100));
+      setTokensUsed(Math.round((response.data["val"] / 90000) * 100));
       setAppStartDate(response.data["started_at"]);
     };
     getData();
