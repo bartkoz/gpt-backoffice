@@ -182,6 +182,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
 
     await Promise.all(promises).then(() => {
       setIsDeleting((prevShouldReload) => !prevShouldReload);
+      clearSelection();
     });
   };
 
@@ -194,8 +195,12 @@ export function KBFilesList({ shop, activeContent, wip }) {
     plural: "Data",
   };
 
-  const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(uploadedFilesList);
+  const {
+    selectedResources,
+    allResourcesSelected,
+    handleSelectionChange,
+    clearSelection,
+  } = useIndexResourceState(uploadedFilesList);
 
   const rowMarkup = uploadedFilesList.map(
     ({ id, topic, answer, type, preview }, index) => (

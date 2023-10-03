@@ -34,6 +34,7 @@ export const ConversationsList = ({ shop }) => {
         );
         setConversations(response.data.items);
         setPageCount(response.data.pages);
+        setSelectedConversation(response.data.items[0]);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch conversations data:", error);
