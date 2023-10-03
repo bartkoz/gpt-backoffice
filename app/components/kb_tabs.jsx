@@ -127,7 +127,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `http://localhost:8000/update-embeddings-pdf/?store_name=${domains}&topic=${title}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/?store_name=${domains}&topic=${title}`,
           formData
         );
       }
