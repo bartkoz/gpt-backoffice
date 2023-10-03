@@ -27,5 +27,11 @@ export async function loader({ request }) {
 
 export default function ProductRecommendations() {
   const shopData = useLoaderData();
-  return <Page>{shopData && <ChatPreview data={shopData} />}</Page>;
+  return (
+    <Page>
+      {" "}
+      <ui-title-bar title="Chat preview" />
+      {shopData && <ChatPreview data={shopData} />}
+    </Page>
+  );
 }

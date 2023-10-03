@@ -358,7 +358,7 @@ export function KBActions({
       {activeContent && (
         <Frame>
           <Modal
-            title="Upload file"
+            title="Create entry"
             open={!!activeContent}
             onClose={() => setActiveContent(null)}
           >
@@ -369,7 +369,7 @@ export function KBActions({
       <PageActions
         secondaryActions={[
           {
-            content: "Create FAQs",
+            content: "Create FAQ",
             onAction: () => setActiveContent(createQAContent),
           },
           {

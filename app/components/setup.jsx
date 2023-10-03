@@ -118,7 +118,15 @@ export default function SetupForm({ shop }) {
   return (
     <Frame>
       {isLoading && <Loading />}
-      <VerticalStack gap="4">
+      <ui-title-bar title="Chat settings" />
+      <VerticalStack gap="1">
+        <Button
+          onClick={handleSubmit}
+          primarySuccess={true}
+          disabled={isSaving || isLoading}
+        >
+          Save
+        </Button>
         <Form>
           <FormLayout>
             {/*<Card>*/}
