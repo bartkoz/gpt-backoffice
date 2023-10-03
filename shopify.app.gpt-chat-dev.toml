@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://do-athletes-crafts-commitment.trycloudflare.com"
+application_url = "https://language-bg-rank-maintaining.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://do-athletes-crafts-commitment.trycloudflare.com/auth/callback",
-  "https://do-athletes-crafts-commitment.trycloudflare.com/auth/shopify/callback",
-  "https://do-athletes-crafts-commitment.trycloudflare.com/api/auth/callback"
+  "https://language-bg-rank-maintaining.trycloudflare.com/auth/callback",
+  "https://language-bg-rank-maintaining.trycloudflare.com/auth/shopify/callback",
+  "https://language-bg-rank-maintaining.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

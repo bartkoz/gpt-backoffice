@@ -127,7 +127,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}&topic=${title}`,
+          `http://localhost:8000/update-embeddings-pdf/?store_name=${domains}&topic=${title}`,
           formData
         );
       }
@@ -141,7 +141,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
     <>
       <Layout.Section>
         <TextField
-          label="Topic"
+          label="Descriptive title"
           value={title}
           onChange={(newValue) => setTitle(newValue)}
           autoComplete="off"
@@ -358,7 +358,7 @@ export function KBActions({
       {activeContent && (
         <Frame>
           <Modal
-            title="KB Definition"
+            title="Upload file"
             open={!!activeContent}
             onClose={() => setActiveContent(null)}
           >
@@ -373,11 +373,11 @@ export function KBActions({
             onAction: () => setActiveContent(createQAContent),
           },
           {
-            content: "Upload File",
+            content: "Upload file",
             onAction: () => setActiveContent(CreateFileUploadContent),
           },
           {
-            content: "Import Policies",
+            content: "Import policies",
             onAction: () => {
               handleImportPolicies({ setWip });
             },
