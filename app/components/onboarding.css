@@ -1,0 +1,9 @@
+.sectionWrapper {
+  position: relative;
+}
+
+.doneIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

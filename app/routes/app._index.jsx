@@ -12,6 +12,7 @@ import { DaysToEndOfMonth, TokenBar } from "~/components/tokenbar";
 import BillingBanner from "~/components/billing";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Onboarding from "~/components/onboarding";
 
 export async function loader({ request }) {
   const { admin } = await authenticate.admin(request);
@@ -118,6 +119,9 @@ export default function Index() {
     <Page>
       <VerticalStack gap="5">
         <Layout>
+          <Layout.Section>
+            <Onboarding />
+          </Layout.Section>
           {isTrial && (
             <Layout.Section>
               <Card>
