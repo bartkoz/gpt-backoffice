@@ -50,33 +50,46 @@ export function QAForm({ actionData, setActiveContent, toggleActive }) {
   };
 
   return (
-    <Layout.Section>
-      <FormLayout>
-        <FormLayout.Group>
-          <TextField
-            labelHidden
-            autoComplete="off"
-            multiline={3}
-            placeholder={"Question"}
-            value={inputTextTopic}
-            onChange={(newValue) => setInputTextTopic(newValue)}
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <TextField
-            multiline={3}
-            placeholder={"Answer"}
-            value={inputText}
-            onChange={(newValue) => setInputText(newValue)}
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <Button primarySuccess onClick={handleSubmit} disabled={isUploading}>
-            Save
-          </Button>
-        </FormLayout.Group>
-      </FormLayout>
-    </Layout.Section>
+    <>
+      <Layout.Section>
+        In the "Topic" field, specify the main subject or inquiry you're
+        exploring, and in the "Answer" field, provide specific details or
+        context that best describes the topic or directly answers the initial
+        question. This structured information will aid the bot in generating
+        more accurate and detailed responses.
+      </Layout.Section>
+      <Layout.Section>
+        <FormLayout>
+          <FormLayout.Group>
+            <TextField
+              labelHidden
+              autoComplete="off"
+              multiline={3}
+              placeholder={"Question"}
+              value={inputTextTopic}
+              onChange={(newValue) => setInputTextTopic(newValue)}
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <TextField
+              multiline={3}
+              placeholder={"Answer"}
+              value={inputText}
+              onChange={(newValue) => setInputText(newValue)}
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <Button
+              primarySuccess
+              onClick={handleSubmit}
+              disabled={isUploading}
+            >
+              Save
+            </Button>
+          </FormLayout.Group>
+        </FormLayout>
+      </Layout.Section>
+    </>
   );
 }
 
@@ -141,6 +154,12 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
 
   return (
     <>
+      <Layout.Section>
+        Upload your PDF files here; their text will be extracted and used to
+        enhance the bot’s ability to provide accurate and informative answers.
+        Ensure the PDFs are text-readable to ensure accurate information
+        extraction.
+      </Layout.Section>
       <Layout.Section>
         <TextField
           label="Descriptive title"
