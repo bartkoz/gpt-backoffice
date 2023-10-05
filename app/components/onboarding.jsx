@@ -27,7 +27,7 @@ export default function Onboarding(shop) {
   };
 
   return (
-    onboardingStep && (
+    onboardingStep < 4 && (
       <LegacyCard title="First steps">
         <LegacyCard.Section title="Chat settings">
           <LegacyStack>
