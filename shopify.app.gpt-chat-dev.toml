@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://eligible-contribution-gather-austin.trycloudflare.com"
+application_url = "https://ultimately-met-recommendations-jj.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://eligible-contribution-gather-austin.trycloudflare.com/auth/callback",
-  "https://eligible-contribution-gather-austin.trycloudflare.com/auth/shopify/callback",
-  "https://eligible-contribution-gather-austin.trycloudflare.com/api/auth/callback"
+  "https://ultimately-met-recommendations-jj.trycloudflare.com/auth/callback",
+  "https://ultimately-met-recommendations-jj.trycloudflare.com/auth/shopify/callback",
+  "https://ultimately-met-recommendations-jj.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

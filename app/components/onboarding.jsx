@@ -1,7 +1,8 @@
-import { Button, LegacyCard, LegacyStack } from "@shopify/polaris";
+import { Button, Icon, LegacyCard, LegacyStack } from "@shopify/polaris";
 import { Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CancelMajor } from "@shopify/polaris-icons";
 
 export default function Onboarding(shop) {
   const [onboardingStep, setOnboardingStep] = useState(null);
@@ -26,6 +27,12 @@ export default function Onboarding(shop) {
     );
   };
 
+  const CloseButton = ({ onClick }) => (
+    <span onClick={onClick} style={{ cursor: "pointer" }} color={"black"}>
+      <Icon source={CancelMajor} color="base" />
+    </span>
+  );
+
   return (
     onboardingStep < 4 && (
       <LegacyCard title="First steps">
@@ -34,10 +41,7 @@ export default function Onboarding(shop) {
           actions={
             onboardingStep === 1 && [
               {
-                content: "X",
-                onAction: () => {
-                  updateOnboarding(2);
-                },
+                content: <CloseButton onClick={() => updateOnboarding(2)} />,
               },
             ]
           }
@@ -68,10 +72,7 @@ export default function Onboarding(shop) {
           actions={
             onboardingStep === 2 && [
               {
-                content: "X",
-                onAction: () => {
-                  updateOnboarding(3);
-                },
+                content: <CloseButton onClick={() => updateOnboarding(3)} />,
               },
             ]
           }
@@ -106,10 +107,7 @@ export default function Onboarding(shop) {
           actions={
             onboardingStep === 3 && [
               {
-                content: "X",
-                onAction: () => {
-                  updateOnboarding(4);
-                },
+                content: <CloseButton onClick={() => updateOnboarding(4)} />,
               },
             ]
           }
