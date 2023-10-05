@@ -29,7 +29,19 @@ export default function Onboarding(shop) {
   return (
     onboardingStep < 4 && (
       <LegacyCard title="First steps">
-        <LegacyCard.Section title="Chat settings">
+        <LegacyCard.Section
+          title="Chat settings"
+          actions={
+            onboardingStep === 1 && [
+              {
+                content: "X",
+                onAction: () => {
+                  updateOnboarding(2);
+                },
+              },
+            ]
+          }
+        >
           <LegacyStack>
             <p>
               Easily define the look of your chat by adjusting colors and basic
@@ -51,7 +63,19 @@ export default function Onboarding(shop) {
             </Button>
           </LegacyStack>
         </LegacyCard.Section>
-        <LegacyCard.Section title="Knowledge base">
+        <LegacyCard.Section
+          title="Knowledge base"
+          actions={
+            onboardingStep === 2 && [
+              {
+                content: "X",
+                onAction: () => {
+                  updateOnboarding(3);
+                },
+              },
+            ]
+          }
+        >
           <LegacyStack>
             <p>
               Enrich your chatbot by defining your own data in the Knowledge
@@ -77,7 +101,19 @@ export default function Onboarding(shop) {
             </Button>
           </LegacyStack>
         </LegacyCard.Section>
-        <LegacyCard.Section title="Chat preview">
+        <LegacyCard.Section
+          title="Chat preview"
+          actions={
+            onboardingStep === 3 && [
+              {
+                content: "X",
+                onAction: () => {
+                  updateOnboarding(4);
+                },
+              },
+            ]
+          }
+        >
           <LegacyStack>
             <p>
               Explore and test your chat's functionality and aesthetic changes

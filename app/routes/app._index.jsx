@@ -119,7 +119,11 @@ export default function Index() {
     <Page>
       <VerticalStack gap="5">
         <Layout>
-          <Layout.Section>{host && <Onboarding shop={host} />}</Layout.Section>
+          {!billingUrl && (
+            <Layout.Section>
+              {host && <Onboarding shop={host} />}
+            </Layout.Section>
+          )}
           {isTrial && (
             <Layout.Section>
               <Card>
