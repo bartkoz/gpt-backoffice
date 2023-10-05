@@ -16,7 +16,6 @@ import {
   EmptySearchResult,
   Frame,
   TextContainer,
-  Toast,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -47,6 +46,7 @@ export function QAForm({ actionData, setActiveContent, toggleActive }) {
     setInputTextTopic("");
     setIsUploading(false);
     setActiveContent(null);
+    toggleActive();
   };
 
   return (
