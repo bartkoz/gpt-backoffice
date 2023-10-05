@@ -9,6 +9,7 @@ import {
   Loading,
   Frame,
   Toast,
+  HorizontalStack,
 } from "@shopify/polaris";
 import { useEffect, useContext, useState, useCallback } from "react";
 import axios from "axios";
@@ -42,6 +43,26 @@ export default function SetupForm({ shop }) {
       });
   };
 
+  const resetToDefault = () => {
+    setChatSetupBackend({
+      background_color: "#00214d",
+      font_color: "#FFFFFF",
+      welcome_message: "Hello I'm virtual assistant how may I help you?",
+      bar_message: "👋  Glad to help you whenever I can!",
+      recommendation_message: "Based on search I recommend",
+      recommendation_button_text: "Check",
+      recommendation_currency: "$",
+      feedback_thank_you: "Thank you for you feedback",
+      feedback_positive: "Upvote",
+      feedback_negative: "Downvote",
+      ask_a_question: "Ask a question...",
+      write_an_answer: "Write an answer",
+    });
+    setChatSetupFrontend({
+      language: "en",
+      dynamic_context: "",
+    });
+  };
   useEffect(() => {
     const getSetup = async () => {
       try {
@@ -126,7 +147,8 @@ export default function SetupForm({ shop }) {
       {active && <Toast content="Saved!" onDismiss={toggleActive} />}
       {isLoading && <Loading />}
       <ui-title-bar title="Chat settings" />
-      <VerticalStack gap="1">
+      <HorizontalStack wrap={false} gap={1}>
+        {" "}
         <Button
           onClick={handleSubmit}
           primarySuccess={true}
@@ -134,6 +156,11 @@ export default function SetupForm({ shop }) {
         >
           Save
         </Button>
+        <Button onClick={resetToDefault} destructive={true}>
+          Reset to default
+        </Button>
+      </HorizontalStack>
+      <VerticalStack gap="1">
         <Form>
           <FormLayout>
             {/*<Card>*/}
@@ -332,14 +359,14 @@ export default function SetupForm({ shop }) {
             </Card>
           </FormLayout>
         </Form>
-        <Button
-          onClick={handleSubmit}
-          primarySuccess={true}
-          disabled={isSaving || isLoading}
-        >
-          Save
-        </Button>
       </VerticalStack>
+      <Button
+        onClick={handleSubmit}
+        primarySuccess={true}
+        disabled={isSaving || isLoading}
+      >
+        Save
+      </Button>
     </Frame>
   );
 }
