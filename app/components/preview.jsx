@@ -37,5 +37,17 @@ export function ChatPreview({ data }) {
 
   const host = findFirstShopifyHost(data);
   const url = `https://frontend-dot-chatbot-zezwolenia.ey.r.appspot.com/?host=${host}`;
-  return <>{isReady && <iframe src={url} width="400" height="550"></iframe>}</>;
+  return (
+    <>
+      {isReady && (
+        <iframe
+          src={url}
+          width="400"
+          height="550"
+          frameBorder={0}
+          style={{ border: "none" }}
+        ></iframe>
+      )}
+    </>
+  );
 }
