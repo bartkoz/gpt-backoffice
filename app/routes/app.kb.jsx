@@ -1,5 +1,5 @@
-import { Layout, Page } from "@shopify/polaris";
-import { useState } from "react";
+import { Frame, Layout, Page, Toast } from "@shopify/polaris";
+import { useCallback, useState } from "react";
 import { KBActions, KBFilesList } from "~/components/kb_tabs";
 import { authenticate } from "~/shopify.server";
 import { useLoaderData } from "@remix-run/react";
@@ -48,30 +48,35 @@ export default function KBUpload() {
   const shopData = useLoaderData();
   const [activeContent, setActiveContent] = useState(null);
   const [wip, setWip] = useState(false);
-
+  const [active, setActive] = useState(false);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
   return (
-    <Page>
-      <Layout>
-        <ui-title-bar title="Knowledge base" />
-        <Layout.Section>
-          <KBActions
-            actionData={shopData}
-            activeContent={activeContent}
-            setActiveContent={setActiveContent}
-            wip={wip}
-            setWip={setWip}
-          />
-        </Layout.Section>
-        <Layout.Section>
-          {shopData && (
-            <KBFilesList
-              shop={shopData.host}
+    <Frame>
+      <Page>
+        {active && <Toast content="Saved!" onDismiss={toggleActive} />}
+        <Layout>
+          <ui-title-bar title="Knowledge base" />
+          <Layout.Section>
+            <KBActions
+              actionData={shopData}
               activeContent={activeContent}
+              setActiveContent={setActiveContent}
               wip={wip}
+              setWip={setWip}
+              toggleActive={toggleActive}
             />
-          )}
-        </Layout.Section>
-      </Layout>
-    </Page>
+          </Layout.Section>
+          <Layout.Section>
+            {shopData && (
+              <KBFilesList
+                shop={shopData.host}
+                activeContent={activeContent}
+                wip={wip}
+              />
+            )}
+          </Layout.Section>
+        </Layout>
+      </Page>
+    </Frame>
   );
 }

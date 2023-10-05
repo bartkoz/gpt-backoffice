@@ -8,8 +8,9 @@ import {
   VerticalStack,
   Loading,
   Frame,
+  Toast,
 } from "@shopify/polaris";
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, useCallback } from "react";
 import axios from "axios";
 import ChatSetupContext from "~/components/context";
 
@@ -22,6 +23,9 @@ export default function SetupForm({ shop }) {
     setChatSetupFrontend,
   } = useContext(ChatSetupContext);
   const [isSaving, setIsSaving] = useState(false);
+  const [active, setActive] = useState(false);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
   const handleSubmit = async () => {
     setIsSaving(true);
     await axios
@@ -34,6 +38,7 @@ export default function SetupForm({ shop }) {
       )
       .then(() => {
         setIsSaving(false);
+        toggleActive();
       });
   };
 
@@ -115,8 +120,10 @@ export default function SetupForm({ shop }) {
     { label: "Urdu", value: "ur" },
     { label: "Vietnamese", value: "vi" },
   ];
+
   return (
     <Frame>
+      {active && <Toast content="Saved!" onDismiss={toggleActive} />}
       {isLoading && <Loading />}
       <ui-title-bar title="Chat settings" />
       <VerticalStack gap="1">

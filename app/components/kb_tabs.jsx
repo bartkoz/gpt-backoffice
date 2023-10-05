@@ -16,6 +16,7 @@ import {
   EmptySearchResult,
   Frame,
   TextContainer,
+  Toast,
 } from "@shopify/polaris";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -25,7 +26,7 @@ import {
   NoteMinor,
 } from "@shopify/polaris-icons";
 
-export function QAForm({ actionData, setActiveContent }) {
+export function QAForm({ actionData, setActiveContent, toggleActive }) {
   const [inputText, setInputText] = useState("");
   const [inputTextTopic, setInputTextTopic] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -79,7 +80,7 @@ export function QAForm({ actionData, setActiveContent }) {
   );
 }
 
-export function KbFileUpload({ actionData, setActiveContent }) {
+export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
   const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [title, setTitle] = useState("");
@@ -135,6 +136,7 @@ export function KbFileUpload({ actionData, setActiveContent }) {
     setFiles([]);
     setIsUploading(false);
     setActiveContent(null);
+    toggleActive();
   };
 
   return (
@@ -319,12 +321,21 @@ export function KBActions({
   setActiveContent,
   wip,
   setWip,
+  toggleActive,
 }) {
   const CreateFileUploadContent = (
-    <KbFileUpload actionData={actionData} setActiveContent={setActiveContent} />
+    <KbFileUpload
+      actionData={actionData}
+      setActiveContent={setActiveContent}
+      toggleActive={toggleActive}
+    />
   );
   const createQAContent = (
-    <QAForm actionData={actionData} setActiveContent={setActiveContent} />
+    <QAForm
+      actionData={actionData}
+      setActiveContent={setActiveContent}
+      toggleActive={toggleActive}
+    />
   );
 
   function stripHtmlTags(input) {
@@ -384,7 +395,7 @@ export function KBActions({
           {
             content: "Import policies",
             onAction: () => {
-              handleImportPolicies({ setWip });
+              handleImportPolicies({ setWip }).then(toggleActive);
             },
             disabled: wip,
             loading: wip,
