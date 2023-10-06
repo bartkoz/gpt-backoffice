@@ -3,8 +3,7 @@ import { Typography } from "@mui/material";
 import { useContext } from "react";
 import ChatSetupContext from "~/components/context";
 
-export default function Message() {
-  const { chatSetupFrontend } = useContext(ChatSetupContext);
+export default function Message({ chatSetupFrontend }) {
   const boxStyleSystem = {
     backgroundColor: "#f0f0f0",
     color: "#202124",

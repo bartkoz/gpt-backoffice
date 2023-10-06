@@ -3,67 +3,23 @@ import {
   FormLayout,
   Select,
   TextField,
-  Button,
   Card,
   VerticalStack,
   Loading,
   Frame,
-  Toast,
-  HorizontalStack,
-  ButtonGroup,
 } from "@shopify/polaris";
-import { useEffect, useContext, useState, useCallback } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import ChatSetupContext from "~/components/context";
 
-export default function SetupForm({ shop }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const {
-    chatSetupBackend,
-    setChatSetupBackend,
-    chatSetupFrontend,
-    setChatSetupFrontend,
-  } = useContext(ChatSetupContext);
-  const [isSaving, setIsSaving] = useState(false);
-  const [active, setActive] = useState(false);
-  const toggleActive = useCallback(() => setActive((active) => !active), []);
-
-  const handleSubmit = async () => {
-    setIsSaving(true);
-    await axios
-      .post(
-        `https://backend-rvm4xlf6ba-ey.a.run.app/update-chat-conf/?store_name=${shop}`,
-        {
-          backend: chatSetupBackend,
-          frontend: chatSetupFrontend,
-        }
-      )
-      .then(() => {
-        setIsSaving(false);
-        toggleActive();
-      });
-  };
-
-  const resetToDefault = () => {
-    setChatSetupBackend({
-      background_color: "#00214d",
-      font_color: "#FFFFFF",
-      welcome_message: "Hello I'm virtual assistant how may I help you?",
-      bar_message: "👋  Glad to help you whenever I can!",
-      recommendation_message: "Based on search I recommend",
-      recommendation_button_text: "Check",
-      recommendation_currency: "$",
-      feedback_thank_you: "Thank you for you feedback",
-      feedback_positive: "Upvote",
-      feedback_negative: "Downvote",
-      ask_a_question: "Ask a question...",
-      write_an_answer: "Write an answer",
-    });
-    setChatSetupFrontend({
-      language: "en",
-      dynamic_context: "",
-    });
-  };
+export default function SetupForm({
+  shop,
+  chatSetupBackend,
+  setChatSetupBackend,
+  chatSetupFrontend,
+  setChatSetupFrontend,
+  isLoading,
+  setIsLoading,
+}) {
   useEffect(() => {
     const getSetup = async () => {
       try {
@@ -145,21 +101,8 @@ export default function SetupForm({ shop }) {
 
   return (
     <Frame>
-      {active && <Toast content="Saved!" onDismiss={toggleActive} />}
       {isLoading && <Loading />}
       <ui-title-bar title="Chat settings" />
-      <ButtonGroup fullWidth>
-        <Button
-          onClick={handleSubmit}
-          primarySuccess={true}
-          disabled={isSaving || isLoading}
-        >
-          Save
-        </Button>
-        <Button onClick={resetToDefault} destructive={true}>
-          Reset to default
-        </Button>
-      </ButtonGroup>
       {/*<HorizontalStack wrap={false} gap={1}>*/}
       {/*  {" "}*/}
       {/*  <Button*/}
@@ -373,13 +316,6 @@ export default function SetupForm({ shop }) {
           </FormLayout>
         </Form>
       </VerticalStack>
-      <Button
-        onClick={handleSubmit}
-        primarySuccess={true}
-        disabled={isSaving || isLoading}
-      >
-        Save
-      </Button>
     </Frame>
   );
 }

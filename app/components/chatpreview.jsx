@@ -8,13 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { Fragment, useContext } from "react";
-import ChatSetupContext from "~/components/context";
+import { Fragment } from "react";
 import Message from "~/components/message";
 import SendIcon from "@mui/icons-material/Send";
 
-export default function ChatPreview() {
-  const { chatSetupFrontend } = useContext(ChatSetupContext);
+export default function ChatPreview({ chatSetupFrontend }) {
   return (
     <Fragment>
       <Container>
@@ -58,7 +56,7 @@ export default function ChatPreview() {
           <Box style={{ flexGrow: 1 }}>
             {" "}
             {/* This box takes up all available space */}
-            <Message />
+            <Message chatSetupFrontend={chatSetupFrontend} />
             {/*<Recommendation />*/}
           </Box>
           <Box sx={{ m: 1 }} mt={2} display="flex" alignItems="center">
