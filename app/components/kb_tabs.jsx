@@ -297,9 +297,11 @@ export function KBFilesList({ shop, activeContent, wip }) {
   const selectedFilesMarkup = () => {
     return (
       <div style={{ marginBottom: "10px" }}>
-        <p>
-          <b>{preview.topic}</b>: {preview.answer}
-        </p>
+        {preview && (
+          <p>
+            <b>{preview.topic}</b>: {preview.answer}
+          </p>
+        )}
       </div>
     );
   };
