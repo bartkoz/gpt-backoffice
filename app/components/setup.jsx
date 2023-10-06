@@ -10,6 +10,7 @@ import {
   Frame,
   Toast,
   HorizontalStack,
+  ButtonGroup,
 } from "@shopify/polaris";
 import { useEffect, useContext, useState, useCallback } from "react";
 import axios from "axios";
@@ -147,8 +148,7 @@ export default function SetupForm({ shop }) {
       {active && <Toast content="Saved!" onDismiss={toggleActive} />}
       {isLoading && <Loading />}
       <ui-title-bar title="Chat settings" />
-      <HorizontalStack wrap={false} gap={1}>
-        {" "}
+      <ButtonGroup fullWidth>
         <Button
           onClick={handleSubmit}
           primarySuccess={true}
@@ -159,7 +159,20 @@ export default function SetupForm({ shop }) {
         <Button onClick={resetToDefault} destructive={true}>
           Reset to default
         </Button>
-      </HorizontalStack>
+      </ButtonGroup>
+      {/*<HorizontalStack wrap={false} gap={1}>*/}
+      {/*  {" "}*/}
+      {/*  <Button*/}
+      {/*    onClick={handleSubmit}*/}
+      {/*    primarySuccess={true}*/}
+      {/*    disabled={isSaving || isLoading}*/}
+      {/*  >*/}
+      {/*    Save*/}
+      {/*  </Button>*/}
+      {/*  <Button onClick={resetToDefault} destructive={true}>*/}
+      {/*    Reset to default*/}
+      {/*  </Button>*/}
+      {/*</HorizontalStack>*/}
       <VerticalStack gap="1">
         <Form>
           <FormLayout>

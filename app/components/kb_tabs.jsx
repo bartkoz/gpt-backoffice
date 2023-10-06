@@ -186,6 +186,7 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
 
 export function KBFilesList({ shop, activeContent, wip }) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [preview, setPreview] = useState(null);
   const getKBFiles = async () => {
     const response = await axios.get(
       `https://backend-rvm4xlf6ba-ey.a.run.app/kb/${shop}`
@@ -249,15 +250,20 @@ export function KBFilesList({ shop, activeContent, wip }) {
         <IndexTable.Cell>
           {preview ? (
             <Link
-              onClick={() => {
+              onClick={(e) => {
+                setPreview({ topic, answer });
+                e.stopPropagation();
                 window.open(preview, "_blank");
+                // setPreview()
               }}
             >
               <Icon source={FileFilledMinor} color="base" />
             </Link>
           ) : (
             <Link
-              onClick={() => {
+              onClick={(e) => {
+                setPreview({ topic, answer });
+                e.stopPropagation();
                 setActive(true);
               }}
             >
@@ -288,15 +294,15 @@ export function KBFilesList({ shop, activeContent, wip }) {
   );
   const [active, setActive] = useState(false);
   const handleChange = useCallback(() => setActive(!active), [active]);
-  const selectedFilesMarkup = uploadedFilesList
-    .filter((file) => selectedResources.includes(file.id))
-    .map((file) => (
-      <div key={file.id} style={{ marginBottom: "10px" }}>
+  const selectedFilesMarkup = () => {
+    return (
+      <div style={{ marginBottom: "10px" }}>
         <p>
-          <b>{file.topic}</b>: {file.answer}
+          <b>{preview.topic}</b>: {preview.answer}
         </p>
       </div>
-    ));
+    );
+  };
 
   return (
     <Frame>
@@ -326,7 +332,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
         {" "}
         <Modal.Section>
           <TextContainer>
-            <p>{selectedFilesMarkup}</p>
+            <p>{selectedFilesMarkup()}</p>
           </TextContainer>
         </Modal.Section>
       </Modal>
