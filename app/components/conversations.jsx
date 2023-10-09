@@ -8,7 +8,7 @@ import {
   Link,
   Text,
   Frame,
-  VerticalStack,
+  BlockStack,
   LegacyStack,
   LegacyCard,
 } from "@shopify/polaris";
@@ -162,7 +162,7 @@ export const ConversationsList = ({ shop }) => {
           <Grid>
             <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 5, xl: 5 }}>
               <Card>
-                <VerticalStack gap={2}>
+                <BlockStack gap={2}>
                   {conversations.length > 0 ? (
                     <>
                       {conversationList()}
@@ -176,7 +176,7 @@ export const ConversationsList = ({ shop }) => {
                   ) : (
                     <Text as={"p"}>No conversations yet.</Text>
                   )}
-                </VerticalStack>
+                </BlockStack>
               </Card>
             </Grid.Cell>
             <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 7, xl: 7 }}>

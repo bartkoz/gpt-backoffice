@@ -1,9 +1,9 @@
 import {
   Layout,
-  VerticalStack,
+  BlockStack,
   Card,
   Button,
-  HorizontalStack,
+  InlineStack,
   Box,
 } from "@shopify/polaris";
 import { useActionData, useSubmit } from "@remix-run/react";
@@ -17,10 +17,10 @@ export default function Gql() {
   return (
     <Layout.Section>
       <Card>
-        <VerticalStack gap="5">
-          <HorizontalStack gap="3" align="end">
+        <BlockStack gap="5">
+          <InlineStack gap="3" align="end">
             <Button onClick={queryGQL}>Query GQL</Button>
-          </HorizontalStack>
+          </InlineStack>
           {actionData && (
             <Box
               padding="4"
@@ -35,7 +35,7 @@ export default function Gql() {
               </pre>
             </Box>
           )}
-        </VerticalStack>
+        </BlockStack>
       </Card>
     </Layout.Section>
   );

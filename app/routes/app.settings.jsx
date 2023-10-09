@@ -1,5 +1,5 @@
 import {
-  VerticalStack,
+  BlockStack,
   Layout,
   Page,
   Grid,
@@ -125,7 +125,7 @@ export default function Conversations() {
             },
           ]}
         />
-        <VerticalStack gap="5">
+        <BlockStack gap="5">
           <Layout>
             <Layout.Section>
               <Grid>
@@ -148,7 +148,7 @@ export default function Conversations() {
               </Grid>
             </Layout.Section>
           </Layout>
-        </VerticalStack>
+        </BlockStack>
       </Frame>
     </Page>
   );

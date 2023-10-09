@@ -7,9 +7,9 @@ import {
   Line,
   LineChart,
 } from "recharts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Layout, Card, Grid, Text, VerticalStack } from "@shopify/polaris";
+import { Layout, Card, Grid, Text, BlockStack } from "@shopify/polaris";
 const Chart = ({ shop }) => {
   const [chartData, setChartData] = useState(null);
 
@@ -58,26 +58,26 @@ const Chart = ({ shop }) => {
         <Grid>
           <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Card>
-              <VerticalStack gap="3">
+              <BlockStack gap="3">
                 <Text variant="headingMd" as="h6">
                   Conversations
                 </Text>
                 <Text variant="headingXl" as="h4">
                   {chartData.conversations}
                 </Text>
-              </VerticalStack>
+              </BlockStack>
             </Card>
           </Grid.Cell>
           <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Card>
-              <VerticalStack gap="3">
+              <BlockStack gap="3">
                 <Text variant="headingMd" as="h6">
                   Messages
                 </Text>
                 <Text variant="headingXl" as="h4">
                   {chartData.messages}
                 </Text>
-              </VerticalStack>
+              </BlockStack>
             </Card>
           </Grid.Cell>
         </Grid>

@@ -1,10 +1,4 @@
-import {
-  Page,
-  Layout,
-  VerticalStack,
-  Card,
-  HorizontalStack,
-} from "@shopify/polaris";
+import { Page, Layout, BlockStack, Card, InlineStack } from "@shopify/polaris";
 import Chart from "~/components/chart";
 import { authenticate } from "~/shopify.server";
 import { useLoaderData } from "@remix-run/react";
@@ -117,7 +111,7 @@ export default function Index() {
 
   return (
     <Page>
-      <VerticalStack gap="5">
+      <BlockStack gap="5">
         <Layout>
           {!billingUrl && (
             <Layout.Section>
@@ -141,15 +135,15 @@ export default function Index() {
           <Layout.Section>
             {!billingUrl && (
               <Card>
-                <HorizontalStack wrap={false}>
+                <InlineStack wrap={false}>
                   <DaysToEndOfMonth />
-                </HorizontalStack>
+                </InlineStack>
                 {host && <TokenBar tokensUsed={tokensUsed} />}
               </Card>
             )}
           </Layout.Section>
         </Layout>
-      </VerticalStack>
+      </BlockStack>
     </Page>
   );
 }

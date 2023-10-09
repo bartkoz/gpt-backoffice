@@ -4,7 +4,7 @@ import {
   Select,
   TextField,
   Card,
-  VerticalStack,
+  BlockStack,
   Loading,
   Frame,
 } from "@shopify/polaris";
@@ -103,7 +103,7 @@ export default function SetupForm({
     <Frame>
       {isLoading && <Loading />}
       <ui-title-bar title="Chat settings" />
-      {/*<HorizontalStack wrap={false} gap={1}>*/}
+      {/*<InlineStack wrap={false} gap={1}>*/}
       {/*  {" "}*/}
       {/*  <Button*/}
       {/*    onClick={handleSubmit}*/}
@@ -115,8 +115,8 @@ export default function SetupForm({
       {/*  <Button onClick={resetToDefault} destructive={true}>*/}
       {/*    Reset to default*/}
       {/*  </Button>*/}
-      {/*</HorizontalStack>*/}
-      <VerticalStack gap="1">
+      {/*</InlineStack>*/}
+      <BlockStack gap="1">
         <Form>
           <FormLayout>
             {/*<Card>*/}
@@ -315,7 +315,7 @@ export default function SetupForm({
             </Card>
           </FormLayout>
         </Form>
-      </VerticalStack>
+      </BlockStack>
     </Frame>
   );
 }
