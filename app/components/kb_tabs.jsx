@@ -26,14 +26,31 @@ import {
   NoteMinor,
 } from "@shopify/polaris-icons";
 
-export function QAForm({ actionData, setActiveContent, toggleActive }) {
-  const [inputText, setInputText] = useState("");
-  const [inputTextTopic, setInputTextTopic] = useState("");
+export function QAForm({
+  actionData,
+  setActiveContent,
+  toggleActive,
+  initialTopic,
+  initialAnswer,
+  deleteExisting,
+  elementUid,
+}) {
+  const [inputText, setInputText] = useState(
+    initialAnswer ? initialAnswer : ""
+  );
+  const [inputTextTopic, setInputTextTopic] = useState(
+    initialTopic ? initialTopic : ""
+  );
   const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = async () => {
     setIsUploading(true);
     const domains = actionData.host;
+    if (deleteExisting) {
+      await axios.post(
+        `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${domains}?uid=${elementUid}`
+      );
+    }
     if (inputText.length > 0) {
       await axios.post(
         `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${domains}`,
@@ -185,7 +202,14 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
   );
 }
 
-export function KBFilesList({ shop, activeContent, wip }) {
+export function KBFilesList({
+  shop,
+  activeContent,
+  wip,
+  actionData,
+  setActiveContent,
+  toggleActive,
+}) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [preview, setPreview] = useState(null);
   const getKBFiles = async () => {
@@ -255,7 +279,6 @@ export function KBFilesList({ shop, activeContent, wip }) {
                 setPreview({ topic, answer });
                 e.stopPropagation();
                 window.open(preview, "_blank");
-                // setPreview()
               }}
             >
               <Icon source={FileFilledMinor} color="base" />
@@ -263,7 +286,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
           ) : (
             <Link
               onClick={(e) => {
-                setPreview({ topic, answer });
+                setPreview({ topic, answer, id });
                 e.stopPropagation();
                 setActive(true);
               }}
@@ -308,6 +331,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
     );
   };
 
+  const [isEditing, setIsEditing] = useState(false);
   return (
     <Frame>
       {uploadedFilesList && uploadedFilesList.length > 0 ? (
@@ -332,12 +356,35 @@ export function KBFilesList({ shop, activeContent, wip }) {
           </IndexTable>
         </LegacyCard>
       ) : null}
-      <Modal open={active} onClose={handleChange} title="Preview">
+      <Modal
+        open={active}
+        onClose={handleChange}
+        title="Preview"
+        primaryAction={
+          !isEditing
+            ? {
+                content: "Edit",
+                onAction: () => {
+                  setIsEditing(true);
+                },
+              }
+            : null
+        }
+      >
         {" "}
         <Modal.Section>
-          <TextContainer>
-            <p>{selectedFilesMarkup()}</p>
-          </TextContainer>
+          {isEditing && (
+            <QAForm
+              actionData={actionData}
+              setActiveContent={setActiveContent}
+              toggleActive={toggleActive}
+              initialTopic={preview.topic}
+              initialAnswer={preview.answer}
+              deleteExisting={true}
+              elementUid={preview.id}
+            />
+          )}
+          {!isEditing && <TextContainer>{selectedFilesMarkup()}</TextContainer>}
         </Modal.Section>
       </Modal>
     </Frame>
