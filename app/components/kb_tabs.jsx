@@ -12,6 +12,7 @@ import {
   Modal,
   Button,
   LegacyStack,
+  Text,
   Thumbnail,
   EmptySearchResult,
   Frame,
@@ -298,9 +299,10 @@ export function KBFilesList({ shop, activeContent, wip }) {
     return (
       <div style={{ marginBottom: "10px" }}>
         {preview && (
-          <p>
-            <b>{preview.topic}</b>: {preview.answer}
-          </p>
+          <>
+            <Text as={"strong"}>{preview.topic}</Text>
+            <Text>{preview.answer}</Text>
+          </>
         )}
       </div>
     );

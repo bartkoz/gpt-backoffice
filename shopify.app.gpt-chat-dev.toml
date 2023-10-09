@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://revenues-continental-holes-fix.trycloudflare.com"
+application_url = "https://matrix-developments-netherlands-newbie.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://revenues-continental-holes-fix.trycloudflare.com/auth/callback",
-  "https://revenues-continental-holes-fix.trycloudflare.com/auth/shopify/callback",
-  "https://revenues-continental-holes-fix.trycloudflare.com/api/auth/callback"
+  "https://matrix-developments-netherlands-newbie.trycloudflare.com/auth/callback",
+  "https://matrix-developments-netherlands-newbie.trycloudflare.com/auth/shopify/callback",
+  "https://matrix-developments-netherlands-newbie.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
