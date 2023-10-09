@@ -2,7 +2,7 @@
 
 name = "gpt-chat-dev"
 client_id = "787d25f0632d150cfd79c24ea4403b0f"
-application_url = "https://cooling-phil-pleasant-apparent.trycloudflare.com"
+application_url = "https://event-took-trade-journey.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_legal_policies"
 
 [auth]
 redirect_urls = [
-  "https://cooling-phil-pleasant-apparent.trycloudflare.com/auth/callback",
-  "https://cooling-phil-pleasant-apparent.trycloudflare.com/auth/shopify/callback",
-  "https://cooling-phil-pleasant-apparent.trycloudflare.com/api/auth/callback"
+  "https://event-took-trade-journey.trycloudflare.com/auth/callback",
+  "https://event-took-trade-journey.trycloudflare.com/auth/shopify/callback",
+  "https://event-took-trade-journey.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
