@@ -72,6 +72,7 @@ export default function KBUpload() {
                 shop={shopData.host}
                 activeContent={activeContent}
                 wip={wip}
+                actionData={shopData}
               />
             )}
           </Layout.Section>

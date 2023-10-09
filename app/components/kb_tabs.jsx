@@ -185,7 +185,7 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
   );
 }
 
-export function KBFilesList({ shop, activeContent, wip }) {
+export function KBFilesList({ shop, activeContent, wip, actionData }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [preview, setPreview] = useState(null);
   const getKBFiles = async () => {
@@ -255,7 +255,6 @@ export function KBFilesList({ shop, activeContent, wip }) {
                 setPreview({ topic, answer });
                 e.stopPropagation();
                 window.open(preview, "_blank");
-                // setPreview()
               }}
             >
               <Icon source={FileFilledMinor} color="base" />
@@ -263,7 +262,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
           ) : (
             <Link
               onClick={(e) => {
-                setPreview({ topic, answer });
+                setPreview({ topic, answer, id });
                 e.stopPropagation();
                 setActive(true);
               }}
@@ -307,7 +306,7 @@ export function KBFilesList({ shop, activeContent, wip }) {
       </div>
     );
   };
-
+  const [isEditing, setIsEditing] = useState(false);
   return (
     <Frame>
       {uploadedFilesList && uploadedFilesList.length > 0 ? (
@@ -332,15 +331,137 @@ export function KBFilesList({ shop, activeContent, wip }) {
           </IndexTable>
         </LegacyCard>
       ) : null}
-      <Modal open={active} onClose={handleChange} title="Preview">
+      <Modal
+        open={active}
+        onClose={handleChange}
+        title="Preview"
+        primaryAction={
+          !isEditing
+            ? {
+                content: "Edit",
+                onAction: () => {
+                  setIsEditing(true);
+                },
+              }
+            : null
+        }
+        secondaryActions={
+          isEditing
+            ? [
+                {
+                  content: "Back",
+                  onAction: () => {
+                    setIsEditing(false);
+                  },
+                },
+              ]
+            : []
+        }
+      >
         {" "}
         <Modal.Section>
-          <TextContainer>
-            <p>{selectedFilesMarkup()}</p>
-          </TextContainer>
+          {isEditing && (
+            <QAEdit
+              setPreview={setPreview}
+              setIsEditing={setIsEditing}
+              actionData={actionData}
+              initialAnswer={preview.answer}
+              initialTopic={preview.topic}
+              uid={preview.id}
+              getKBFiles={getKBFiles}
+            />
+          )}
+          {!isEditing && <TextContainer>{selectedFilesMarkup()}</TextContainer>}
         </Modal.Section>
       </Modal>
     </Frame>
+  );
+}
+
+export function QAEdit({
+  actionData,
+  initialAnswer,
+  initialTopic,
+  setPreview,
+  setIsEditing,
+  uid,
+  getKBFiles,
+}) {
+  const [inputText, setInputText] = useState(
+    initialAnswer ? initialAnswer : ""
+  );
+  const [inputTextTopic, setInputTextTopic] = useState(
+    initialTopic ? initialTopic : ""
+  );
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsUploading(true);
+    const domains = actionData.host;
+    await axios.post(
+      `https://backend-rvm4xlf6ba-ey.a.run.app/kb/delete/${domains}?uid=${uid}`
+    );
+    if (inputText.length > 0) {
+      await axios
+        .post(
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-text/?store_name=${domains}`,
+          {
+            question: inputTextTopic,
+            answer: inputText,
+          }
+        )
+        .then((resp) => {
+          setPreview(resp.data);
+          getKBFiles();
+        });
+    }
+    setInputText("");
+    setInputTextTopic("");
+    setIsUploading(false);
+    setIsEditing(false);
+  };
+
+  return (
+    <>
+      <Layout.Section>
+        In the "Topic" field, specify the main subject or inquiry you're
+        exploring, and in the "Answer" field, provide specific details or
+        context that best describes the topic or directly answers the initial
+        question. This structured information will aid the bot in generating
+        more accurate and detailed responses.
+      </Layout.Section>
+      <Layout.Section>
+        <FormLayout>
+          <FormLayout.Group>
+            <TextField
+              labelHidden
+              autoComplete="off"
+              multiline={3}
+              placeholder={"Question"}
+              value={inputTextTopic}
+              onChange={(newValue) => setInputTextTopic(newValue)}
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <TextField
+              multiline={3}
+              placeholder={"Answer"}
+              value={inputText}
+              onChange={(newValue) => setInputText(newValue)}
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <Button
+              primarySuccess
+              onClick={handleSubmit}
+              disabled={isUploading}
+            >
+              Save
+            </Button>
+          </FormLayout.Group>
+        </FormLayout>
+      </Layout.Section>
+    </>
   );
 }
 
