@@ -1,5 +1,4 @@
 import { Button, Icon, LegacyCard, LegacyStack } from "@shopify/polaris";
-import { Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CancelMajor } from "@shopify/polaris-icons";
@@ -29,8 +28,8 @@ export default function Onboarding(shop) {
   };
 
   const CloseButton = ({ onClick }) => (
-    <span onClick={onClick} style={{ cursor: "pointer" }} color={"black"}>
-      <Icon source={CancelMajor} color="base" />
+    <span onClick={onClick}>
+      <Icon source={CancelMajor} tone="primary" />
     </span>
   );
 
