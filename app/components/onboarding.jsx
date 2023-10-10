@@ -6,7 +6,7 @@ import { CancelMajor } from "@shopify/polaris-icons";
 
 export default function Onboarding(shop) {
   const [onboardingStep, setOnboardingStep] = useState(null);
-
+  const [isReady, setIsReady] = useState(false);
   useEffect(() => {
     const resp = async () => {
       await axios
@@ -14,6 +14,7 @@ export default function Onboarding(shop) {
           `https://backend-rvm4xlf6ba-ey.a.run.app/onboarding/?shop_name=${shop.shop}`
         )
         .then((resp) => {
+          setIsReady(true);
           setOnboardingStep(resp.data);
         });
     };
@@ -34,7 +35,8 @@ export default function Onboarding(shop) {
   );
 
   return (
-    onboardingStep < 4 && (
+    onboardingStep < 4 &&
+    isReady && (
       <LegacyCard title="First steps">
         <LegacyCard.Section
           title="Chat settings"
