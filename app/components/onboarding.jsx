@@ -35,7 +35,7 @@ export default function Onboarding(shop) {
   );
 
   return (
-    onboardingStep < 4 &&
+    onboardingStep < 5 &&
     isReady && (
       <LegacyCard title="First steps">
         <LegacyCard.Section
@@ -134,6 +134,41 @@ export default function Onboarding(shop) {
               {onboardingStep < 3
                 ? "Complete previous step"
                 : onboardingStep === 3
+                ? "Configure"
+                : "Done"}
+            </Button>
+          </LegacyStack>
+        </LegacyCard.Section>
+        <LegacyCard.Section
+          title="Seamless Chat Integration Awaits"
+          actions={
+            onboardingStep === 4 && [
+              {
+                content: <CloseButton onClick={() => updateOnboarding(5)} />,
+              },
+            ]
+          }
+        >
+          <LegacyStack>
+            <p>
+              Effortlessly add our chat plugin to your Shopify store and enhance
+              your customer service, providing timely and efficient responses to
+              all shopper inquiries.
+            </p>
+            <Button
+              disabled={onboardingStep !== 4}
+              primarySuccess={onboardingStep === 4}
+              onClick={() => {
+                updateOnboarding(5);
+                window.open(
+                  `https://${shop.shop}/admin/apps/gpt-chat/app/add-to-theme`,
+                  "_blank"
+                );
+              }}
+            >
+              {onboardingStep < 4
+                ? "Complete previous step"
+                : onboardingStep === 4
                 ? "Configure"
                 : "Done"}
             </Button>

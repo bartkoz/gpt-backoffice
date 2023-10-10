@@ -67,7 +67,8 @@ export default function App() {
             <Link to="/app/kb">Knowledge base</Link>
             <Link to="/app/settings">Chat settings</Link>
             <Link to="/app/preview">Chat preview</Link>
-            <Link to="/app/contact">Contact</Link>
+            <Link to="/app/add-to-theme">Add to theme</Link>
+            <Link to="/app/contact">Support</Link>
           </>
         )}
       </ui-nav-menu>
