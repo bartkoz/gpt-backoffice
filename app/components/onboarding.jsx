@@ -54,6 +54,7 @@ export default function Onboarding(shop) {
               design features to harmoniously integrate it into your shop’s
               interface.
             </p>
+            <br />
             <Button
               disabled={onboardingStep > 1}
               primarySuccess={onboardingStep <= 1}
