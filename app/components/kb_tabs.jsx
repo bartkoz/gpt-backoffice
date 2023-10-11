@@ -22,6 +22,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
   ContentMinor,
+  EditMajor,
   FileFilledMinor,
   NoteMinor,
 } from "@shopify/polaris-icons";
@@ -142,7 +143,7 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
         const formData = new FormData();
         formData.append(`file`, file);
         await axios.post(
-          `https://backend-rvm4xlf6ba-ey.a.run.app/?store_name=${domains}&topic=${title}`,
+          `https://backend-rvm4xlf6ba-ey.a.run.app/update-embeddings-pdf/?store_name=${domains}&topic=${title}`,
           formData
         );
       }
@@ -249,6 +250,20 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
         </IndexTable.Cell>
         <IndexTable.Cell>{type}</IndexTable.Cell>
         <IndexTable.Cell>
+          {type === "FAQ" && (
+            <Link
+              onClick={(e) => {
+                setPreview({ topic, answer, id });
+                e.stopPropagation();
+                setActive(true);
+                setIsEditing(true);
+              }}
+            >
+              <Icon source={EditMajor} color="base" />
+            </Link>
+          )}
+        </IndexTable.Cell>
+        <IndexTable.Cell>
           {preview ? (
             <Link
               onClick={(e) => {
@@ -323,6 +338,7 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
               { title: "Topic" },
               { title: "Content" },
               { title: "Type" },
+              { title: "Edit" },
               { title: "Preview" },
             ]}
             promotedBulkActions={promotedBulkActions}
