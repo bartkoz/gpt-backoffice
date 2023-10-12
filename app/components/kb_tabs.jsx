@@ -308,7 +308,10 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
     />
   );
   const [active, setActive] = useState(false);
-  const handleChange = useCallback(() => setActive(!active), [active]);
+  const handleChange = useCallback(() => {
+    setActive(!active);
+    setIsEditing(false);
+  }, [active]);
   const selectedFilesMarkup = () => {
     return (
       <div style={{ marginBottom: "10px" }}>
@@ -360,18 +363,6 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
                 },
               }
             : null
-        }
-        secondaryActions={
-          isEditing
-            ? [
-                {
-                  content: "Back",
-                  onAction: () => {
-                    setIsEditing(false);
-                  },
-                },
-              ]
-            : []
         }
       >
         {" "}
