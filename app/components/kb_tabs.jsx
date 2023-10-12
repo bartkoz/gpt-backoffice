@@ -458,13 +458,15 @@ export function QAEdit({
             />
           </FormLayout.Group>
           <FormLayout.Group>
-            <Button
-              primarySuccess
-              onClick={handleSubmit}
-              disabled={isUploading}
-            >
-              Save
-            </Button>
+            <LegacyStack distribution="trailing">
+              <Button
+                primarySuccess
+                onClick={handleSubmit}
+                disabled={isUploading}
+              >
+                Save
+              </Button>
+            </LegacyStack>
           </FormLayout.Group>
         </FormLayout>
       </Layout.Section>
