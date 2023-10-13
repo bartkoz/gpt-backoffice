@@ -527,13 +527,16 @@ export function KBActions({
       setWip(false);
     });
   };
+  const [selectedAction, setSelectedAction] = useState(null);
 
   return (
     <>
       {activeContent && (
         <Frame>
           <Modal
-            title="Create entry"
+            title={
+              selectedAction === "FAQ" ? "Create FAQ entry" : "Upload file"
+            }
             open={!!activeContent}
             onClose={() => setActiveContent(null)}
           >
@@ -545,11 +548,17 @@ export function KBActions({
         secondaryActions={[
           {
             content: "Create FAQ",
-            onAction: () => setActiveContent(createQAContent),
+            onAction: () => {
+              setActiveContent(createQAContent);
+              setSelectedAction("FAQ");
+            },
           },
           {
             content: "Upload file",
-            onAction: () => setActiveContent(CreateFileUploadContent),
+            onAction: () => {
+              setActiveContent(CreateFileUploadContent);
+              setSelectedAction("file");
+            },
           },
           {
             content: "Import policies",

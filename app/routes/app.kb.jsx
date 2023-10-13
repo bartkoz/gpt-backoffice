@@ -57,16 +57,6 @@ export default function KBUpload() {
         <Layout>
           <ui-title-bar title="Knowledge base" />
           <Layout.Section>
-            <KBActions
-              actionData={shopData}
-              activeContent={activeContent}
-              setActiveContent={setActiveContent}
-              wip={wip}
-              setWip={setWip}
-              toggleActive={toggleActive}
-            />
-          </Layout.Section>
-          <Layout.Section>
             {shopData && (
               <KBFilesList
                 shop={shopData.host}
@@ -75,6 +65,16 @@ export default function KBUpload() {
                 actionData={shopData}
               />
             )}
+          </Layout.Section>
+          <Layout.Section>
+            <KBActions
+              actionData={shopData}
+              activeContent={activeContent}
+              setActiveContent={setActiveContent}
+              wip={wip}
+              setWip={setWip}
+              toggleActive={toggleActive}
+            />
           </Layout.Section>
         </Layout>
       </Page>
