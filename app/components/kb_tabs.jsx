@@ -361,7 +361,7 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
       <Modal
         open={active}
         onClose={handleChange}
-        title="Edit FAQ entry"
+        title={isEditing ? "Edit FAQ entry" : "Preview"}
         primaryAction={
           !isEditing
             ? {
