@@ -81,13 +81,15 @@ export function QAForm({ actionData, setActiveContent, toggleActive }) {
             />
           </FormLayout.Group>
           <FormLayout.Group>
-            <Button
-              variant="primary"
-              onClick={handleSubmit}
-              disabled={isUploading}
-            >
-              Save
-            </Button>
+            <LegacyStack distribution="trailing">
+              <Button
+                variant="primary"
+                onClick={handleSubmit}
+                disabled={isUploading}
+              >
+                Save
+              </Button>
+            </LegacyStack>
           </FormLayout.Group>
         </FormLayout>
       </Layout.Section>
@@ -178,9 +180,15 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
         </DropZone>
       </Layout.Section>
       <Layout.Section>
-        <Button variant="primary" onClick={handleSubmit} disabled={isUploading}>
-          Save
-        </Button>
+        <LegacyStack distribution="trailing">
+          <Button
+            variant="primary"
+            onClick={handleSubmit}
+            disabled={isUploading}
+          >
+            Save
+          </Button>
+        </LegacyStack>
       </Layout.Section>
     </>
   );
