@@ -82,7 +82,7 @@ export function QAForm({ actionData, setActiveContent, toggleActive }) {
           </FormLayout.Group>
           <FormLayout.Group>
             <Button
-              primarySuccess
+              variant="primary"
               onClick={handleSubmit}
               disabled={isUploading}
             >
@@ -178,7 +178,7 @@ export function KbFileUpload({ actionData, setActiveContent, toggleActive }) {
         </DropZone>
       </Layout.Section>
       <Layout.Section>
-        <Button primarySuccess onClick={handleSubmit} disabled={isUploading}>
+        <Button variant="primary" onClick={handleSubmit} disabled={isUploading}>
           Save
         </Button>
       </Layout.Section>
@@ -353,7 +353,7 @@ export function KBFilesList({ shop, activeContent, wip, actionData }) {
       <Modal
         open={active}
         onClose={handleChange}
-        title="Preview"
+        title="Edit FAQ entry"
         primaryAction={
           !isEditing
             ? {
@@ -460,7 +460,7 @@ export function QAEdit({
           <FormLayout.Group>
             <LegacyStack distribution="trailing">
               <Button
-                primarySuccess
+                variant="primary"
                 onClick={handleSubmit}
                 disabled={isUploading}
               >
@@ -535,7 +535,7 @@ export function KBActions({
         <Frame>
           <Modal
             title={
-              selectedAction === "FAQ" ? "Create FAQ entry" : "Upload file"
+              selectedAction === "FAQ" ? "Create FAQ entry" : "File upload"
             }
             open={!!activeContent}
             onClose={() => setActiveContent(null)}
@@ -554,7 +554,7 @@ export function KBActions({
             },
           },
           {
-            content: "Upload file",
+            content: "File upload",
             onAction: () => {
               setActiveContent(CreateFileUploadContent);
               setSelectedAction("file");
