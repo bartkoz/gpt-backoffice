@@ -29,10 +29,14 @@ export function DaysToEndOfMonth({ tokensUsed }) {
       //   active
       //   content="The quota will be renewed at 12:00 AM UTC on the first day of the upcoming month."
       // >
-      <Text alignment={"center"}>
-        Tokens used {tokensUsed}
-        /100 (<b>resets in {days} days</b>)
-      </Text>
+      <>
+        <Text alignment={"center"}>
+          <b>{tokensUsed}%</b> of chat quota used
+        </Text>
+        <Text alignment={"center"}>
+          Montly usage resets in <b>{days} days</b>
+        </Text>
+      </>
       // </Tooltip>
     )
   );
